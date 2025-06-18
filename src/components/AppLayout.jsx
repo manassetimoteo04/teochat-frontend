@@ -1,11 +1,12 @@
+import ConversationList from "./ConversationList";
 import Sidebar from "./Sidebar";
 
 function AppLayout() {
   return (
-    <div className="grid h-screen grid-cols-[5rem_30rem_1fr] bg-[#F1F1F1]">
+    <div className="grid h-screen grid-cols-[8rem_40rem_1fr] bg-[#F1F1F1]">
       <Sidebar />
-      <div className="bg-white">Main</div>
-      <div>Main</div>
+      <ConversationList />
+      <div>Selec</div>
     </div>
   );
 }

@@ -1,7 +1,12 @@
 function Logo() {
   return (
     <div>
-      <img src="/logo.png" draggable={"false"} alt="teo-chat logo image" />
+      <img
+        src="/logo.png"
+        className="w-[5rem]"
+        draggable={"false"}
+        alt="teo-chat logo image"
+      />
     </div>
   );
 }
