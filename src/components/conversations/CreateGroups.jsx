@@ -4,6 +4,9 @@ import {
   HiOutlineUserGroup,
 } from "react-icons/hi";
 import ContactBox from "./ContactBox";
+import ButtonIcon from "../../ui/ButtonIcon";
+import Heading from "../../ui/Heading";
+import Input from "../../ui/Input";
 const contacts = [
   {
     name: "Mason Carter",
@@ -24,44 +27,40 @@ const contacts = [
 function CreateGroups({ onBack }) {
   return (
     <div>
-      <header className="p-[0.5rem_1rem] border-b-[1px] flex  justify-between items-center  border-[#DCDCDC]">
-        <div className="flex items-center">
-          <button
+      <header className="p-[0.5rem_1rem] border-b-[1px] flex  justify-between items-center  border-main-border-color dark:border-main-border-color-dark">
+        <div className="grid grid-cols-[4rem_1fr] items-center">
+          <ButtonIcon
             onClick={() => onBack(null)}
             className="w-[3rem] h-[2.4rem] text-[2rem]"
           >
             <HiArrowLeft />
-          </button>
+          </ButtonIcon>
           <div className="flex flex-col justify-center">
-            <h3>Criar novo Grupo</h3>
-            <span className="text-[1.4rem] text-gray-600">
+            <Heading size="1.6rem">Criar novo Grupo</Heading>
+            <span className="text-[1.4rem] text-secondary-text-color dark:text-secondary-text-color-dark">
               Nenhum contacto selecionado
             </span>
           </div>
         </div>
         <div className="flex">
-          <button className="w-[3rem] h-[3rem] text-[2rem]">
+          <ButtonIcon className="w-[3rem] h-[3rem] text-[2rem]">
             <HiOutlineSearch />
-          </button>
+          </ButtonIcon>
         </div>
       </header>
 
       <form action="" className="p-[2rem] flex flex-col gap-[2rem]">
         <div
           className="rounded-[0.6rem] 
-            w-full overflow-hidden items-center grid grid-cols-[3.5rem_1fr]"
+            w-full  items-center grid grid-cols-[3.5rem_1fr]"
         >
-          <span className="text-[2.4rem] text-gray-600">
+          <span className="text-[2.4rem] text-secondary-text-color dark:text-secondary-text-color-dark">
             <HiOutlineUserGroup />
           </span>
-          <input
-            type="text"
-            className="border bg-gray-50 h-[4rem] p-[1rem] rounded-[0.8rem]  border-[#E5E5E5]"
-            placeholder="Nome do Grupo"
-          />
+          <Input type="text" placeholder="Nome do Grupo" />
         </div>
         <div className="">
-          <span className="px-[1rem] font-semibold text-[1.2rem] text-gray-600">
+          <span className="px-[1rem] font-semibold text-[1.2rem] text-secondary-text-color dark:text-secondary-text-color-dark">
             Contactos no Teochat
           </span>
           <div>

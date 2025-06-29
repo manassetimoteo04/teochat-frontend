@@ -18,7 +18,7 @@ function ConversationBox({ conv }) {
       <UserSmallImg url={conv.img} alt={conv.name} />
       <div className="flex flex-col  justify-center">
         <div className="flex justify-between items-center">
-          <p className="font-[600] text-main-text-color  dark:text-main-text-color-dark">
+          <p className="font-[500] text-main-text-color  dark:text-main-text-color-dark">
             {conv.name}
           </p>
           <span className="text-secondary-text-color  dark:text-secondary-text-color-dark text-[1.4rem]">

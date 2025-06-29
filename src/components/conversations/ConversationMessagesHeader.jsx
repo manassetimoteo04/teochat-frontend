@@ -7,8 +7,8 @@ import {
 import { useCurrentConversation } from "../../contexts/ConversationContextProvider";
 import Row from "../../ui/Row";
 import UserSmallImg from "../../ui/UserSmallImg";
-import { chats } from "./ConversationList";
 import ButtonIcon from "../../ui/ButtonIcon";
+import { chats } from "../../utils/helpers";
 
 function ConversationMessagesHeader() {
   const {
