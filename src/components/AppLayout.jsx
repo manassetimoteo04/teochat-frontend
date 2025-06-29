@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-import ConversationList from "./ConversationList";
-import Sidebar from "./Sidebar";
-
-function AppLayout() {
-  return (
-    <div className="grid h-screen grid-cols-[8rem_40rem_1fr] bg-[#F1F1F1]">
-      <Sidebar />
-      <ConversationList />
-      <div>Selec</div>
-=======
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useCurrentConversation } from "../contexts/ConversationContextProvider";
@@ -26,7 +15,6 @@ function AppLayout() {
     >
       <Sidebar />
       <Outlet />
->>>>>>> 26a9d0f (primeiro commit)
     </div>
   );
 }

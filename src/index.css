@@ -2,23 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-<<<<<<< HEAD
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
-=======
-@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
->>>>>>> 26a9d0f (primeiro commit)
 
 html {
   font-size: 62.5%;
 }
 
 body {
-<<<<<<< HEAD
-  font-family: "Roboto", sans-serif;
-
-  font-size: 1.6rem;
-}
-=======
   font-family: "Poppins", sans-serif;
   position: relative;
   font-size: 1.6rem;
@@ -68,4 +58,3 @@ body {
     background-color: #9ca3af;
   }
 }
->>>>>>> 26a9d0f (primeiro commit)

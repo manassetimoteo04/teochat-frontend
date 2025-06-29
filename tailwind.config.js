@@ -1,10 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-<<<<<<< HEAD
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-  theme: {
-    extend: {},
-=======
   darkMode: "class",
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -26,7 +21,6 @@ export default {
         "main-border-color-dark": "#1f2937",
       },
     },
->>>>>>> 26a9d0f (primeiro commit)
   },
   plugins: [],
 };
