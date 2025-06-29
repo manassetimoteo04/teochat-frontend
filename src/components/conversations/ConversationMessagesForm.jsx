@@ -10,12 +10,14 @@ import EmojiPicker from "emoji-picker-react";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { useCurrentConversation } from "../../contexts/ConversationContextProvider";
 import { useDarkMode } from "../../contexts/DarkModeContext";
+import AudioRecorder from "../../ui/AudioRecorder";
 function ConversationMessagesForm() {
   const [text, setText] = useState("");
   const [showEmoji, setShowEmoji] = useState(false);
   const ref = useOutsideClick(() => setShowEmoji(false));
   const { addMessage } = useCurrentConversation();
   const { isDarkMode } = useDarkMode();
+  const [recording, setRecording] = useState(false);
 
   function getEmoji(emoji) {
     setText((prev) => prev + emoji.emoji);
@@ -74,9 +76,14 @@ function ConversationMessagesForm() {
         </div>
       )}
       {(!text || text?.trim() === "") && (
-        <button className="text-[2.4rem]  w-[3.5rem] rounded-full h-[3.5rem] text-secondary-text-color self-center dark:text-secondary-text-color-dark flex items-center  justify-center">
-          <HiOutlineMicrophone />
-        </button>
+        <AudioRecorder recording={recording} setRecording={setRecording}>
+          <button
+            title="Clique para gravar"
+            className="text-[2.4rem]  w-[3.5rem] rounded-full h-[3.5rem] text-secondary-text-color self-center dark:text-secondary-text-color-dark flex items-center  justify-center"
+          >
+            <HiOutlineMicrophone />
+          </button>
+        </AudioRecorder>
       )}{" "}
       {text && (
         <button

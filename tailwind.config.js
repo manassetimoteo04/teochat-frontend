@@ -6,7 +6,7 @@ export default {
     extend: {
       colors: {
         // Lightmode colors
-        "main-color": "#fde68a",
+        "main-color": "#2563eb",
         "main-bg-color": "#F1F1F1",
         "main-bg-color-2": "#fff",
         "main-text-color": "#010101",
@@ -19,6 +19,17 @@ export default {
         "main-text-color-dark": "#f9fafb",
         "secondary-text-color-dark": "#9ca3af",
         "main-border-color-dark": "#1f2937",
+      },
+      keyframes: {
+        pulseGrow: {
+          "0%": { transform: "scale(1)", opacity: "1" },
+          "50%": { transform: "scale(1.1)", opacity: "0.7" },
+          "100%": { transform: "scale(1)", opacity: "1" },
+        },
+      },
+      animation: {
+        pulseGrow: "pulseGrow 1s ease-in-out infinite",
+        slideIn: "slideIn 0.5s ease-out forwards",
       },
     },
   },
