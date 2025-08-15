@@ -1,9 +1,14 @@
+import FeaturesSection from "./features-section";
+import Features from "./features-section";
+import HowWorksSection from "./how-works-section";
 function Main() {
   return (
-    <div className="w-[100dvw] relative">
-      <div className="max-w-[100rem] left-1/2 absolute m-[0_auto]">
-        <img src="./image.png" className="w-full" />
+    <div className="max-w-[120rem]  m-[0_auto] flex flex-col gap-[16rem] relative">
+      <div className=" w-full overflow-hidden shadow-md rounded-[2rem] -translate-y-[15rem]  ">
+        <img src="./image2.png" className="w-full" />
       </div>
+      <FeaturesSection />
+      <HowWorksSection />
     </div>
   );
 }

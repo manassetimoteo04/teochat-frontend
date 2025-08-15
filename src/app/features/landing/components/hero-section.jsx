@@ -1,3 +1,4 @@
+import { ArrowDown } from "lucide-react";
 import ButtonCta from "../ui/button-cta";
 import Header from "./header";
 
@@ -8,7 +9,7 @@ function HeroSection() {
         className="w-[90dvw] z-[0] absolute -top-[50dvw] left-1/2 -translate-x-1/2 opacity-[0.4] h-[100dvw] rounded-full"
         style={{
           background:
-            "radial-gradient(circle, rgba(200,200,200,0.8) 0%, rgba(200,200,200,0.4) 40%, rgba(200,200,200,0) 100%)",
+            "radial-gradient(circle, rgb(255, 243, 205) 0%, rgba(200, 200, 200, 0.178) 40%, rgba(200,200,200,0) 100%)",
         }}
       ></div>
 
@@ -20,8 +21,15 @@ function HeroSection() {
       />
       <Header />
       <div className="flex absolute gap-[2rem] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2  flex-col items-center h-[50%] z-10 justify-center">
-        <h1 class="text-[4.5rem] text-center max-w-[80rem] font-bold bg-gradient-to-b from-gray-500 to-black bg-clip-text text-transparent">
-          Transforme a comunicação da sua Equipe
+        <h1 class="text-[4.5rem] text-center w-[65rem] font-bold bg-gradient-to-b from-gray-500 to-black bg-clip-text text-transparent">
+          Transforme a{" "}
+          <span className="text-green-500 bg-gradient-to-b from-green-50 to-green-800 inline-block bg-clip-text">
+            Comunicação
+          </span>{" "}
+          da sua{" "}
+          <span className="text-green-500 bg-gradient-to-b from-green-500 to-green-800 inline-block bg-clip-text">
+            Equipe
+          </span>
         </h1>
         <p className="text-secondary-text-color text-center max-w-[60rem]">
           Um espaço completo para mensagens, chamadas, agenda e colaboração —
@@ -29,7 +37,13 @@ function HeroSection() {
           dispersos.
         </p>
         <ButtonCta variarion="secondary">Criar Empresa</ButtonCta>
+        <div>
+          <span className="animate-bounce text-secondary-text-color cursor-pointer hover:bg-green-500 hover:text-white  mt-[2rem] w-[3rem] h-[3rem] bg-gray-200 flex items-center justify-center rounded-full">
+            <ArrowDown size={20} />
+          </span>
+        </div>
       </div>
+      <div className="absolute bottom-0 w-full h-[10rem] bg-gradient-to-t from-gray-50 to-transparent"></div>
     </div>
   );
 }
