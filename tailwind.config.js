@@ -1,4 +1,3 @@
-
 export default {
   darkMode: "class",
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
@@ -6,7 +5,7 @@ export default {
     extend: {
       colors: {
         // Lightmode colors
-        "main-color": "#2563eb",
+        "main-color": "#fb923c",
         "main-bg-color": "#F1F1F1",
         "main-bg-color-2": "#fff",
         "main-text-color": "#010101",
@@ -31,6 +30,6 @@ export default {
         pulseGrow: "pulseGrow 1s ease-in-out infinite",
       },
     },
+    plugins: [],
   },
-  plugins: [],
 };
