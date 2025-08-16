@@ -21,7 +21,7 @@ function HeroSection() {
       />
       <Header />
       <div className="flex absolute gap-[2rem] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2  flex-col items-center h-[50%] z-10 justify-center">
-        <h1 class="text-[4.5rem] text-center w-[65rem] font-bold bg-gradient-to-b from-gray-500 to-black bg-clip-text text-transparent">
+        <h1 className="text-[4.5rem] text-center w-[65rem] font-bold bg-gradient-to-b from-gray-500 to-black bg-clip-text text-transparent">
           Transforme a{" "}
           <span className="text-green-500 bg-gradient-to-b from-green-50 to-green-800 inline-block bg-clip-text">
             Comunicação
