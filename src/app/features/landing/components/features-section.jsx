@@ -14,7 +14,7 @@ function FeaturesSection() {
       <Heading description="As funcionalidades principais da nossa aplicação">
         Funcionalidades
       </Heading>
-      <div className="grid gap-[3rem] grid-cols-3">
+      <div className="grid gap-[3rem] md:grid-cols-3 sm:grid-cols-2">
         <FeatureBox
           icon={<CalendarDays />}
           title="Gestão de Eventos"

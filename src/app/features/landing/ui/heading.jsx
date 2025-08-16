@@ -3,7 +3,7 @@ function Heading({ children, description, isCenter = false }) {
     <div
       className={`flex flex-col ${isCenter ? "items-center text-center" : ""}`}
     >
-      <h1 class="text-[3.5rem]  font-bold bg-gradient-to-b from-gray-500 to-black bg-clip-text text-transparent">
+      <h1 class="sm:text-[3.5rem] text-[2.4rem]  font-bold bg-gradient-to-b from-gray-500 to-black bg-clip-text text-transparent">
         {children}
       </h1>
       <span className="text-secondary-text-color">{description}</span>
