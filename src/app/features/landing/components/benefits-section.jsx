@@ -35,7 +35,7 @@ const benefits = [
 
 function BenefitsSection() {
   return (
-    <section className="flex flex-col gap-[6rem] max-w-[120rem]  m-[0_auto] ">
+    <section className="flex flex-col gap-[6rem] max-w-[120rem] pb-[16rem] px-[2rem]  m-[0_auto] ">
       <Heading description="Resultados que sua equipe vai sentir no dia a dia">
         Principais Benefícios
       </Heading>

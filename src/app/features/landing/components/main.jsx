@@ -7,7 +7,7 @@ import TestimonialsSection from "./testimonials-section";
 import CtaSection from "./cta-section";
 function Main() {
   return (
-    <main className="flex flex-col gap-[16rem] relative">
+    <main className="flex flex-col  relative">
       <div className="max-w-[120rem] m-[0_auto] w-full overflow-hidden shadow-md rounded-[2rem] -translate-y-[15rem]  ">
         <img src="./image2.png" className="w-full" />
       </div>

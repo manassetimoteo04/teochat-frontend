@@ -2,7 +2,7 @@ import Heading from "../ui/heading";
 
 function CtaSection() {
   return (
-    <div className="bg-gradient-to-l p-[4rem] from-green-500 to-green-600">
+    <div className="bg-gradient-to-l p-[10rem_2rem] from-green-500 to-green-600">
       <section className="max-w-[120rem] m-[0_auto]">
         <header className="max-w-[65rem] m-[0_auto]">
           <h1 class="text-[3.5rem] text-center  font-bold text-white">
@@ -15,7 +15,7 @@ function CtaSection() {
             gratuitamente e descubra como é fácil se manter organizado e
             produtivo. A comunicação da sua equipe nunca mais será a mesma.
           </p>
-          <button className="bg-white p-[1rem_2rem] flex items-center gap-[0.5rem] text-black justify-center hover:bg-green-700 rounded-full">
+          <button className="bg-white p-[1rem_2rem] flex items-center gap-[0.5rem] text-black justify-center hover:bg-black hover:text-white rounded-full">
             Criar a minha empresa
           </button>
         </div>

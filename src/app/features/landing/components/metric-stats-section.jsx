@@ -18,7 +18,7 @@ const impactData = [
 
 function MetricStatsSection() {
   return (
-    <section>
+    <section className="pb-[16rem]">
       <Heading isCenter={true}>O impacto do TeoChat nas Empresas</Heading>
       <div
         className="relative w-full mt-[6rem]

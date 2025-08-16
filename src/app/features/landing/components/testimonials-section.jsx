@@ -103,7 +103,7 @@ function TestimonialsSection() {
       >
         Testemunhos
       </Heading>
-      <div className="bg-white p-[6rem]">
+      <div className="bg-white py-[10rem]">
         <div className="max-w-[100rem] min-h-[30rem] p-[3rem] relative  overflow-hidden flex justify-center  m-[0_auto] ">
           {extendedSlides.map((testimonial, index) => (
             <TestimonialBox
