@@ -97,14 +97,16 @@ function TestimonialsSection() {
   }
   return (
     <section className="flex flex-col gap-[6rem] ">
-      <Heading
-        isCenter={true}
-        description="Vê o que os nossos clientes dizem sobre o TeoChat"
-      >
-        Testemunhos
-      </Heading>
-      <div className="bg-white py-[10rem]">
-        <div className="max-w-[100rem] min-h-[30rem] p-[3rem] relative  overflow-hidden flex justify-center  m-[0_auto] ">
+      <div className="px-[2rem]">
+        <Heading
+          isCenter={true}
+          description="Vê o que os nossos clientes dizem sobre o TeoChat"
+        >
+          Testemunhos
+        </Heading>
+      </div>
+      <div className="bg-white ">
+        <div className="max-w-[100rem] min-h-[60rem] p-[3rem] relative items-center  overflow-hidden flex justify-center  m-[0_auto] ">
           {extendedSlides.map((testimonial, index) => (
             <TestimonialBox
               list={testimonials}

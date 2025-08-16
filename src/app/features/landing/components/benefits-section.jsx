@@ -39,7 +39,7 @@ function BenefitsSection() {
       <Heading description="Resultados que sua equipe vai sentir no dia a dia">
         Principais Benefícios
       </Heading>
-      <div className="grid gap-[3rem] grid-cols-2">
+      <div className="grid gap-[3rem]  lg:grid-cols-2">
         {benefits.map((benefit) => (
           <BenefitBox benefit={benefit} key={benefit.title} />
         ))}

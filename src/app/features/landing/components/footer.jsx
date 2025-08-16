@@ -9,7 +9,7 @@ import {
 function footer() {
   return (
     <footer className="bg-gray-950 p-[10rem_0rem] pb-0">
-      <div className="max-w-[120rem] flex justify-between m-[0_auto]">
+      <div className="max-w-[120rem] p-[2rem] flex-col gap-[2rem]  sm:flex-row flex justify-between m-[0_auto]">
         <div className="flex flex-col items-start">
           <h3 className="text-2xl font-bold text-white mb-3">
             <h1 className="flex items-center text-[2.4rem] relative">

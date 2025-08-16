@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 
 function WhatWeSolveSection() {
   return (
-    <section className="grid grid-cols-2 max-w-[120rem]  pb-[16rem] px-[2rem]  m-[0_auto]">
+    <section className="grid sm:grid-cols-2 max-w-[120rem] gap-[2rem]  pb-[16rem] px-[2rem]  m-[0_auto]">
       <Heading description="">Problema que Resolvemos</Heading>
       <div className="flex gap-[0.5rem] flex-col">
         <h2 className="text-[2.8rem]">

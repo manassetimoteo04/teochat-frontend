@@ -22,15 +22,15 @@ function MetricStatsSection() {
       <Heading isCenter={true}>O impacto do TeoChat nas Empresas</Heading>
       <div
         className="relative w-full mt-[6rem]
-  bg-[url('./img-3.jpg')] h-[20rem] bg-cover bg-center"
+  bg-[url('./img-3.jpg')] min-h-[40rem] sm:min-h-[30rem] md:h-[20rem] bg-cover bg-center"
       >
         <div
           className="absolute inset-0 
     bg-gradient-to-t from-black/80 to-transparent 
     backdrop-blur-[2rem]"
         >
-          <div className="max-w-[120rem] h-full relative m-[0_auto]">
-            <div className=" h-full  items-center flex text-white ">
+          <div className="max-w-[120rem] flex flex-col justify-center items-center p-[2rem] min-h-fit  h-full relative m-[0_auto]">
+            <div className=" min-h-fit gap-[2rem] items-center grid md:grid-cols-3 sm:grid-cols-2 text-white ">
               {impactData.map((data) => (
                 <div
                   key={data.title}
