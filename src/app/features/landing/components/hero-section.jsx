@@ -14,7 +14,7 @@ function HeroSection() {
       ></div>
 
       <div
-        className="absolute z-[0] inset-0 bg-repeat opacity-30 pointer-events-none"
+        className="absolute z-[0] inset-0 bg-repeat opacity-50 pointer-events-none"
         style={{
           backgroundImage: `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><path d="M100 0 L0 0 0 100" fill="none" stroke="%23d1d5db" stroke-width="1"/></svg>')`,
         }}

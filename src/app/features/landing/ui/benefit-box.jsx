@@ -3,7 +3,7 @@ function BenefitBox({ benefit }) {
   return (
     <div className="p-[2rem] overflow-hidden relative bg-main-bg-color-2 shadow-sm  rounded-2xl  grid grid-cols-[1fr_20rem] gap-[1rem]">
       <div>
-        <h3 className="mb-3">{title}</h3>
+        <h3 className="mb-3 text-[2rem]">{title}</h3>
         <div>
           <p className="text-secondary-text-color">{description}</p>
         </div>

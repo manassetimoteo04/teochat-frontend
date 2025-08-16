@@ -1,6 +1,8 @@
-function Heading({ children, description }) {
+function Heading({ children, description, isCenter = false }) {
   return (
-    <div className="flex flex-col">
+    <div
+      className={`flex flex-col ${isCenter ? "items-center text-center" : ""}`}
+    >
       <h1 class="text-[3.5rem]  font-bold bg-gradient-to-b from-gray-500 to-black bg-clip-text text-transparent">
         {children}
       </h1>

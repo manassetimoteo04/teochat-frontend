@@ -10,7 +10,7 @@ import Heading from "../ui/heading";
 import FeatureBox from "../ui/feature-box";
 function FeaturesSection() {
   return (
-    <section className="flex flex-col gap-[6rem]">
+    <section className="flex flex-col gap-[6rem] max-w-[120rem]  m-[0_auto]">
       <Heading description="As funcionalidades principais da nossa aplicação">
         Funcionalidades
       </Heading>
