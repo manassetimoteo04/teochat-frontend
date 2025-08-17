@@ -18,7 +18,6 @@ function SignInForm() {
       return toast.error("Por favor preenche todos os campos");
     signIn(data);
   }
-  console.log(isPending);
   return (
     <div className="p-[4rem] flex items-center h-full">
       <Form onSubmit={onSubmit}>
@@ -50,8 +49,6 @@ function SignInForm() {
           <button className="bg-gradient-to-b text-[1.4rem] sm:text-[1.6rem] from-green-600 to-green-500 p-[1rem_2rem]  gap-[0.5rem] text-white hover:bg-green-700 rounded-full">
             {isPending ? <SpinnerMini /> : "Iniciar Sessão"}
           </button>
-          <SpinnerMini />
-          dfg
         </div>
         <div className="text-secondary-text-color mt-[2rem] flex justify-between">
           <p>Ainda não tem uma conta?</p>{" "}
