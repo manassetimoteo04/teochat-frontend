@@ -18,3 +18,22 @@ export const signIn = async ({ password, email }) => {
     throw new Error(error);
   }
 };
+export const verifyAccount = async ({ verificationCode }) => {
+  try {
+    const { data } = await api.post("/auth/verify-account", {
+      verificationCode,
+    });
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+};
+export const resendVerificationCode = async () => {
+  try {
+    await api.post("/auth/verify-account/resend-code");
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+};
