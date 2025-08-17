@@ -1,22 +1,22 @@
 import { useState } from "react";
-import { useSignUp } from "../hooks/use-signup";
 import AuthInput from "../ui/auth-input";
 import Form from "../ui/form";
+import { toast } from "sonner";
+import useSignIn from "../hooks/use-signin";
 import { useNavigate } from "react-router-dom";
+import SpinnerMini from "../../../shared/ui/SpinnerMini";
 
-function SignUpForm() {
-  const { signUp, isPending } = useSignUp();
+function SignInForm() {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
+  const { signIn, isPending } = useSignIn();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
   function onSubmit(e) {
     e.preventDefault();
-    const data = { name, email, password };
-    if (!name || !email || !password || !confirm) return;
-    if (password !== confirm) return;
-    signUp(data);
+    const data = { email, password };
+    if (!email || !password)
+      return toast.error("Por favor preenche todos os campos");
+    signIn(data);
   }
   console.log(isPending);
   return (
@@ -27,18 +27,12 @@ function SignUpForm() {
             <img src="./logo.png" className="sm:w-[3.5rem] w-[2.5rem] h-auto" />
             TeoChat
           </h1>
-          <h1 className="text-[2.4rem]">Criar Conta</h1>
+          <h1 className="text-[2.4rem]">Iniciar Sessão</h1>
           <span className="text-secondary-text-color">
-            Crie a tua conta para começar a trabalhar com mais productividade
+            Informe as tuas credenciais para começar a tua productividade
           </span>
         </header>
         <div className="flex flex-col my-[3rem] gap-[1.5rem]">
-          <AuthInput
-            value={name}
-            setValue={setName}
-            label="Nome Completo"
-            id="fullName"
-          />
           <AuthInput
             value={email}
             setValue={setEmail}
@@ -51,26 +45,21 @@ function SignUpForm() {
             label="Palavra-passe"
             id="password"
           />
-          <AuthInput
-            value={confirm}
-            setValue={setConfirm}
-            label="Confirmar Palavra-passe"
-            id="confirm"
-          />
         </div>
         <div className="flex flex-col w-full">
           <button className="bg-gradient-to-b text-[1.4rem] sm:text-[1.6rem] from-green-600 to-green-500 p-[1rem_2rem]  gap-[0.5rem] text-white hover:bg-green-700 rounded-full">
-            {" "}
-            Criar Conta
+            {isPending ? <SpinnerMini /> : "Iniciar Sessão"}
           </button>
+          <SpinnerMini />
+          dfg
         </div>
         <div className="text-secondary-text-color mt-[2rem] flex justify-between">
-          <p>Já tem uma conta?</p>{" "}
+          <p>Ainda não tem uma conta?</p>{" "}
           <span
-            onClick={() => navigate("/sign-in")}
+            onClick={() => navigate("/sign-up")}
             className="text-blue-700 cursor-pointer"
           >
-            Iniciar Sessão
+            Criar Conta
           </span>
         </div>
       </Form>
@@ -78,4 +67,4 @@ function SignUpForm() {
   );
 }
 
-export default SignUpForm;
+export default SignInForm;

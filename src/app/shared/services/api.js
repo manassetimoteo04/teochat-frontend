@@ -21,13 +21,12 @@ api.interceptors.response.use(
     } else {
       const status = error.response.status;
       const data = error.response.data;
-      console.log(data.message);
       if (status === 400) message = data.message || "Dados inválidos.";
       if (status === 401)
         message = data.message || "Sessão expirada. Faça login novamente.";
       if (status === 403)
         message = data.message || "Você não tem permissão para esta ação.";
-      if (status === 404) message = data.message || "Recurso não encontrado.";
+      if (status === 404) message = data.error || "Recurso não encontrado.";
       if (status === 409) message = data.error || "Conflito de recursos";
       if (status === 500)
         message = "Erro no servidor. Tente novamente mais tarde.";

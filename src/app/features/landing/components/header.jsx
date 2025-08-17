@@ -12,7 +12,7 @@ function Header() {
           &nbsp;
         </span>
       </h1>
-      <ButtonCta onClick={() => navigate("/sign-up")}>
+      <ButtonCta onClick={() => navigate("/sign-in")}>
         Começar Agora <ArrowRight size={18} />
       </ButtonCta>
     </header>
