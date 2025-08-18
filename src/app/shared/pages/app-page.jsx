@@ -1,5 +1,7 @@
+import AppLayout from "../components/app-layout";
+
 function AppPage() {
-  return <div>Bem vindo a empresa X</div>;
+  return <AppLayout />;
 }
 
 export default AppPage;
