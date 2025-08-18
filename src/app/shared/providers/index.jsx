@@ -6,7 +6,7 @@ function AppProvider() {
   return (
     <CacheProvider>
       <ToastProvider />
-      <RoutesProvider />;
+      <RoutesProvider />
     </CacheProvider>
   );
 }

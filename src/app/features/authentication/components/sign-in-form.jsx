@@ -46,7 +46,7 @@ function SignInForm() {
           />
         </div>
         <div className="flex flex-col w-full">
-          <button className="bg-gradient-to-b text-[1.4rem] sm:text-[1.6rem] from-green-600 to-green-500 p-[1rem_2rem]  gap-[0.5rem] text-white hover:bg-green-700 rounded-full">
+          <button className="bg-gradient-to-b text-[1.4rem] flex items-center justify-center sm:text-[1.6rem] from-green-600 to-green-500 p-[1rem_2rem]  gap-[0.5rem] text-white hover:bg-green-700 rounded-full">
             {isPending ? <SpinnerMini /> : "Iniciar Sessão"}
           </button>
         </div>
