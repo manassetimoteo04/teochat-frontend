@@ -1,6 +1,8 @@
 import { ArrowRight } from "lucide-react";
 import ButtonCta from "../ui/button-cta";
+import { useNavigate } from "react-router-dom";
 function Header() {
+  const navigate = useNavigate();
   return (
     <header className="flex absolute top-0 left-0 w-full justify-between items-center p-[2rem]">
       <h1 className="flex items-center sm:text-[2.4rem] relative">
@@ -10,7 +12,7 @@ function Header() {
           &nbsp;
         </span>
       </h1>
-      <ButtonCta>
+      <ButtonCta onClick={() => navigate("/sign-in")}>
         Começar Agora <ArrowRight size={18} />
       </ButtonCta>
     </header>
