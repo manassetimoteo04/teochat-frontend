@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
-
 html {
   font-size: 62.5%;
 }
@@ -14,6 +12,7 @@ body {
   font-size: 1.6rem;
 }
 * {
+  transition: all 0.3s ease-in-out;
   scrollbar-width: thin;
   scrollbar-color: #d1d5db transparent;
 }

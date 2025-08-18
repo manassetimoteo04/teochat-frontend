@@ -1,18 +1,7 @@
-import { BrowserRouter } from "react-router-dom";
-import AppRoutes from "./routes/AppRoutes";
-import { ConversationContextProvider } from "./contexts/ConversationContextProvider";
-import { DarkModeContextProvider } from "./contexts/DarkModeContext";
+import AppProvider from "./app/shared/providers";
 
 function App() {
-  return (
-    <BrowserRouter>
-      <DarkModeContextProvider>
-        <ConversationContextProvider>
-          <AppRoutes />
-        </ConversationContextProvider>
-      </DarkModeContextProvider>
-    </BrowserRouter>
-  );
+  return <AppProvider />;
 }
 
 export default App;
