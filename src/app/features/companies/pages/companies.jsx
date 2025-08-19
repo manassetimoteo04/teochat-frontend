@@ -1,4 +1,5 @@
 import CompaniesList from "../components/companies-list";
+import CompaniesLayout from "../ui/companies-layout";
 
 function CompaniesPage() {
   return (

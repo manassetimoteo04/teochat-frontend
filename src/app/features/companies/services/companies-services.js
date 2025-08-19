@@ -31,3 +31,12 @@ export const createCompany = async (newData) => {
     throw new Error(error);
   }
 };
+export const checkInviteToken = async (token) => {
+  try {
+    const { data } = await api.get("/companies/check-invite/" + token);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+};
