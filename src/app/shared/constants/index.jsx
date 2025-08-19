@@ -25,6 +25,16 @@ export const NavListItems = [
     icon: <UsersIcon />,
   },
   {
+    title: "Agendas",
+    isCollapseble: true,
+    childs: [
+      { title: "Marketing Digital", to: "agendas/" },
+      { title: "Dev Luvulo", to: "agendas/" },
+    ],
+    to: "/app/agendas",
+    icon: <CalendarDaysIcon />,
+  },
+  {
     title: "Chats",
     isCollapseble: true,
     childs: [
@@ -35,25 +45,16 @@ export const NavListItems = [
     icon: <MessageCircleIcon />,
   },
   {
-    title: "Chamadas",
+    title: "Meetings",
     isCollapseble: true,
     childs: [
-      { title: "Marketing Digital", to: "calls/" },
-      { title: "Dev Luvulo", to: "calls/" },
+      { title: "Marketing Digital", to: "mettings/" },
+      { title: "Dev Luvulo", to: "mettings/" },
     ],
-    to: "/app/calls",
+    to: "/app/mettings",
     icon: <Smartphone />,
   },
-  {
-    title: "Agendas",
-    isCollapseble: true,
-    childs: [
-      { title: "Marketing Digital", to: "agendas/" },
-      { title: "Dev Luvulo", to: "agendas/" },
-    ],
-    to: "/app/agendas",
-    icon: <CalendarDaysIcon />,
-  },
+
   {
     title: "Configurações",
 

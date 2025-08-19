@@ -11,7 +11,7 @@ function CompaniesList() {
 
   if (isPending) return <Spinner />;
   return (
-    <div className="max-w-[100rem] rounded-2xl mt-[8rem] border border-main-border-color bg-main-bg-color-2 m-[0_auto]">
+    <div className="max-w-[100rem] rounded-2xl mt-[8rem] bg-main-bg-color-2 m-[0_auto]">
       <header className="flex gap-[1rem] flex-col justify-between p-[2rem]  border-b border-main-border-color">
         <h3 className="text-[1.8rem]">Minhas Empresas</h3>
         <div className="flex justify-between">

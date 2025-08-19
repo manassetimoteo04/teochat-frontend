@@ -13,7 +13,7 @@ function NavLink({ link }) {
         to={link.isCollapseble ? "" : link.to}
         className={`${
           isActive ? "bg-gray-100 !text-main-text-color" : ""
-        } flex p-[1.5rem] gap-[0.5rem] text-secondary-text-color justify-between  active:bg-gray-50 hover:bg-gray-50 rounded-3xl`}
+        } flex p-[1.5rem] gap-[0.5rem] cursor-pointer text-secondary-text-color justify-between  active:bg-gray-50 hover:bg-gray-50 rounded-3xl`}
       >
         <span className="flex gap-[0.5rem] items-center">
           {link.icon} {link.title}
@@ -29,7 +29,7 @@ function NavLink({ link }) {
           className={`flex flex-col p-[1rem_1.5rem] gap-[0.5rem] text-secondary-text-color justify-between  rounded-3xl`}
         >
           {link.childs.map((child) => (
-            <NavCollapseLink link={child} key={child.to} />
+            <NavCollapseLink link={child} key={child.title} />
           ))}
         </div>
       )}

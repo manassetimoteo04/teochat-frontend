@@ -1,5 +1,5 @@
 import { ArrowLeft, Check, ChevronLeft, ChevronRight } from "lucide-react";
-import StepForm from "../pages/step-form";
+import StepForm from "../ui/step-form";
 import Button from "../../../shared/ui/button";
 import SpinnerMini from "../../../shared/ui/SpinnerMini";
 import { useNavigate } from "react-router-dom";
@@ -69,6 +69,10 @@ function CreateCompanyForm() {
   }
   function handleNext(e) {
     e.preventDefault();
+    if (!step.data)
+      return toast.warning(
+        "Por favor preenche o campo antes de ir ao próximo passo"
+      );
     dispatch({ type: "NEXT_STEP" });
   }
   function handlePrev(e) {
