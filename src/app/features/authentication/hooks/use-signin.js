@@ -11,13 +11,15 @@ function useSignIn() {
     mutationFn: signIn,
     onSuccess: (data) => {
       toast.success("Sessão inciada com successo");
-      setToLocalStorage(data.token);
+      setToLocalStorage(data.token, "token");
       if (!data.data.user.isConfirmed) {
         toast.error(
           "Conta não verifica, por favor verifique a tua conta para continuar"
         );
         navigate("/verify-account");
+        return;
       }
+      navigate("/companies", { replace: true });
     },
     onError: (err) => {
       toast.error(err.message);

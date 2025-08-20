@@ -1,0 +1,40 @@
+import { NavLink as Link, useLocation } from "react-router-dom";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import { useState } from "react";
+import NavCollapseLink from "./nav-collapse-link";
+function NavLink({ link }) {
+  const isActive = useLocation().pathname.startsWith(link.to);
+  const [collapse, setCollapse] = useState(false);
+  const Component = !link.isCollapseble ? Link : "div";
+  return (
+    <li>
+      <Component
+        onClick={() => (link.isCollapseble ? setCollapse((s) => !s) : {})}
+        to={link.isCollapseble ? "" : link.to}
+        className={`${
+          isActive ? "bg-gray-100 !text-main-text-color" : ""
+        } flex p-[1.5rem] gap-[0.5rem] cursor-pointer text-secondary-text-color justify-between  active:bg-gray-50 hover:bg-gray-50 rounded-3xl`}
+      >
+        <span className="flex gap-[0.5rem] items-center">
+          {link.icon} {link.title}
+        </span>
+        {link.isCollapseble && (
+          <span>
+            {collapse ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+          </span>
+        )}
+      </Component>
+      {collapse && (
+        <div
+          className={`flex flex-col p-[1rem_1.5rem] gap-[0.5rem] text-secondary-text-color justify-between  rounded-3xl`}
+        >
+          {link.childs.map((child) => (
+            <NavCollapseLink link={child} key={child.title} />
+          ))}
+        </div>
+      )}
+    </li>
+  );
+}
+
+export default NavLink;
