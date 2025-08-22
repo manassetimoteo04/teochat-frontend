@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import LandingHomePage from "../../../features/landing/pages/home";
 import SignUpPage from "../../../features/authentication/pages/sign-up";
 import SignInPage from "../../../features/authentication/pages/sign-in";
@@ -35,6 +35,7 @@ function RoutesProvider() {
             </ProtectedRoute>
           }
         >
+          <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<DashboardPage />}></Route>
           <Route path="teams" element={<DashboardPage />}></Route>
           <Route path="chats" element={<ChatsPage />}></Route>

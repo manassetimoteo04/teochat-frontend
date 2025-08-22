@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { MapPin, Video } from "lucide-react";
 const weekdays = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
 const times = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, "0"));
-export const events = [
+const events = [
   {
     id: "9b2fc0c0-5d31-41f5-8ae0-9dc99f4323a1",
     title: "Reunião Diária",
