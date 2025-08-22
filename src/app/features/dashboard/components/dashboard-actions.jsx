@@ -1,4 +1,5 @@
 import Button from "../../../shared/ui/button";
+import Modal from "../../../shared/ui/modal";
 
 function DashboardActions() {
   return (
@@ -13,9 +14,11 @@ function DashboardActions() {
         <Button className="bg-green-500 hover:bg-green-600 w-full p-[0.8rem_1.5rem] rounded-full">
           Criar Equipe
         </Button>
-        <Button className="bg-green-500 hover:bg-green-600 w-full p-[0.8rem_1.5rem] rounded-full">
-          Convidar Membro
-        </Button>
+        <Modal.Open id="invite-new-member">
+          <Button className="bg-green-500 hover:bg-green-600 w-full p-[0.8rem_1.5rem] rounded-full">
+            Convidar Membro
+          </Button>
+        </Modal.Open>
       </div>
     </div>
   );

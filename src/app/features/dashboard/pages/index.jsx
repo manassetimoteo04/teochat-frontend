@@ -7,6 +7,7 @@ import DashboardRecentMemebrs from "../components/dashboard-recent-members";
 import DashboardSchedule from "../components/dashboard-schedule";
 import Modal from "../../../shared/ui/modal";
 import DashboardActions from "../components/dashboard-actions";
+import DashboardInviteMember from "../components/dashboard-invite-member";
 function DashboardPage() {
   const { currentUser } = useAppContext();
   return (
@@ -33,6 +34,9 @@ function DashboardPage() {
         <DashboardSchedule />
         <Modal.Window buttonClose={true} id="create-new">
           <DashboardActions />
+        </Modal.Window>
+        <Modal.Window buttonClose={true} id="invite-new-member">
+          <DashboardInviteMember />
         </Modal.Window>
       </Modal>
     </div>

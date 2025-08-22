@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Form from "../ui/form";
-import AuthInput from "../ui/auth-input";
 import { useVerifyAccount } from "../hooks/use-verify-account";
 import { toast } from "sonner";
 import { useResendVerificationCode } from "../hooks/use-resend-verification-code";
+import Input from "../../../shared/ui/input";
 
 function ConfirmForm() {
   const [confirm, setConfirm] = useState("");
@@ -36,7 +36,7 @@ function ConfirmForm() {
           </span>
         </header>
         <div className="flex flex-col my-[3rem] mb-[1rem] gap-[1.5rem]">
-          <AuthInput
+          <Input
             value={confirm}
             setValue={setConfirm}
             label="Inserir Código de Verificação"

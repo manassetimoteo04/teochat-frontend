@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-function AuthInput({ label, id, value, setValue }) {
+function Input({ label, id, value, setValue, type = "text" }) {
   const [isFocus, setIsFocus] = useState(false);
   return (
-    <div className=" border-[1px] h-[5rem] border-main-border-color rounded-2xl overflow-hidden relative">
+    <div className=" w-full border-[1px] h-[5rem] border-main-border-color rounded-2xl overflow-hidden relative">
       <label
         htmlFor={id}
         className={`${
@@ -13,10 +13,10 @@ function AuthInput({ label, id, value, setValue }) {
         {label}
       </label>
       <input
+        type={type}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         onChange={(e) => setValue(e.target.value)}
-        type="text"
         id={id}
         className="p-[1.5rem] focus:outline-none !transition-none bottom-[-1rem] bg-transparent absolute w-full"
       />
@@ -24,4 +24,4 @@ function AuthInput({ label, id, value, setValue }) {
   );
 }
 
-export default AuthInput;
+export default Input;
