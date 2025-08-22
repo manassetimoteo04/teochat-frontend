@@ -196,22 +196,24 @@ function CreateCompanyForm() {
             </div>
           </StepForm>
         )}
-        <div className=" items-center flex gap-[2rem] justify-end mt-[3rem]">
-          {currentStep > 0 && (
-            <Button onClick={handlePrev} variation="secondary">
-              <ChevronLeft /> Anterior{" "}
-            </Button>
-          )}
-          {steps.length > currentStep && (
-            <Button disabled={isPending} onClick={handleNext}>
-              Próximo <ChevronRight />
-            </Button>
-          )}
-          {steps.length <= currentStep && (
-            <Button disabled={isPending} onClick={onSubmit}>
-              {isPending && <SpinnerMini />}Criar Empresa
-            </Button>
-          )}
+        <div className="flex justify-end">
+          <div className=" items-center flex  gap-[2rem] justify-end mt-[3rem]">
+            {currentStep > 0 && (
+              <Button onClick={handlePrev} variation="secondary">
+                <ChevronLeft /> Anterior{" "}
+              </Button>
+            )}
+            {steps.length > currentStep && (
+              <Button disabled={isPending} onClick={handleNext}>
+                Próximo <ChevronRight />
+              </Button>
+            )}
+            {steps.length <= currentStep && (
+              <Button disabled={isPending} onClick={onSubmit}>
+                {isPending && <SpinnerMini />}Criar Empresa
+              </Button>
+            )}
+          </div>
         </div>
       </form>
     </div>

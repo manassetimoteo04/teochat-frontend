@@ -8,6 +8,7 @@ import DashboardSchedule from "../components/dashboard-schedule";
 import Modal from "../../../shared/ui/modal";
 import DashboardActions from "../components/dashboard-actions";
 import DashboardInviteMember from "../components/dashboard-invite-member";
+import Button from "../../../shared/ui/button";
 function DashboardPage() {
   const { currentUser } = useAppContext();
   return (
@@ -19,10 +20,10 @@ function DashboardPage() {
         >
           <div className="flex gap">
             <Modal.Open id="create-new">
-              <button className="bg-green-500 p-[0.8rem_1.5rem] hover:bg-green-600 overflow-hidden active:shadow-md active:-translate-y-1 flex gap-2 items-center justify-center  text-white rounded-full">
+              <Button>
                 <Plus size={20} />
                 Novo
-              </button>
+              </Button>
             </Modal.Open>
           </div>
         </PageHeader>
