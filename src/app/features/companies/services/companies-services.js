@@ -16,7 +16,7 @@ export const getUserCompanies = async () => {
 export const selectCompanyAuth = async ({ companyId }) => {
   try {
     const { data } = await api.post("/auth/select-company", { companyId });
-    return { data };
+    return data;
   } catch (error) {
     console.error(error);
     throw new Error(error);
@@ -31,9 +31,28 @@ export const createCompany = async (newData) => {
     throw new Error(error);
   }
 };
+export const inviteCompanyMember = async ({ emails }) => {
+  try {
+    await api.post("/companies/invite-member/", { emails });
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+};
 export const checkInviteToken = async (token) => {
   try {
     const { data } = await api.get("/companies/check-invite/" + token);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+};
+export const acceptInvite = async (token) => {
+  try {
+    const { data } = await api.put("/companies/accept-invite/", {
+      inviteToken: token,
+    });
     return data;
   } catch (error) {
     console.error(error);

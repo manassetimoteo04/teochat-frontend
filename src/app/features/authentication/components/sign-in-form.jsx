@@ -1,10 +1,10 @@
 import { useState } from "react";
-import AuthInput from "../ui/auth-input";
 import Form from "../ui/form";
 import { toast } from "sonner";
 import useSignIn from "../hooks/use-signin";
 import { useNavigate } from "react-router-dom";
 import SpinnerMini from "../../../shared/ui/SpinnerMini";
+import Input from "../../../shared/ui/input";
 
 function SignInForm() {
   const navigate = useNavigate();
@@ -32,13 +32,13 @@ function SignInForm() {
           </span>
         </header>
         <div className="flex flex-col my-[3rem] gap-[1.5rem]">
-          <AuthInput
+          <Input
             value={email}
             setValue={setEmail}
             label="Endereço de Email"
             id="email"
           />
-          <AuthInput
+          <Input
             value={password}
             setValue={setPassword}
             label="Palavra-passe"

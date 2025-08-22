@@ -1,7 +1,17 @@
+import { useParams } from "react-router-dom";
 import Button from "../../../shared/ui/button";
 import Tag from "../../../shared/ui/tag";
+import SpinnerMini from "../../../shared/ui/SpinnerMini";
+import { useAcceptInvite } from "../hooks/use-accept-invite";
 
 function JoinDetails({ company }) {
+  const { inviteToken } = useParams();
+
+  const { accept, isPending } = useAcceptInvite();
+  function handleAccept() {
+    if (!inviteToken) return;
+    accept(inviteToken);
+  }
   return (
     <div className="p-[2rem] text-secondary-text-color">
       <h4>
@@ -43,7 +53,9 @@ function JoinDetails({ company }) {
             </p>
           </div>
           <div className="pt-[2rem] flex justify-end">
-            <Button>Aceitar Convite</Button>
+            <Button onClick={handleAccept}>
+              {isPending ? <SpinnerMini /> : "Aceitar Convite"}
+            </Button>
           </div>
         </div>
       </div>

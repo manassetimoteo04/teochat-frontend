@@ -4,8 +4,8 @@ import { useLocalStorage } from "../hooks/use-localstorage";
 export function useSession() {
   const { value } = useLocalStorage("token");
   const { data, isPending, error } = useQuery({
-    queryKey: ["session", JSON.parse(value)],
-    queryFn: () => getSession({ token: JSON.parse(value) }),
+    queryKey: ["session", value],
+    queryFn: () => getSession({ token: value }),
   });
   return { session: data, isPending, error };
 }

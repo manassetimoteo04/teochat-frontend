@@ -1,3 +1,4 @@
+import Button from "../../../shared/ui/button";
 import SpinnerMini from "../../../shared/ui/SpinnerMini";
 import { rewriteRoles } from "../../../utils/helpers";
 import { useSelectCompanyAuth } from "../hooks/use-select-company-auth";
@@ -22,13 +23,13 @@ function CompanyBox({ company: { joinedAt, role, company } }) {
             {new Date(joinedAt).toDateString()}
           </span>{" "}
         </p>
-        <button
+        <Button
+          variation="secondary"
           disabled={isPending}
           onClick={() => select({ companyId: id })}
-          className="bg-main-bg-color p-[1rem_2rem] disabled:opacity-50  rounded-full text-main-text-color mt-3 border border-main-border-color hover:border-main-color hover:text-main-color"
         >
           {isPending ? <SpinnerMini /> : "Selecionar Empresa"}
-        </button>
+        </Button>
       </div>
     </div>
   );

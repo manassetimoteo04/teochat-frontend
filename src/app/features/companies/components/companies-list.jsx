@@ -20,10 +20,11 @@ function CompaniesList() {
             placeholder="Procurar Empresa"
             className="bg-gray-50 border focus:outline-none !transition-none focus:bottom-1 focus:border-green-600 border-main-border-color p-[1rem_1.2rem] rounded-xl"
           />
-
-          <Button onClick={() => navigate("create")}>
-            Criar Empresa <Plus />
-          </Button>
+          <div>
+            <Button onClick={() => navigate("create")}>
+              Criar Empresa <Plus />
+            </Button>
+          </div>
         </div>
       </header>
       <div className="grid p-[2rem]  gap-[4rem] grid-cols-3 py-[4rem]">

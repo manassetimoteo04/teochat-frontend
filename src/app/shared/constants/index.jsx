@@ -6,6 +6,7 @@ import {
   Settings2Icon,
   Smartphone,
   UsersIcon,
+  Video,
 } from "lucide-react";
 
 export const NavListItems = [
@@ -52,7 +53,7 @@ export const NavListItems = [
       { title: "Dev Luvulo", to: "mettings/" },
     ],
     to: "/app/mettings",
-    icon: <Smartphone />,
+    icon: <Video />,
   },
 
   {
