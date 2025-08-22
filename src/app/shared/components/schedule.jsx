@@ -204,7 +204,7 @@ function Event({ event }) {
         heights
       )}
     >
-      <p className="text-[1.2rem] text-blue-700">{event.title}</p>
+      <p className="truncate text-[1.4rem] text-blue-700">{event.title}</p>
       <span className="text-[1.2rem] text-secondary-text-color">
         {event.team}
       </span>
