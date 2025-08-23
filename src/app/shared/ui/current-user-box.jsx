@@ -1,6 +1,6 @@
 import { ChevronDown } from "lucide-react";
 import { useAppContext } from "../providers/context/";
-import { rewriteRoles } from "../../utils/helpers";
+import { rewriteRoles } from "../utils/helpers";
 function CurrentUserBox() {
   const { currentUser, currentRole } = useAppContext();
   return (

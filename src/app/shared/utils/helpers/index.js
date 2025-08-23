@@ -8,3 +8,9 @@ const roles = {
 export const rewriteRoles = (role) => {
   return roles[role];
 };
+export function normalizeText(string) {
+  return string
+    ?.normalize("NFD")
+    ?.replace(/[\u0300-\u036f]/g, "")
+    ?.toLowerCase();
+}

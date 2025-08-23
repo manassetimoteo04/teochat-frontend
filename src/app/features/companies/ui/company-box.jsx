@@ -1,6 +1,6 @@
 import Button from "../../../shared/ui/button";
 import SpinnerMini from "../../../shared/ui/SpinnerMini";
-import { rewriteRoles } from "../../../utils/helpers";
+import { rewriteRoles } from "../../../shared/utils/helpers";
 import { useSelectCompanyAuth } from "../hooks/use-select-company-auth";
 
 function CompanyBox({ company: { joinedAt, role, company } }) {

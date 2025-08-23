@@ -11,9 +11,11 @@ function DashboardActions() {
         </span>
       </div>
       <div className="flex justify-center w-full gap-[1rem]">
-        <Button className="bg-green-500 hover:bg-green-600 w-full p-[0.8rem_1.5rem] rounded-full">
-          Criar Equipe
-        </Button>
+        <Modal.Open id="create-new-team">
+          <Button className="bg-green-500 hover:bg-green-600 w-full p-[0.8rem_1.5rem] rounded-full">
+            Criar Equipe
+          </Button>
+        </Modal.Open>
         <Modal.Open id="invite-new-member">
           <Button className="bg-green-500 hover:bg-green-600 w-full p-[0.8rem_1.5rem] rounded-full">
             Convidar Membro

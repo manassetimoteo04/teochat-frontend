@@ -1,5 +1,5 @@
 import { ChevronRight } from "lucide-react";
-import { rewriteRoles } from "../../utils/helpers";
+import { rewriteRoles } from "../utils/helpers";
 import { useAppContext } from "../providers/context";
 import { useNavigate } from "react-router-dom";
 function CurrentCompany() {

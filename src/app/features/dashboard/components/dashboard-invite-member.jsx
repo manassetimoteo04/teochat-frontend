@@ -19,11 +19,11 @@ function DashboardInviteMember() {
       onSubmit={onSubmit}
       className="p-[4rem_2rem] flex items-center flex-col gap-[4rem] max-w-[45rem]"
     >
-      <div className=" flex items-center flex-col ">
+      <div className=" flex flex-col ">
         <h2 className="text-[2.4rem] font-[600]">
           Enviar Convite para de Adesão{" "}
         </h2>
-        <span className="text-secondary-text-color text-center">
+        <span className="text-secondary-text-color ">
           Digite o email correctamente de quem desejas convidar a participar na
           tua empresa
         </span>
