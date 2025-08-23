@@ -10,3 +10,14 @@ export const getCompanyTeams = async ({ companyId }) => {
     throw new Error(error);
   }
 };
+export const createNewTeam = async ({ newTeam }) => {
+  try {
+    const {
+      data: { data },
+    } = await api.post("teams/", newTeam);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+};

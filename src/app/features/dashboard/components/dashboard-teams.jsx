@@ -19,11 +19,11 @@ function DashboardTeams() {
         </div>
       }
     >
-      <div>
+      <div className="min-h-[30rem]">
         {data?.map((team) => (
           <div
             key={team._id}
-            className="grid p-[0.5rem_2rem] border-b last:border-b-0 items-center grid-cols-[5rem_1fr] gap-[1rem]"
+            className="grid p-[0.5rem_2rem]  items-center grid-cols-[5rem_1fr] gap-[1rem]"
           >
             <img
               src="/default-user.jpg"

@@ -5,6 +5,28 @@ export const getUserCompanies = async () => {
     const {
       data: { data },
     } = await api.get("/companies");
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+};
+export const getCompanyMembers = async (companyId) => {
+  try {
+    const {
+      data: { data },
+    } = await api.get(`/companies/${companyId}/members`);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+};
+export const getCompanyRecentMembers = async (companyId) => {
+  try {
+    const {
+      data: { data },
+    } = await api.get(`/companies/${companyId}/recent-members`);
     console.log(data);
     return data;
   } catch (error) {
