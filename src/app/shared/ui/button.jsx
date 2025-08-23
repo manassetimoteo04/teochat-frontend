@@ -4,7 +4,7 @@ function Button({ children, onClick, variation = "primary", disabled }) {
       <button
         disabled={disabled}
         onClick={onClick}
-        className="bg-green-500 flex items-center text-white justify-center gap-[0.5rem] hover:bg-green-600 w-full p-[0.8rem_1.5rem] rounded-full "
+        className="bg-green-500 flex items-center text-main-text-color justify-center gap-[0.5rem] hover:bg-green-600 w-full p-[0.8rem_1.5rem] rounded-full "
       >
         {children}
       </button>

@@ -8,7 +8,7 @@ function NavLink({ link }) {
   const isActive = useLocation().pathname.startsWith(link.to);
   const { data, isPending } = useCompanyTeams();
   const [collapse, setCollapse] = useState(false);
-  link.childs = data;
+  link.childs = data || [];
   const Component = !link.isCollapseble ? Link : "div";
   return (
     <li>
@@ -28,7 +28,7 @@ function NavLink({ link }) {
           </span>
         )}
       </Component>
-      {collapse && (
+      {collapse && link?.childs?.length > 0 && (
         <div
           className={`flex flex-col p-[1rem_1.5rem] gap-[0.5rem] text-secondary-text-color justify-between  rounded-3xl`}
         >

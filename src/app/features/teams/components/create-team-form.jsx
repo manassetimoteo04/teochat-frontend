@@ -32,12 +32,12 @@ function reducer(state, action) {
       return {
         ...state,
         members: [
-          ...state.members.filter((user) => user.id !== action.payload),
+          ...state.members.filter((user) => user._id !== action.payload),
         ],
       };
   }
 }
-function CreateTeamForm() {
+function CreateTeamForm({ onCloseModal }) {
   const { create, isPending: isCreating } = useCreateTeam();
   const { data: users, isPending } = useCompanyMembers();
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -61,7 +61,7 @@ function CreateTeamForm() {
       tags,
       members: members?.map((mem) => mem._id),
     };
-    create({ newTeam });
+    create({ newTeam }, { onSuccess: onCloseModal });
   };
   function handleNextStep() {
     dispatch({ type: "NEXT_STEP" });
@@ -70,7 +70,7 @@ function CreateTeamForm() {
     dispatch({ type: "PREV_STEP" });
   }
   function handleSetMembers(user) {
-    const exists = members.filter((us) => us.id === user._id).at(0);
+    const exists = members.filter((us) => us._id === user._id).at(0);
     if (exists) {
       dispatch({ type: "REMOVE_MEMBERS", payload: user._id });
     } else dispatch({ type: "SET_MEMBERS", payload: user });

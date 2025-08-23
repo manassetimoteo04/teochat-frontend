@@ -8,12 +8,15 @@ import {
   Users,
 } from "lucide-react";
 import Tag from "../../../shared/ui/tag";
-
-function TeamDetails() {
+import TeamDetailsNav from "./team-details-nav";
+import { formatDate } from "../../../shared/utils/helpers";
+function TeamDetails({ data }) {
+  const { name, description, members, tags, createdBy, createdAt, teamLider } =
+    data;
   return (
     <div className="p-[3rem]  ">
       <div className="bg-white p-[3rem] rounded-2xl border border-gray-100">
-        <h2 className="text-[3.4rem] ">TeoChat</h2>
+        <h2 className="text-[3.4rem] ">{name}</h2>
         <div className="flex flex-col gap-[0.5rem]">
           <div className="grid grid-cols-[20rem_1fr] mt-[2rem]">
             <span className="flex items-center gap-[0.5rem] text-secondary-text-color">
@@ -27,7 +30,7 @@ function TeamDetails() {
             <span className="flex items-center gap-[0.5rem] text-secondary-text-color">
               <Users size={20} /> Participantes
             </span>
-            <div>10</div>
+            <div>{members?.length}</div>
           </div>{" "}
           <div className="grid grid-cols-[20rem_1fr] mt-[2rem]">
             <span className="flex items-center gap-[0.5rem] text-secondary-text-color">
@@ -40,7 +43,9 @@ function TeamDetails() {
                   className="w-[2rem] rounded-full"
                   alt=""
                 />
-                <p className="text-[1.3rem]">Manasse Timóteo</p>
+                <p className="text-[1.3rem]">
+                  {teamLider?.name || "nenhum líder"}
+                </p>
               </div>
             </div>
           </div>
@@ -49,7 +54,7 @@ function TeamDetails() {
               <CalendarDays size={20} /> Criado aos
             </span>
             <div>
-              <span>18 de Abril de 2025</span>
+              <span>{formatDate(new Date(createdAt))}</span>
             </div>
           </div>
           <div className="grid grid-cols-[20rem_1fr] mt-[2rem]">
@@ -64,7 +69,7 @@ function TeamDetails() {
                     className="w-[2rem] rounded-full"
                     alt=""
                   />
-                  <p className="text-[1.3rem]">Manasse Timóteo</p>
+                  <p className="text-[1.3rem]">{createdBy.name}</p>
                 </div>
               </div>
             </div>
@@ -74,12 +79,7 @@ function TeamDetails() {
               <Text size={20} /> Descrição
             </span>
             <div>
-              <span>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Reprehenderit, voluptates. Eligendi illo quos tempore
-                exercitationem sit similique odit vero? Fuga non quo vitae in
-                neque earum architecto, ipsum aperiam accusantium!
-              </span>
+              <span>{description}</span>
             </div>
           </div>
           <div className="grid items-start grid-cols-[20rem_1fr] mt-[2rem]">
@@ -87,12 +87,13 @@ function TeamDetails() {
               <TagIcon size={20} /> Tags
             </span>
             <div className="flex gap-[0.5rem]">
-              <Tag>#marketing</Tag>
-              <Tag>#web</Tag>
-              <Tag>#frontend</Tag>
+              {tags.map((tag) => (
+                <Tag key={tag}>#{tag}</Tag>
+              ))}
             </div>
           </div>
         </div>
+        <TeamDetailsNav />
       </div>
     </div>
   );
