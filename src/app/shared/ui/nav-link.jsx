@@ -1,10 +1,14 @@
 import { NavLink as Link, useLocation } from "react-router-dom";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
+
+import { useCompanyTeams } from "../../features/teams/hooks/use-company-teams";
 import NavCollapseLink from "./nav-collapse-link";
 function NavLink({ link }) {
   const isActive = useLocation().pathname.startsWith(link.to);
+  const { data, isPending } = useCompanyTeams();
   const [collapse, setCollapse] = useState(false);
+  link.childs = data;
   const Component = !link.isCollapseble ? Link : "div";
   return (
     <li>
@@ -28,8 +32,9 @@ function NavLink({ link }) {
         <div
           className={`flex flex-col p-[1rem_1.5rem] gap-[0.5rem] text-secondary-text-color justify-between  rounded-3xl`}
         >
+          {isPending && <span>Carrengando...</span>}
           {link.childs.map((child) => (
-            <NavCollapseLink link={child} key={child.title} />
+            <NavCollapseLink link={child} to={link.to} key={child.title} />
           ))}
         </div>
       )}
