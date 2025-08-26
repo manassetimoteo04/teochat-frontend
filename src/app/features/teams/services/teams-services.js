@@ -21,6 +21,17 @@ export const getTeamDetails = async (teamId) => {
     throw new Error(error);
   }
 };
+export const getTeamParticipants = async (teamId) => {
+  try {
+    const {
+      data: { data },
+    } = await api.get(`teams/${teamId}/participants`);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+};
 export const createNewTeam = async ({ newTeam }) => {
   try {
     const {

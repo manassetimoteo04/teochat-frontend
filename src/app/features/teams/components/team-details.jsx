@@ -14,7 +14,7 @@ function TeamDetails({ data }) {
   const { name, description, members, tags, createdBy, createdAt, teamLider } =
     data;
   return (
-    <div className="p-[3rem]  ">
+    <div className="p-[3rem] pt-[0]  ">
       <div className="bg-white p-[3rem] rounded-2xl border border-gray-100">
         <h2 className="text-[3.4rem] ">{name}</h2>
         <div className="flex flex-col gap-[0.5rem]">

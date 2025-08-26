@@ -1,8 +1,13 @@
 import api from "../../../shared/services/api";
 
-export const signUp = async ({ password, email, name }) => {
+export const signUp = async ({ password, email, name, avatar }) => {
   try {
-    const { data } = await api.post("/auth/sign-up", { password, email, name });
+    const { data } = await api.post("/auth/sign-up", {
+      password,
+      email,
+      name,
+      avatar,
+    });
     return data;
   } catch (error) {
     console.error(error);

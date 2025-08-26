@@ -52,3 +52,24 @@ export const formatDate = function (
 
   return new Intl.DateTimeFormat(locale).format(date);
 };
+
+export function getRandomAvatars(type = "user") {
+  const unsplashBase = "https://source.unsplash.com/random/100x100";
+  const dicebearBase = "https://api.dicebear.com/7.x";
+
+  const queries = {
+    user: "portrait,person",
+    team: "abstract,gradient,pattern,geometry",
+  };
+
+  const sig = Math.floor(Math.random() * 10000);
+
+  const unsplashUrl = `${unsplashBase}/?${queries[type]}&sig=${sig}`;
+
+  const dicebearStyle = type === "user" ? "avataaars" : "shapes";
+  const dicebearUrl = `${dicebearBase}/${dicebearStyle}/svg?seed=${sig}`;
+
+  const useUnsplash = Math.random() > 0.3;
+
+  return useUnsplash ? unsplashUrl : dicebearUrl;
+}

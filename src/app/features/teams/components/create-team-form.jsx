@@ -7,7 +7,7 @@ import Input from "../../../shared/ui/input";
 import Spinner from "../../../shared/ui/Spinner";
 import SpinnerMini from "../../../shared/ui/SpinnerMini";
 import InputSearch from "../../../shared/ui/input-search";
-import { normalizeText } from "../../../shared/utils/helpers";
+import { getRandomAvatars, normalizeText } from "../../../shared/utils/helpers";
 import { useCompanyMembers } from "../../companies/hooks/use-company-members";
 import { useCreateTeam } from "../hooks/use-create-team";
 
@@ -60,6 +60,7 @@ function CreateTeamForm({ onCloseModal }) {
       description,
       tags,
       members: members?.map((mem) => mem._id),
+      photo: getRandomAvatars("teams"),
     };
     create({ newTeam }, { onSuccess: onCloseModal });
   };

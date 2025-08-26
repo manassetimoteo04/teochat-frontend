@@ -26,7 +26,7 @@ function DashboardTeams() {
             className="grid p-[0.5rem_2rem]  items-center grid-cols-[5rem_1fr] gap-[1rem]"
           >
             <img
-              src="/default-user.jpg"
+              src={team.photo}
               alt=""
               className="w-[5rem] rounded-full h-[5rem]"
             />

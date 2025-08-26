@@ -5,6 +5,8 @@ import { useVerifyAccount } from "../hooks/use-verify-account";
 import { toast } from "sonner";
 import { useResendVerificationCode } from "../hooks/use-resend-verification-code";
 import Input from "../../../shared/ui/input";
+import Button from "../../../shared/ui/button";
+import SpinnerMini from "../../../shared/ui/SpinnerMini";
 
 function ConfirmForm() {
   const [confirm, setConfirm] = useState("");
@@ -53,9 +55,7 @@ function ConfirmForm() {
           </span>
         </div>
         <div className="flex flex-col w-full">
-          <button className="bg-gradient-to-b text-[1.4rem] sm:text-[1.6rem] from-green-600 to-green-500 p-[1rem_2rem]  gap-[0.5rem] text-white hover:bg-green-700 rounded-full">
-            Confirmar Conta
-          </button>
+          <Button>{isPending ? <SpinnerMini /> : "  Confirmar Conta"}</Button>
         </div>
         <div className="text-secondary-text-color mt-[2rem] flex justify-between">
           <p>Ainda não tem uma conta?</p>{" "}

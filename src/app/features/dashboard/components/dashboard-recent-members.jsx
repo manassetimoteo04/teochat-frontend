@@ -16,7 +16,7 @@ function DashboardRecentMembers() {
               className="grid p-[0.5rem_2rem] items-center grid-cols-[5rem_1fr] gap-[0rem]"
             >
               <img
-                src="/default-user.jpg"
+                src={user.avatar}
                 alt=""
                 className="w-[5rem] rounded-full h-[5rem]"
               />
