@@ -18,7 +18,7 @@ function ConfirmForm() {
     e.preventDefault();
     if (!confirm)
       return toast.error("Por favor insira o código de verificação");
-    verify({ verificationCode: confirm });
+    verify({ code: confirm });
   }
   function handleResendVerification() {
     resendCode();

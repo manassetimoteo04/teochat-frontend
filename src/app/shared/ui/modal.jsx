@@ -4,12 +4,15 @@ import { cloneElement, createContext, useContext, useState } from "react";
 const ModalContext = createContext();
 function Modal({ children }) {
   const [open, setOpen] = useState(null);
+
   function close() {
     setOpen(null);
   }
+
   function onOpen(value) {
     setOpen(value);
   }
+
   return (
     <ModalContext.Provider value={{ open, close, onOpen }}>
       {children}
@@ -21,7 +24,7 @@ function Window({ id, children, buttonClose }) {
   const { close, open } = useContext(ModalContext);
   if (id !== open) return;
   return (
-    <div className="absolute flex items-center z-[999999999999] justify-center h-screen w-full top-0 left-0 bg-black/40">
+    <div className="absolute flex items-center z-[9] justify-center h-screen w-full top-0 left-0 bg-black/40">
       <div
         onClick={close}
         className="absolute top-0 left-0 w-full h-dvh "

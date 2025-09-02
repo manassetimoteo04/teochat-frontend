@@ -33,12 +33,14 @@ function SignInForm() {
         </header>
         <div className="flex flex-col my-[3rem] gap-[1.5rem]">
           <Input
+            defaultValues="manasse@gmaill.com"
             value={email}
             setValue={setEmail}
             label="Endereço de Email"
             id="email"
           />
           <Input
+            defaultValues="password123"
             value={password}
             setValue={setPassword}
             label="Palavra-passe"

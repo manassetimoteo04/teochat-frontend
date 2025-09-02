@@ -1,8 +1,10 @@
 import { Crown, Ellipsis, Trash, UserX } from "lucide-react";
 import ButtonIcon from "../../../shared/ui/button-icon";
 import Spinner from "../../../shared/ui/Spinner";
+import Modal from "../../../shared/ui/modal";
 import InputSearch from "../../../shared/ui/input-search";
 import { useTeamParticipants } from "../hooks/use-team-participants";
+import RemoveMemberAlert from "./remove-member-alert";
 
 function CompanyListMembers() {
   const { data, isPending } = useTeamParticipants();
@@ -36,9 +38,11 @@ function CompanyListMembers() {
                   </div>
                 </div>
                 <div className="flex gap-[2rem]">
-                  <ButtonIcon title="Remover do Team">
-                    <UserX size={20} />
-                  </ButtonIcon>
+                  <Modal.Open id={user._id}>
+                    <ButtonIcon title="Remover do Team">
+                      <UserX size={20} />
+                    </ButtonIcon>
+                  </Modal.Open>
                   <ButtonIcon title="Promover a Líder">
                     <Crown size={20} />
                   </ButtonIcon>
@@ -46,6 +50,9 @@ function CompanyListMembers() {
                     <Ellipsis size={20} />
                   </ButtonIcon>
                 </div>
+                <Modal.Window id={user._id}>
+                  <RemoveMemberAlert />
+                </Modal.Window>
               </div>
             ))}
           </div>

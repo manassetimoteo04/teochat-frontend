@@ -23,10 +23,10 @@ export const signIn = async ({ password, email }) => {
     throw new Error(error);
   }
 };
-export const verifyAccount = async ({ verificationCode }) => {
+export const verifyAccount = async ({ code }) => {
   try {
     const { data } = await api.post("/auth/verify-account", {
-      verificationCode,
+      code,
     });
     return data;
   } catch (error) {

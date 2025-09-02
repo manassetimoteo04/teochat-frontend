@@ -6,10 +6,12 @@ import Modal from "../../../shared/ui/modal";
 import { useGetTeamDetails } from "../hooks/use-get-team-details";
 import AddTeamMemberForm from "../components/add-team-member-form";
 import CompanyListMembers from "../components/company-members-list";
+import ResourceNotFound from "../../../shared/ui/resource-not-found";
 
 function TeamsPage() {
-  const { data, isPending } = useGetTeamDetails();
+  const { data, isPending, error } = useGetTeamDetails();
   if (isPending) return <Spinner />;
+  if (error) return <ResourceNotFound error={error.message} />;
   return (
     <Modal>
       <div>

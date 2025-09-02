@@ -14,16 +14,28 @@ function TeamDetails({ data }) {
   const { name, description, members, tags, createdBy, createdAt, teamLider } =
     data;
   return (
-    <div className="p-[3rem] pt-[0]  ">
+    <div className="p-[3rem] pt-[0]">
       <div className="bg-white p-[3rem] rounded-2xl border border-gray-100">
-        <h2 className="text-[3.4rem] ">{name}</h2>
+        <div className="flex  p-[1rem_0] items-center gap-[1rem]">
+          <img src="/default-user.jpg" className="w-[6.4rem]" alt="" />
+          <div>
+            <h2 className="text-[2.4rem] ">{name}</h2>
+            <div className="flex gap-[0.5rem]">
+              {tags.map((tag) => (
+                <Tag type="pending" key={tag}>
+                  {tag}
+                </Tag>
+              ))}
+            </div>
+          </div>
+        </div>
         <div className="flex flex-col gap-[0.5rem]">
           <div className="grid grid-cols-[20rem_1fr] mt-[2rem]">
             <span className="flex items-center gap-[0.5rem] text-secondary-text-color">
               <Lock size={20} /> Privacidade
             </span>
             <div>
-              <Tag>Privado</Tag>
+              <Tag type="active">Público</Tag>
             </div>
           </div>
           <div className="grid grid-cols-[20rem_1fr] mt-[2rem]">
@@ -80,16 +92,6 @@ function TeamDetails({ data }) {
             </span>
             <div>
               <span>{description}</span>
-            </div>
-          </div>
-          <div className="grid items-start grid-cols-[20rem_1fr] mt-[2rem]">
-            <span className="flex items-center gap-[0.5rem] text-secondary-text-color">
-              <TagIcon size={20} /> Tags
-            </span>
-            <div className="flex gap-[0.5rem]">
-              {tags.map((tag) => (
-                <Tag key={tag}>#{tag}</Tag>
-              ))}
             </div>
           </div>
         </div>
