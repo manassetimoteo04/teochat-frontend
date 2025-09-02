@@ -32,11 +32,11 @@ export const getTeamParticipants = async (teamId) => {
     throw new Error(error);
   }
 };
-export const createNewTeam = async ({ newTeam }) => {
+export const createNewTeam = async ({ newTeam, companyId }) => {
   try {
     const {
       data: { data },
-    } = await api.post("teams/", newTeam);
+    } = await api.post("teams/" + companyId, newTeam);
     return data;
   } catch (error) {
     console.error(error);

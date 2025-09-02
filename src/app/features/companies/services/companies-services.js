@@ -4,7 +4,19 @@ export const getUserCompanies = async () => {
   try {
     const {
       data: { data },
-    } = await api.get("/companies");
+    } = await api.get(`/users/companies/`);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+};
+export const getCurrentCompany = async (companyId) => {
+  try {
+    const {
+      data: { data },
+    } = await api.get(`/companies/${companyId}/current`);
+    console.log(data);
     return data;
   } catch (error) {
     console.error(error);

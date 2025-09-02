@@ -5,7 +5,7 @@ const api = axios.create({
   timeout: 10000,
   withCredentials: true,
   headers: {
-    Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+    Authorization: `Bearer ${localStorage?.getItem("token") || ""}`,
     "Content-Type": "application/json",
   },
 });
@@ -32,7 +32,6 @@ api.interceptors.response.use(
       if (status === 500)
         message = "Erro no servidor. Tente novamente mais tarde.";
     }
-
     Promise.reject(error);
     throw new Error(message);
   }

@@ -212,7 +212,7 @@ function CreateCompanyForm() {
             )}
             {steps.length <= currentStep && (
               <Button disabled={isPending} onClick={onSubmit}>
-                {isPending && <SpinnerMini />}Criar Empresa
+                {isPending && <SpinnerMini />} Finalizar
               </Button>
             )}
           </div>

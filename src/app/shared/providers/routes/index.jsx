@@ -29,7 +29,7 @@ function RoutesProvider() {
           element={<CompanyJoinPage />}
         />
         <Route
-          path="/app"
+          path="/:companyId"
           element={
             <ProtectedRoute>
               <AppPage />

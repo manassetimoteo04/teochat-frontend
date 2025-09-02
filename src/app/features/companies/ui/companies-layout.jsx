@@ -8,21 +8,14 @@ import { toast } from "sonner";
 function CompaniesLayout({ children }) {
   const { session, isPending } = useSession();
   const navigate = useNavigate();
-  console.log(session);
   useEffect(() => {
-    if (session) {
-      if (!session?.user) {
-        navigate("/sign-in", { replace: true });
-        toast.warning("Usuário não autenticado, redirecionando");
-      }
-    }
-    if (!session && !session?.user && !isPending) {
+    if (!session && !isPending) {
       navigate("/sign-in", { replace: true });
       toast.warning("Usuário não autenticado, redirecionando");
     }
   }, [isPending, navigate, session]);
   if (isPending) return <FullPageSpinner />;
-  if (!isPending && session?.user)
+  if (!isPending && session)
     return (
       <div className="bg-main-bg-color overflow-scroll  h-screen">
         <div>
