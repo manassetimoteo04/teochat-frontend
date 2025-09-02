@@ -4,9 +4,10 @@ import Tag from "../../../shared/ui/tag";
 import SpinnerMini from "../../../shared/ui/SpinnerMini";
 import { useAcceptInvite } from "../hooks/use-accept-invite";
 
-function JoinDetails({ company }) {
+function JoinDetails({ data }) {
   const { inviteToken } = useParams();
-
+  const { company } = data;
+  console.log(company);
   const { accept, isPending } = useAcceptInvite();
   function handleAccept() {
     if (!inviteToken) return;

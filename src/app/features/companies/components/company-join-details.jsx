@@ -8,10 +8,9 @@ import JoinErrorBox from "../ui/join-error-box";
 
 function CompanyJoinDetails() {
   const navigate = useNavigate();
-  const { inviteToken } = useParams();
-  const { data, isPending, error } = useCheckInvite(inviteToken);
+  const { invitationId } = useParams();
+  const { data, isPending, error } = useCheckInvite(invitationId);
   if (isPending) return <FullPageSpinner />;
-  console.log(data, error);
   return (
     <div className="max-w-[60rem] rounded-2xl my-[8rem]  border-main-border-color bg-main-bg-color-2 m-[0_auto]">
       <header className="flex gap-[1rem] flex-col justify-between p-[2rem] border-b  border-main-border-color">
@@ -28,7 +27,7 @@ function CompanyJoinDetails() {
           </div>
         </div>
       </header>
-      {!error && <JoinDetails company={data.data.company} />}
+      {!error && <JoinDetails data={data} />}
       {error && <JoinErrorBox error={error} />}
     </div>
   );

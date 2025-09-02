@@ -25,7 +25,7 @@ function RoutesProvider() {
         <Route path="/companies" element={<CompaniesPage />} />
         <Route path="/companies/create" element={<CreateCompany />} />
         <Route
-          path="/companies/join/:inviteToken"
+          path="/companies/join/:invitationId"
           element={<CompanyJoinPage />}
         />
         <Route

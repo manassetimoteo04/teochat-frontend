@@ -65,17 +65,20 @@ export const createCompany = async (newData) => {
     throw new Error(error);
   }
 };
-export const inviteCompanyMember = async ({ emails }) => {
+export const inviteCompanyMember = async ({ companyId, emails }) => {
   try {
-    await api.post("/companies/invite-member/", { emails });
+    const { data } = await api.post("/invitations/" + companyId, { emails });
+    return data;
   } catch (error) {
     console.error(error);
     throw new Error(error);
   }
 };
-export const checkInviteToken = async (token) => {
+export const checkInvite = async (id) => {
   try {
-    const { data } = await api.get("/companies/check-invite/" + token);
+    const {
+      data: { data },
+    } = await api.get("/invitations/" + id);
     return data;
   } catch (error) {
     console.error(error);
