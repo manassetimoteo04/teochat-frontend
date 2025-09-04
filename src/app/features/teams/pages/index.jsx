@@ -1,4 +1,4 @@
-import { Ellipsis, Star, UserPlus } from "lucide-react";
+import { PencilLine, Star, UserPlus } from "lucide-react";
 import TeamDetails from "../components/team-details";
 import ButtonIcon from "../../../shared/ui/button-icon";
 import Spinner from "../../../shared/ui/Spinner";
@@ -10,7 +10,6 @@ import ResourceNotFound from "../../../shared/ui/resource-not-found";
 
 function TeamsPage() {
   const { data, isPending, error } = useGetTeamDetails();
-  console.log(data);
   if (isPending) return <Spinner />;
   if (error) return <ResourceNotFound error={error.message} />;
   return (
@@ -34,7 +33,7 @@ function TeamsPage() {
               </button>
             </Modal.Open>
             <ButtonIcon>
-              <Ellipsis size={20} />
+              <PencilLine size={20} />
             </ButtonIcon>
           </div>
         </header>

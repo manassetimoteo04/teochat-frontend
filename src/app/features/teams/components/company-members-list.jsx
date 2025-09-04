@@ -1,13 +1,15 @@
-import { Crown, Ellipsis, Trash, UserX } from "lucide-react";
+import { Crown, Trash2, User } from "lucide-react";
 import ButtonIcon from "../../../shared/ui/button-icon";
 import Spinner from "../../../shared/ui/Spinner";
 import Modal from "../../../shared/ui/modal";
 import InputSearch from "../../../shared/ui/input-search";
 import { useTeamParticipants } from "../hooks/use-team-participants";
 import RemoveMemberAlert from "./remove-member-alert";
+import { useRemoveTeamMember } from "../hooks/use-remove-team-member";
 
 function CompanyListMembers() {
   const { data, isPending } = useTeamParticipants();
+  const { removeMember, isPending: isRemoving } = useRemoveTeamMember();
   return (
     <div className="p-[0_3rem] mb-[3rem]">
       <div className="bg-white p-[2rem] border border-gray-100 rounded-2xl">
@@ -38,20 +40,21 @@ function CompanyListMembers() {
                   </div>
                 </div>
                 <div className="flex gap-[2rem]">
-                  <Modal.Open id={user._id}>
+                  <ButtonIcon title="Mais opções">
+                    <User size={20} />
+                  </ButtonIcon>
+                  <Modal.Open id={user.id}>
                     <ButtonIcon title="Remover do Team">
-                      <UserX size={20} />
+                      <Trash2 size={20} />
                     </ButtonIcon>
                   </Modal.Open>
-                  <ButtonIcon title="Promover a Líder">
-                    <Crown size={20} />
-                  </ButtonIcon>
-                  <ButtonIcon title="Mais opções">
-                    <Ellipsis size={20} />
-                  </ButtonIcon>
                 </div>
-                <Modal.Window id={user._id}>
-                  <RemoveMemberAlert />
+                <Modal.Window id={user.id}>
+                  <RemoveMemberAlert
+                    onConfirm={removeMember}
+                    data={{ memberId: user.id }}
+                    isPending={isRemoving}
+                  />
                 </Modal.Window>
               </div>
             ))}
