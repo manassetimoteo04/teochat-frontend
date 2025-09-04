@@ -65,9 +65,7 @@ function TeamDetails({ data }) {
             <span className="flex items-center gap-[0.5rem] text-secondary-text-color">
               <CalendarDays size={20} /> Criado aos
             </span>
-            <div>
-              <span>{formatDate(new Date(createdAt))}</span>
-            </div>
+            <div>{/* <span>{formatDate(new Date(createdAt))}</span> */}</div>
           </div>
           <div className="grid grid-cols-[20rem_1fr] mt-[2rem]">
             <span className="flex items-center gap-[0.5rem] text-secondary-text-color">

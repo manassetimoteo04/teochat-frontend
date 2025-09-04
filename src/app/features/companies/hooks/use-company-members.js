@@ -4,8 +4,8 @@ import { useAppContext } from "../../../shared/providers/context";
 export function useCompanyMembers() {
   const { currentCompany } = useAppContext();
   const { data, isPending } = useQuery({
-    queryKey: ["members", currentCompany._id],
-    queryFn: () => getCompanyMembers(currentCompany._id),
+    queryKey: ["members", currentCompany.id],
+    queryFn: () => getCompanyMembers(currentCompany.id),
   });
 
   return { data, isPending };

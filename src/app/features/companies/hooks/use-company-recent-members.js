@@ -5,8 +5,8 @@ export function useCompanyRecentMembers() {
   const { currentCompany } = useAppContext();
 
   const { data, isPending } = useQuery({
-    queryKey: ["recent-members", currentCompany?._id],
-    queryFn: () => getCompanyRecentMembers(currentCompany?._id),
+    queryKey: ["recent-members", currentCompany?.id],
+    queryFn: () => getCompanyRecentMembers(currentCompany?.id),
   });
 
   return { data, isPending };

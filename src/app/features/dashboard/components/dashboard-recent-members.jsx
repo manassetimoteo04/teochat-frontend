@@ -12,7 +12,7 @@ function DashboardRecentMembers() {
         {!isPending ? (
           data?.map((user) => (
             <div
-              key={user._id}
+              key={user.id}
               className="grid p-[0.5rem_2rem] items-center grid-cols-[5rem_1fr] gap-[0rem]"
             >
               <img
@@ -24,7 +24,8 @@ function DashboardRecentMembers() {
                 <div>
                   <p className="text-main-text-color">{user.name}</p>
                   <span className="text-secondary-text-color text-[1.4rem]">
-                    {user.email} &mdash; {formatDate(new Date(user.joinedAt))}
+                    {user.email} &mdash;{" "}
+                    {formatDate(new Date(user.companies.joined))}
                   </span>
                 </div>
                 <div className="flex gap-[0.5rem]">

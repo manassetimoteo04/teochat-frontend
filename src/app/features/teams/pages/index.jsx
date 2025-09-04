@@ -10,6 +10,7 @@ import ResourceNotFound from "../../../shared/ui/resource-not-found";
 
 function TeamsPage() {
   const { data, isPending, error } = useGetTeamDetails();
+  console.log(data);
   if (isPending) return <Spinner />;
   if (error) return <ResourceNotFound error={error.message} />;
   return (

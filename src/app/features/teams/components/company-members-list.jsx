@@ -23,7 +23,7 @@ function CompanyListMembers() {
           <div className=" mt-[2rem] flex flex-col ">
             {data.map((user) => (
               <div
-                key={user._id}
+                key={user.id}
                 className="flex border-b last:border-b-0 p-[1.5rem_0] justify-between"
               >
                 <div className="flex items-center gap-[1rem]">

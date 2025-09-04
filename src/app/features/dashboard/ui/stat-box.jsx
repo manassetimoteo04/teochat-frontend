@@ -5,7 +5,7 @@ function StatBox({ stat }) {
       <div className="flex justify-between items-center text-secondary-text-color">
         <span className=" text-[1.4rem] ">{stat.title}</span>
         <span className="text-[1.2rem]">
-          <Tag>{stat.change}</Tag>
+          <Tag type="active">{stat.change}</Tag>
         </span>
       </div>
       <div className="flex justify-between items-center">

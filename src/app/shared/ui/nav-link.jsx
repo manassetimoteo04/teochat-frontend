@@ -1,4 +1,4 @@
-import { NavLink as Link, useLocation } from "react-router-dom";
+import { NavLink as Link, useLocation, useParams } from "react-router-dom";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 
@@ -7,6 +7,8 @@ import NavCollapseLink from "./nav-collapse-link";
 function NavLink({ link }) {
   const isActive = useLocation().pathname.startsWith(link.to);
   const { data, isPending } = useCompanyTeams();
+  const { companyId } = useParams();
+
   const [collapse, setCollapse] = useState(false);
   link.childs = data || [];
   const Component = !link.isCollapseble ? Link : "div";
@@ -14,7 +16,7 @@ function NavLink({ link }) {
     <li>
       <Component
         onClick={() => (link.isCollapseble ? setCollapse((s) => !s) : {})}
-        to={link.isCollapseble ? "" : link.to}
+        to={link.isCollapseble ? "" : link.to.replace("app", companyId)}
         className={`${
           isActive ? "bg-gray-100 !text-main-text-color" : ""
         } flex p-[1.5rem] gap-[0.5rem] cursor-pointer text-secondary-text-color justify-between  active:bg-gray-50 hover:bg-gray-50 rounded-3xl`}

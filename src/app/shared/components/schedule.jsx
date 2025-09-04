@@ -2,95 +2,84 @@ import clsx from "clsx";
 import { MapPin, Video } from "lucide-react";
 const weekdays = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
 const times = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, "0"));
-const events = [
-  {
-    id: "9b2fc0c0-5d31-41f5-8ae0-9dc99f4323a1",
-    title: "Reunião Diária",
-    team: "Marketing Team",
-    date: "2025-08-21",
-    time: "09:00",
-    end: "10:30",
-    type: "meeting",
-    status: "Pendente",
-    createdBy: "Recepcionista Carla",
-  },
-  {
-    id: "e1b1b63f-770b-49fa-bc70-54197b4f2dc6",
-    title: "Reunião Semanal",
-    team: "Dr. Pedro Lima",
-    date: "2025-08-21",
-    time: "11:30",
-    end: "14:30",
-    type: "meeting",
-    status: "Confirmado",
-    createdBy: "Recepcionista Carla",
-  },
-  {
-    id: "fb948b6e-3389-4e80-ae65-038d1bd0e4b7",
-    title: "Meeting director",
-    team: "Dra. Ana Oliveira",
-    date: "2025-08-22",
-    time: "14:00",
-    end: "15:30",
-    type: "presencial",
-    status: "Finalizado",
-    createdBy: "Administração",
-  },
-  {
-    id: "c48ad682-f52e-4fd1-9279-80cf780fd127",
-    title: "Organizar aniv.",
-    team: "Marketing",
-    date: "2025-08-19",
-    time: "07:00",
-    end: "11:30",
-    type: "meeting",
-    status: "Cancelado",
-    createdBy: "Recepcionista João",
-  },
-  {
-    id: "f153a0e5-4828-4c4f-b1f8-e0ef9d5a6f5f",
-    title: "Reunião Semanal",
-    team: "GRH",
-    date: "2025-08-20",
-    time: "11:30",
-    end: "12:30",
-    type: "presencial",
-    status: "Confirmado",
-    createdBy: "Recepcionista Carla",
-  },
-  {
-    id: "2eb20b45-b4fc-4bcf-bc5f-3400a203d349",
-    title: "Contabilidade Geral",
-    team: "Dr. Pedro Lima",
-    date: "2025-08-22",
-    time: "12:00",
-    end: "14:30",
-    type: "presencial",
-    status: "Pendente",
-    createdBy: "Recepcionista João",
-  },
-  //   {
-  //     id: "a3f8d340-bb60-43f1-83a3-bb8a5eb1a22b",
-  //     title: "Tiago Nascimento",
-  //     team: "Dra. Ana Oliveira",
-  //     date: "2025-08-16",
-  //     time: "09:30",
-  //     type: "Exame de acuidade",
-  //     status: "Confirmado",
-  //     createdBy: "Administração",
-  //   },
-  //   {
-  //     id: "1c6368f7-0628-44b8-a590-7cf2a8f5e6a6",
-  //     title: "Isabela Rocha",
-  //     team: "Dr. Pedro Lima",
-  //     date: "2025-08-17",
-  //     time: "13:30",
-  //     type: "Retorno",
-  //     status: "Finalizado",
-  //     createdBy: "Recepcionista Carla",
-  //   },
-];
+function addDays(base, days) {
+  const date = new Date(base);
+  date.setDate(date.getDate() + days);
+  return date.toISOString().split("T")[0];
+}
 
+function randomChoice(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function generateEvents(count = 20) {
+  const now = new Date();
+
+  const titles = [
+    "Reunião de Planejamento",
+    "Treinamento Técnico",
+    "Workshop de Marketing",
+    "Avaliação de Projeto",
+    "Reunião com Cliente",
+    "Reunião Final de Sprint",
+    "Treinamento Segurança",
+    "Reunião Semanal",
+    "Sessão de Feedback",
+    "Brainstorm Criativo",
+  ];
+
+  const teams = [
+    "Equipe de Produto",
+    "TI",
+    "Marketing",
+    "Direção",
+    "Comercial",
+    "Dev Team",
+    "Operações",
+    "Equipe de Design",
+  ];
+
+  const statuses = ["Confirmado", "Pendente", "Finalizado"];
+  const types = ["meeting", "presencial"];
+  const creators = [
+    "Administração",
+    "Scrum Master",
+    "Recursos Humanos",
+    "Recepcionista Carla",
+    "Recepcionista João",
+    "Vendas",
+    "RH",
+  ];
+
+  const events = [];
+
+  for (let i = 0; i < count; i++) {
+    const offset = Math.floor(Math.random() * (30 + 7 + 1)) - 7;
+
+    const hour = 8 + Math.floor(Math.random() * 10);
+    const minute = Math.random() > 0.5 ? "00" : "30";
+
+    const startTime = `${hour.toString().padStart(2, "0")}:${minute}`;
+    const endTime = `${(hour + 1).toString().padStart(2, "0")}:${minute}`;
+
+    events.push({
+      id: crypto.randomUUID(),
+      title: randomChoice(titles),
+      team: randomChoice(teams),
+      date: addDays(now, offset),
+      time: startTime,
+      end: endTime,
+      type: randomChoice(types),
+      status: randomChoice(statuses),
+      createdBy: randomChoice(creators),
+    });
+  }
+
+  return events;
+}
+
+const events = generateEvents(30);
+console.log(events);
 function Schedule() {
   const list = [-3, -2, -1, 0, 1, 2, 3];
   const today = new Date(Date.now());

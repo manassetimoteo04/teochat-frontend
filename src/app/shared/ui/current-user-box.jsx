@@ -7,8 +7,9 @@ function CurrentUserBox() {
     <div className="flex items-center gap-[0.5rem]">
       <img
         src={currentUser?.avatar || "/default-user.jpg"}
-        className="w-[3.5rem] border-[2px] border-main-color rounded-full"
-        alt=""
+        onError={() => "/default-user.jpg"}
+        className="w-[3.5rem] h-[3.5rem] border-[2px] border-main-color rounded-full"
+        alt={currentUser?.name}
       />
       <div className="flex flex-col gap-0">
         <p className="text-[1.4rem] text-main-text-color">

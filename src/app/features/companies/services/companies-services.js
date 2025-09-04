@@ -39,7 +39,6 @@ export const getCompanyRecentMembers = async (companyId) => {
     const {
       data: { data },
     } = await api.get(`/companies/${companyId}/recent-members`);
-    console.log(data);
     return data;
   } catch (error) {
     console.error(error);
@@ -85,11 +84,9 @@ export const checkInvite = async (id) => {
     throw new Error(error);
   }
 };
-export const acceptInvite = async (token) => {
+export const acceptInvite = async (id) => {
   try {
-    const { data } = await api.put("/companies/accept-invite/", {
-      inviteToken: token,
-    });
+    const { data } = await api.put("/invitations/accept/" + id);
     return data;
   } catch (error) {
     console.error(error);

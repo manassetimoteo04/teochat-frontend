@@ -10,22 +10,22 @@ export const getCompanyTeams = async ({ companyId }) => {
     throw new Error(error);
   }
 };
-export const getTeamDetails = async (teamId) => {
+export const getTeamDetails = async ({ teamId, companyId }) => {
   try {
     const {
       data: { data },
-    } = await api.get("teams/" + teamId);
+    } = await api.get(`teams/${teamId}/${companyId}`);
     return data;
   } catch (error) {
     console.error(error);
     throw new Error(error);
   }
 };
-export const getTeamParticipants = async (teamId) => {
+export const getTeamParticipants = async ({ teamId, companyId }) => {
   try {
     const {
       data: { data },
-    } = await api.get(`teams/${teamId}/participants`);
+    } = await api.get(`teams/${teamId}/members/${companyId}`);
     return data;
   } catch (error) {
     console.error(error);
