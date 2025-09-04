@@ -1,18 +1,19 @@
 import { useState } from "react";
 
-function Input({ label, id, value, setValue, type = "text" }) {
+function Input({ label, id, value, setValue, type = "text", defaultValues }) {
   const [isFocus, setIsFocus] = useState(false);
   return (
     <div className=" w-full border-[1px] h-[5rem] border-main-border-color rounded-2xl overflow-hidden relative">
       <label
         htmlFor={id}
         className={`${
-          isFocus || value ? "top-[1.3rem] text-[1.4rem] " : ""
+          isFocus || value || defaultValues ? "top-[1.3rem] text-[1.4rem] " : ""
         } absolute top-1/2 z-9 text-secondary-text-color -translate-y-1/2 left-[1.5rem]`}
       >
         {label}
       </label>
       <input
+        defaultValue={defaultValues}
         type={type}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}

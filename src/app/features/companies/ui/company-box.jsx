@@ -1,11 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import Button from "../../../shared/ui/button";
 import SpinnerMini from "../../../shared/ui/SpinnerMini";
-import { rewriteRoles } from "../../../utils/helpers";
-import { useSelectCompanyAuth } from "../hooks/use-select-company-auth";
+import { rewriteRoles } from "../../../shared/utils/helpers";
 
-function CompanyBox({ company: { joinedAt, role, company } }) {
-  const { name, _id: id } = company || {};
-  const { select, isPending } = useSelectCompanyAuth();
+function CompanyBox({ company: { joined, role, company } }) {
+  const navigate = useNavigate();
+  const { name, id } = company || {};
   return (
     <div className="shadow-sm bg-gray-50 border rounded-xl">
       <div className="border-b flex justify-between items-center p-[1rem_2rem] border-main-border-color">
@@ -20,15 +20,11 @@ function CompanyBox({ company: { joinedAt, role, company } }) {
         <p>
           Aderido aos:
           <span className="text-main-text-color">
-            {new Date(joinedAt).toDateString()}
+            {new Date(joined).toDateString()}
           </span>{" "}
         </p>
-        <Button
-          variation="secondary"
-          disabled={isPending}
-          onClick={() => select({ companyId: id })}
-        >
-          {isPending ? <SpinnerMini /> : "Selecionar Empresa"}
+        <Button variation="secondary" onClick={() => navigate(`/${id}/`)}>
+          Selecionar Empresa
         </Button>
       </div>
     </div>

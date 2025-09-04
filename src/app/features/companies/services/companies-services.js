@@ -4,8 +4,41 @@ export const getUserCompanies = async () => {
   try {
     const {
       data: { data },
-    } = await api.get("/companies");
+    } = await api.get(`/users/companies/`);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+};
+export const getCurrentCompany = async (companyId) => {
+  try {
+    const {
+      data: { data },
+    } = await api.get(`/companies/${companyId}/current`);
     console.log(data);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+};
+export const getCompanyMembers = async (companyId) => {
+  try {
+    const {
+      data: { data },
+    } = await api.get(`/companies/${companyId}/members`);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+};
+export const getCompanyRecentMembers = async (companyId) => {
+  try {
+    const {
+      data: { data },
+    } = await api.get(`/companies/${companyId}/recent-members`);
     return data;
   } catch (error) {
     console.error(error);
@@ -31,28 +64,29 @@ export const createCompany = async (newData) => {
     throw new Error(error);
   }
 };
-export const inviteCompanyMember = async ({ emails }) => {
+export const inviteCompanyMember = async ({ companyId, emails }) => {
   try {
-    await api.post("/companies/invite-member/", { emails });
-  } catch (error) {
-    console.error(error);
-    throw new Error(error);
-  }
-};
-export const checkInviteToken = async (token) => {
-  try {
-    const { data } = await api.get("/companies/check-invite/" + token);
+    const { data } = await api.post("/invitations/" + companyId, { emails });
     return data;
   } catch (error) {
     console.error(error);
     throw new Error(error);
   }
 };
-export const acceptInvite = async (token) => {
+export const checkInvite = async (id) => {
   try {
-    const { data } = await api.put("/companies/accept-invite/", {
-      inviteToken: token,
-    });
+    const {
+      data: { data },
+    } = await api.get("/invitations/" + id);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+};
+export const acceptInvite = async (id) => {
+  try {
+    const { data } = await api.put("/invitations/accept/" + id);
     return data;
   } catch (error) {
     console.error(error);

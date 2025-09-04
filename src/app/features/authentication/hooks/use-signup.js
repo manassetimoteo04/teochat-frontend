@@ -13,7 +13,8 @@ export function useSignUp() {
       toast.success(
         "Conta Criada com sucesso verifique o email para confirmar"
       );
-      setToLocalStorage(data.token);
+      console.log(data);
+      setToLocalStorage(data.data.token, "token");
       navigate("/verify-account");
     },
     onError: (err) => {

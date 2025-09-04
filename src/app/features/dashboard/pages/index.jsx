@@ -9,6 +9,7 @@ import Modal from "../../../shared/ui/modal";
 import DashboardActions from "../components/dashboard-actions";
 import DashboardInviteMember from "../components/dashboard-invite-member";
 import Button from "../../../shared/ui/button";
+import CreateTeamForm from "../../teams/components/create-team-form";
 function DashboardPage() {
   const { currentUser } = useAppContext();
   return (
@@ -38,6 +39,9 @@ function DashboardPage() {
         </Modal.Window>
         <Modal.Window buttonClose={true} id="invite-new-member">
           <DashboardInviteMember />
+        </Modal.Window>{" "}
+        <Modal.Window buttonClose={true} id="create-new-team">
+          <CreateTeamForm />
         </Modal.Window>
       </Modal>
     </div>

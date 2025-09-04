@@ -40,6 +40,7 @@ function SignInForm() {
           />
           <Input
             value={password}
+            type="password"
             setValue={setPassword}
             label="Palavra-passe"
             id="password"

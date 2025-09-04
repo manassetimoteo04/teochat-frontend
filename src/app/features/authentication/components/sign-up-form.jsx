@@ -2,9 +2,11 @@ import { useState } from "react";
 import { useSignUp } from "../hooks/use-signup";
 import Input from "../../../shared/ui/input";
 import Form from "../ui/form";
+import SpinnerMini from "../../../shared/ui/SpinnerMini";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import Button from "../../../shared/ui/button";
+import { getRandomAvatars } from "../../../shared/utils/helpers";
 
 function SignUpForm() {
   const { signUp, isPending } = useSignUp();
@@ -15,10 +17,12 @@ function SignUpForm() {
   const [confirm, setConfirm] = useState("");
   function onSubmit(e) {
     e.preventDefault();
-    const data = { name, email, password };
+    const data = { name, email, password, avatar: getRandomAvatars("users") };
+    console.log(data);
     if (!name || !email || !password || !confirm)
       return toast.error("Por favor preencha todos os campos");
-    if (password !== confirm) return;
+    if (password !== confirm)
+      return toast.error("Por favor confirme a senha correctamente");
     signUp(data);
   }
   return (
@@ -63,7 +67,7 @@ function SignUpForm() {
           />
         </div>
         <div className="flex flex-col w-full">
-          <Button>Criar Conta</Button>
+          <Button>{isPending ? <SpinnerMini /> : "Criar Conta"}</Button>
         </div>
         <div className="text-secondary-text-color mt-[2rem] flex justify-between">
           <p>Já tem uma conta?</p>{" "}

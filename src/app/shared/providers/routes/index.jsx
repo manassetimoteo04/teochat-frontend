@@ -13,6 +13,7 @@ import AgendasPage from "../../../features/agenda/pages";
 import ConfigurationsPage from "../../../features/configurations/pages";
 import MeetingsPage from "../../../features/meetings/pages";
 import CompanyJoinPage from "../../../features/companies/pages/company-join";
+import TeamsPage from "../../../features/teams/pages";
 function RoutesProvider() {
   return (
     <BrowserRouter>
@@ -24,11 +25,11 @@ function RoutesProvider() {
         <Route path="/companies" element={<CompaniesPage />} />
         <Route path="/companies/create" element={<CreateCompany />} />
         <Route
-          path="/companies/join/:inviteToken"
+          path="/companies/join/:invitationId"
           element={<CompanyJoinPage />}
         />
         <Route
-          path="/app"
+          path="/:companyId"
           element={
             <ProtectedRoute>
               <AppPage />
@@ -37,10 +38,10 @@ function RoutesProvider() {
         >
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<DashboardPage />}></Route>
-          <Route path="teams" element={<DashboardPage />}></Route>
-          <Route path="chats" element={<ChatsPage />}></Route>
-          <Route path="mettings" element={<MeetingsPage />}></Route>
-          <Route path="agendas" element={<AgendasPage />}></Route>
+          <Route path="teams/:teamId" element={<TeamsPage />}></Route>
+          <Route path="chats/:teamId" element={<ChatsPage />}></Route>
+          <Route path="mettings/:teamId" element={<MeetingsPage />}></Route>
+          <Route path="agendas/:teamId" element={<AgendasPage />}></Route>
           <Route path="configurations" element={<ConfigurationsPage />}></Route>
         </Route>
       </Routes>

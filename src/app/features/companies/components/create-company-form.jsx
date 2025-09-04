@@ -92,13 +92,15 @@ function CreateCompanyForm() {
       <header className="flex gap-[1rem] flex-col justify-between p-[2rem]   border-main-border-color">
         <div className="flex justify-between items-center ">
           <h3 className="text-[1.8rem]">Criar minha empresa</h3>
-          <Button
-            onClick={() => navigate(-1)}
-            variation="secondary"
-            className="bg-main-bg-color p-[0.8rem_2rem] flex gap-[0.5rem] text-secondary-text-color disabled:opacity-50  rounded-full  mt-3 border border-main-border-color hover:border-main-color hover:text-main-color"
-          >
-            <ArrowLeft /> Voltar
-          </Button>
+          <div>
+            <Button
+              onClick={() => navigate(-1)}
+              variation="secondary"
+              className="bg-main-bg-color p-[0.8rem_2rem] flex gap-[0.5rem] text-secondary-text-color disabled:opacity-50  rounded-full  mt-3 border border-main-border-color hover:border-main-color hover:text-main-color"
+            >
+              <ArrowLeft /> Voltar
+            </Button>
+          </div>
         </div>
         <div className="flex justify-between my-[2rem]">
           {steps.map((_, i) => (
@@ -210,7 +212,7 @@ function CreateCompanyForm() {
             )}
             {steps.length <= currentStep && (
               <Button disabled={isPending} onClick={onSubmit}>
-                {isPending && <SpinnerMini />}Criar Empresa
+                {isPending && <SpinnerMini />} Finalizar
               </Button>
             )}
           </div>

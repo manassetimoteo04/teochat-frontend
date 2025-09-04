@@ -3,20 +3,21 @@ import Button from "../../../shared/ui/button";
 import Tag from "../../../shared/ui/tag";
 import SpinnerMini from "../../../shared/ui/SpinnerMini";
 import { useAcceptInvite } from "../hooks/use-accept-invite";
-
-function JoinDetails({ company }) {
-  const { inviteToken } = useParams();
-
+import { useAppContext } from "../../../shared/providers/context";
+function JoinDetails({ data }) {
+  const { invitationId } = useParams();
+  const { currentUser } = useAppContext();
+  const { company } = data;
   const { accept, isPending } = useAcceptInvite();
   function handleAccept() {
-    if (!inviteToken) return;
-    accept(inviteToken);
+    if (!invitationId) return;
+    accept(invitationId);
   }
   return (
     <div className="p-[2rem] text-secondary-text-color">
       <h4>
-        Olá <span className="text-main-text-color">Manasse Timóteo</span>, você
-        foi convidado por um administrador a participar na Empresa{" "}
+        Olá <span className="text-main-text-color">{currentUser?.name}</span>,
+        você foi convidado por um administrador a participar na Empresa{" "}
         <span className="text-main-text-color">{company.name}</span>
       </h4>
       <div className="mt-[2rem]">
