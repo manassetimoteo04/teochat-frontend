@@ -32,7 +32,7 @@ function reducer(state, action) {
       return {
         ...state,
         members: [
-          ...state.members.filter((user) => user._id !== action.payload),
+          ...state.members.filter((user) => user.id !== action.payload),
         ],
       };
   }
@@ -44,7 +44,7 @@ function CreateTeamForm({ onCloseModal }) {
   const { currentStep, name, description, tags, members } = state;
   const [query, setQuery] = useState("");
   const filteredUsers = users
-    ? users?.members.filter((user) =>
+    ? users?.filter((user) =>
         normalizeText(user.name).startsWith(normalizeText(query))
       )
     : [];
@@ -59,7 +59,7 @@ function CreateTeamForm({ onCloseModal }) {
       name,
       description,
       tags,
-      members: members?.map((mem) => mem._id),
+      members: members?.map((mem) => mem.id),
       photo: getRandomAvatars("teams"),
     };
     create({ newTeam }, { onSuccess: onCloseModal });
@@ -71,9 +71,9 @@ function CreateTeamForm({ onCloseModal }) {
     dispatch({ type: "PREV_STEP" });
   }
   function handleSetMembers(user) {
-    const exists = members.filter((us) => us._id === user._id).at(0);
+    const exists = members.filter((us) => us.id === user.id).at(0);
     if (exists) {
-      dispatch({ type: "REMOVE_MEMBERS", payload: user._id });
+      dispatch({ type: "REMOVE_MEMBERS", payload: user.id });
     } else dispatch({ type: "SET_MEMBERS", payload: user });
   }
   function handleRemoveMember(id) {
@@ -132,17 +132,17 @@ function CreateTeamForm({ onCloseModal }) {
           <div className="flex flex-wrap gap-3">
             {members.map((user) => (
               <div
-                key={user._id}
+                key={user.id}
                 className="flex items-center gap-[0.5rem] p-[0.5rem] bg-gray-100 rounded-full border"
               >
                 <img
-                  src="/default-user.jpg"
-                  className="w-[2rem] rounded-full"
-                  alt=""
+                  src={user.avatar || "/default-user.jpg"}
+                  className="w-[2rem] h-[2rem] overflow-hidden rounded-full"
+                  alt={user.name}
                 />
                 <p className="text-[1.3rem]">{user.name}</p>
                 <span
-                  onClick={() => handleRemoveMember(user._id)}
+                  onClick={() => handleRemoveMember(user.id)}
                   className="text-secondary-text-color hover:text-main-text-color cursor-pointer"
                 >
                   <X size={18} />
@@ -161,19 +161,24 @@ function CreateTeamForm({ onCloseModal }) {
                   filteredUsers.map((user) => (
                     <div
                       onClick={() => handleSetMembers(user)}
-                      key={user._id}
+                      key={user.id}
                       className={clsx(
-                        "flex hover:bg-gray-100 rounded-lg items-center gap-[0.5rem] p-[1rem]  ",
+                        "flex hover:bg-gray-100 rounded-2xl items-center gap-[0.5rem] p-[0.5rem_1rem]  ",
                         members.some((mem) => mem.id === user.id) &&
                           "bg-gray-100"
                       )}
                     >
                       <img
-                        src="/default-user.jpg"
-                        className="w-[2.4rem] rounded-full"
-                        alt=""
+                        src={user.avatar || "/default-user.jpg"}
+                        className="w-[3rem] border h-[3rem] overflow-hidden rounded-full"
+                        alt={user.name}
                       />
-                      <p className="">{user.name}</p>
+                      <div>
+                        <p className="">{user.name}</p>
+                        <p className="text-[1.3rem] text-secondary-text-color">
+                          {user.email}
+                        </p>
+                      </div>
                     </div>
                   ))
                 ) : (

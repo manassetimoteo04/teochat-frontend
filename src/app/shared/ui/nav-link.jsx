@@ -5,9 +5,11 @@ import { useState } from "react";
 import { useCompanyTeams } from "../../features/teams/hooks/use-company-teams";
 import NavCollapseLink from "./nav-collapse-link";
 function NavLink({ link }) {
-  const isActive = useLocation().pathname.startsWith(link.to);
-  const { data, isPending } = useCompanyTeams();
   const { companyId } = useParams();
+  const isActive = useLocation().pathname.startsWith(
+    link.to.replace("app", companyId)
+  );
+  const { data, isPending } = useCompanyTeams();
 
   const [collapse, setCollapse] = useState(false);
   link.childs = data || [];

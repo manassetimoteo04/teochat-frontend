@@ -7,11 +7,11 @@ function CurrentCompany() {
   const navigate = useNavigate();
   return (
     <div className="p-[1rem] relative shadow-sm bg-gray-50 border border-gray-200 text-secondary-text-color rounded-3xl    grid grid-cols-[4rem_1fr] items-center">
-      <div className="h-[3rem] w-[3rem] flex items-center justify-center rounded-full bg-white border border-gray-200">
+      <div className="h-[3.5rem] w-[3.5rem] flex items-center justify-center rounded-full bg-white border border-gray-200">
         <img
           src={currentCompany?.logo || "/default-user.jpg"}
           alt={currentCompany?.name}
-          className="sm:w-[2rem] w-[1rem] h-auto"
+          className=" w-[3rem] h-[3rem]  "
         />
       </div>
       <div className="flex flex-col justify-center">

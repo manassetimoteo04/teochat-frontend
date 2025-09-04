@@ -8,7 +8,7 @@ function CurrentUserBox() {
       <img
         src={currentUser?.avatar || "/default-user.jpg"}
         onError={() => "/default-user.jpg"}
-        className="w-[3.5rem] h-[3.5rem] border-[2px] border-main-color rounded-full"
+        className="w-[3.5rem] overflow-hidden h-[3.5rem] border-[2px] border-main-color rounded-full"
         alt={currentUser?.name}
       />
       <div className="flex flex-col gap-0">
