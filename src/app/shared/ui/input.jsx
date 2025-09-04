@@ -7,7 +7,7 @@ function Input({ label, id, value, setValue, type = "text", defaultValues }) {
       <label
         htmlFor={id}
         className={`${
-          isFocus || value ? "top-[1.3rem] text-[1.4rem] " : ""
+          isFocus || value || defaultValues ? "top-[1.3rem] text-[1.4rem] " : ""
         } absolute top-1/2 z-9 text-secondary-text-color -translate-y-1/2 left-[1.5rem]`}
       >
         {label}

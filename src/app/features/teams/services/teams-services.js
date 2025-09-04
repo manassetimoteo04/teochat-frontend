@@ -43,6 +43,17 @@ export const createNewTeam = async ({ newTeam, companyId }) => {
     throw new Error(error);
   }
 };
+export const updateTeam = async ({ updateData, companyId, teamId }) => {
+  try {
+    const {
+      data: { data },
+    } = await api.put(`teams/${teamId}/${companyId}`, { updateData });
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+};
 export const addTeamMembers = async ({ teamId, companyId, members }) => {
   try {
     const {
@@ -83,6 +94,15 @@ export const removeTeamLider = async ({ teamId, companyId }) => {
       data: { data },
     } = await api.delete(`teams/${teamId}/lider/${companyId}/`);
     return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+};
+
+export const deleteTeam = async ({ companyId, teamId }) => {
+  try {
+    await api.delete(`teams/${teamId}/${companyId}`);
   } catch (error) {
     console.error(error);
     throw new Error(error);
