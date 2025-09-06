@@ -66,14 +66,20 @@ export function DayView({ events, render = null, setTitle }) {
         </ButtonIcon>
       </div>
       <div className="flex flex-col border-border-light border-1 rounded-2xl overflow-hidden">
-        {hours.map((hour) => (
-          <DayHour
-            render={render}
-            events={filteredList.filter((app) => app.time === hour)}
-            key={hour}
-            hour={hour}
-          />
-        ))}
+        {hours.map((hour) => {
+          const filter = filteredList
+            .filter((app) => app.time.startsWith(hour.split(":").at(0)))
+            .map((el, index) => ({ ...el, index }));
+          return (
+            <DayHour
+              left={filter.length > 1}
+              render={render}
+              events={filter}
+              key={hour}
+              hour={hour}
+            />
+          );
+        })}
       </div>
     </div>
   );

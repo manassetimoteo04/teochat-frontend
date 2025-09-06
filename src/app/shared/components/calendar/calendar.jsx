@@ -57,7 +57,7 @@ function generateEvents(count = 20) {
     const offset = Math.floor(Math.random() * (30 + 7 + 1)) - 7;
 
     const hour = 8 + Math.floor(Math.random() * 10);
-    const minute = Math.random() > 0.5 ? "00" : "30";
+    const minute = Math.floor(Math.random() * 59) + 1;
 
     const startTime = `${hour.toString().padStart(2, "0")}:${minute}`;
     const endTime = `${(hour + 1).toString().padStart(2, "0")}:${minute}`;
@@ -78,7 +78,8 @@ function generateEvents(count = 20) {
   return events;
 }
 
-const events = generateEvents(30);
+const events = generateEvents(100);
+
 function Calendar() {
   const [title, setTitle] = useState("");
   const [view, setView] = useState("week-view");

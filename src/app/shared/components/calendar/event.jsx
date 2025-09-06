@@ -1,26 +1,37 @@
 import clsx from "clsx";
 import { MapPin, Video } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
-export default function Event({ event }) {
+export default function Event({ event, left }) {
   const [startTime, startMin] = event?.time?.split(":") || [];
   const [endTime, endMin] = event?.end?.split(":") || [];
-  let heights = "";
-  let styles = {};
-  if (startMin !== "00") heights = "top-1/2 ";
-  if (startTime === endTime) {
-    heights = heights + " h-full ";
-  }
-  if (+startTime < +endTime) {
-    const diference = +endTime - +startTime;
-    heights += ` !h-[${100 * diference}%]`;
-    styles.height = `${100 * diference}%`;
-  }
+  const [over, setOver] = useState(false);
+  const ref = useRef();
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const startHour = Number(startTime);
+    const startMinutes = Number(startMin);
+    const endHour = Number(endTime);
+    const endMinutes = Number(endMin);
+
+    ref.current.style.top = `${(startMinutes / 60) * 100}%`;
+
+    const durationHours = endHour - startHour;
+    const durationMinutes = durationHours * 60 + (endMinutes - startMinutes);
+    const heightPercent = (durationMinutes / 60) * 100;
+    ref.current.style.height = `${heightPercent}%`;
+  }, [startTime, startMin, endTime, endMin]);
+
   return (
     <div
-      style={styles}
+      ref={ref}
+      onMouseEnter={() => setOver(true)}
+      onMouseOut={() => setOver(false)}
       className={clsx(
-        "w-full  absolute flex flex-col p-[0.5rem] rounded-2xl bg-blue-100",
-        heights
+        over && "index-9",
+        "w-full cursor-pointer border border-gray-200 absolute flex flex-col p-[0.5rem] rounded-2xl bg-blue-100 transition-all duration-200"
       )}
     >
       <p className="truncate text-[1.4rem] text-blue-700">{event.title}</p>

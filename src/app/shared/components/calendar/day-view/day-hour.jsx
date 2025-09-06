@@ -1,6 +1,7 @@
 import Event from "../event";
 
-export default function DayHour({ hour, events }) {
+export default function DayHour({ hour, left, events }) {
+  console.log(events);
   return (
     <div className="  border-gray-200 relative min-h-[10rem] first:border-t  border-b grid grid-cols-[4rem_1fr] sm:grid-cols-[7rem_1fr] md:grid-cols-[8rem_1fr] ">
       <div className="content-center text-center border-r-1 text-text-secondary border-border-light  ">
@@ -10,7 +11,7 @@ export default function DayHour({ hour, events }) {
       <div className="relative mr-[2rem] ">
         <div>
           {events.map((event) => (
-            <Event event={event} />
+            <Event left={left} event={event} />
           ))}
         </div>
       </div>
