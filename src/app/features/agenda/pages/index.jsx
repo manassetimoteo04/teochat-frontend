@@ -12,7 +12,7 @@ function AgendasPage() {
   const { data, isPending } = useGetTeamDetails();
   if (isPending) return <Spinner />;
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex  gap-[3rem] flex-col h-screen">
       <PageHeader title={`Agendas da Equipe de ${data.name}`}>
         <div className="flex justify-between h-full items-center gap-2">
           <Button variation="secondary">

@@ -1,0 +1,54 @@
+import clsx from "clsx";
+import { useScheduleWeek } from "./use-schedule-week";
+import WeekHours from "./week-hours";
+import { useEffect } from "react";
+import ButtonIcon from "../../../ui/button-icon";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
+function WeekView({ events, setTitle, onNext, onPrev }) {
+  const { dates, weekdays, times, days, title, handleNext, handlePrev } =
+    useScheduleWeek();
+  useEffect(() => {
+    setTitle(title);
+  }, [title, setTitle]);
+  return (
+    <>
+      <div>
+        <div className="w-[calc(100dvw-30rem)]  overflow-x-scroll ">
+          <div className="grid grid-cols-[8rem_1fr_1fr_1fr_1fr_1fr_1fr_1fr] border-b">
+            <div className="p-[1rem_2rem] text-[1.2rem] flex justify-center">
+              <span>Horário</span>
+            </div>
+            {dates.map((date) => {
+              const isToday =
+                new Date(date).toDateString() === new Date().toDateString();
+              return (
+                <div
+                  key={date}
+                  className={clsx(
+                    "p-[1rem_2rem] flex justify-center gap-[1rem] text-secondary-text-color items-center border-r",
+                    isToday && "bg-gray-50"
+                  )}
+                >
+                  <span className={isToday ? "text-main-text-color" : ""}>
+                    {weekdays[new Date(date).getDay()]}
+                  </span>
+                  <span className={isToday ? "text-main-text-color" : ""}>
+                    {new Date(date).getDate()}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+          <div>
+            {times.map((time) => (
+              <WeekHours events={events} days={days} time={time} key={time} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default WeekView;

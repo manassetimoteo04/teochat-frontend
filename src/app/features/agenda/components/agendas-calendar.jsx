@@ -1,9 +1,9 @@
-import Schedule from "../../../shared/components/schedule";
+import Calendar from "../../../shared/components/calendar/calendar";
 
 function AgendasCalendar() {
   return (
-    <div>
-      <Schedule />
+    <div className="bg-main-bg-color-2 border-t border-gray-100">
+      <Calendar />
     </div>
   );
 }

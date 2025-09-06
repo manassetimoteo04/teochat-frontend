@@ -1,4 +1,4 @@
-import Schedule from "../../../shared/components/schedule";
+import Calendar from "../../../shared/components/calendar/calendar";
 
 function DashboardSchedule() {
   return (
@@ -6,7 +6,7 @@ function DashboardSchedule() {
       <header className="p-[2rem]">
         <h3>Agenda Completa</h3>
       </header>
-      <Schedule />
+      <Calendar />
     </div>
   );
 }
