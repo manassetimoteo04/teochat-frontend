@@ -1,8 +1,16 @@
-import { Calendar1Icon, CalendarDays, CalendarRange } from "lucide-react";
+import {
+  Calendar1Icon,
+  CalendarDays,
+  CalendarRange,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import ButtonIcon from "../../ui/button-icon";
 import { useState } from "react";
 import WeekView from "./week-view/week-view";
 import { DayView } from "./day-view/day-view";
+import MonthView from "./month-view/month-view";
+import { useCalendar } from "./calendar-provider";
 function addDays(base, days) {
   const date = new Date(base);
   date.setDate(date.getDate() + days);
@@ -78,39 +86,47 @@ function generateEvents(count = 20) {
   return events;
 }
 
-const events = generateEvents(100);
+export const events = generateEvents(100);
 
 function Calendar() {
-  const [title, setTitle] = useState("");
-  const [view, setView] = useState("week-view");
-
+  const { title, currentView, setCurrentView, ...rest } = useCalendar();
+  const handlers = { ...rest };
   return (
     <div>
       <header className="p-[2rem] justify-between flex border-b">
+        <div>
+          <ButtonIcon title="Anterior" onClick={handlers[currentView].prev}>
+            <ChevronLeft />
+          </ButtonIcon>
+          <ButtonIcon title="Próximo" onClick={handlers[currentView].next}>
+            <ChevronRight />
+          </ButtonIcon>
+        </div>
         <p>{title}</p>
         <div className="flex gap-[1rem]">
           <ButtonIcon
             title="Visualizar Dia"
-            onClick={() => setView("day-view")}
+            onClick={() => setCurrentView("day")}
           >
             <Calendar1Icon />
           </ButtonIcon>
           <ButtonIcon
             title="Visualizar semana"
-            onClick={() => setView("week-view")}
+            onClick={() => setCurrentView("week")}
           >
             <CalendarRange />
           </ButtonIcon>
           <ButtonIcon
             title="Visualizar mês"
-            onClick={() => setView("month-view")}
+            onClick={() => setCurrentView("month")}
           >
             <CalendarDays />
           </ButtonIcon>
         </div>
       </header>
-      {view === "week-view" && <WeekView events={events} setTitle={setTitle} />}
-      {view === "day-view" && <DayView events={events} setTitle={setTitle} />}
+      {currentView === "week" && <WeekView events={events} />}
+      {currentView === "day" && <DayView events={events} />}
+      {currentView === "month" && <MonthView />}
     </div>
   );
 }

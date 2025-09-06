@@ -1,23 +1,20 @@
 import clsx from "clsx";
-import { useScheduleWeek } from "./use-schedule-week";
 import WeekHours from "./week-hours";
-import { useEffect } from "react";
-import ButtonIcon from "../../../ui/button-icon";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+
+import { useCalendar } from "../calendar-provider";
 
 function WeekView({ events, setTitle, onNext, onPrev }) {
-  const { dates, weekdays, times, days, title, handleNext, handlePrev } =
-    useScheduleWeek();
-  useEffect(() => {
-    setTitle(title);
-  }, [title, setTitle]);
+  const {
+    week: { dates, weekdays, times, days },
+  } = useCalendar();
+
   return (
     <>
       <div>
         <div className="w-[calc(100dvw-30rem)]  overflow-x-scroll ">
-          <div className="grid grid-cols-[8rem_1fr_1fr_1fr_1fr_1fr_1fr_1fr] border-b">
-            <div className="p-[1rem_2rem] text-[1.2rem] flex justify-center">
-              <span>Horário</span>
+          <div className="grid grid-cols-[5rem_1fr_1fr_1fr_1fr_1fr_1fr_1fr] border-b">
+            <div className=" h-full w-full items-center border-r text-[1.2rem] flex justify-center">
+              <span>H</span>
             </div>
             {dates.map((date) => {
               const isToday =

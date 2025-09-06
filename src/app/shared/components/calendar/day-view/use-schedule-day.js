@@ -90,11 +90,11 @@ function useScheduleDay(list) {
   let increment = 0;
   const isToday = (day) =>
     new Date(day).toDateString() === new Date().toDateString();
-  const handleNext = () => {
+  const next = () => {
     increment++;
     setDays((d) => d.map((d) => updateScheduleDays(d, increment)));
   };
-  const handlePrev = () => {
+  const pev = () => {
     increment--;
     setDays((d) => d.map((d) => updateScheduleDays(d, increment)));
   };
@@ -109,14 +109,15 @@ function useScheduleDay(list) {
     if (!pickDate) return;
     setDays(buildScheduleDatesList(pickDate));
   }, [pickDate]);
+  const title = formatDate(new Date(currentDay), true, true);
   return {
     handleInputCalendarClick,
     filteredList,
-    handleNext,
-    handlePrev,
+    next,
+    pev,
     isToday,
     setPickDate,
-    formatDate,
+    title,
     hours,
     days,
     setDays,

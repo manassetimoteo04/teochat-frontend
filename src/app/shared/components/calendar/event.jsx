@@ -30,8 +30,8 @@ export default function Event({ event, left }) {
       onMouseEnter={() => setOver(true)}
       onMouseOut={() => setOver(false)}
       className={clsx(
-        over && "index-9",
-        "w-full cursor-pointer border border-gray-200 absolute flex flex-col p-[0.5rem] rounded-2xl bg-blue-100 transition-all duration-200"
+        over && "z-10",
+        "w-full cursor-pointer border border-blue-300 absolute flex flex-col p-[0.5rem] rounded-2xl bg-blue-100 transition-all duration-200"
       )}
     >
       <p className="truncate text-[1.4rem] text-blue-700">{event.title}</p>

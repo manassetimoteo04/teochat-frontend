@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { formatDate } from "../../../utils/helpers";
 
 const weekdays = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
 const times = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, "0"));
@@ -11,14 +12,16 @@ export function useScheduleWeek() {
     new Date(Date.now()).setDate(today.getDate() + day)
   );
   const dates = days.map((day) => new Date(day).toDateString());
-  const title = `${new Date(days.at(0)).toDateString()}  —  ${new Date(
-    days.at(-1)
-  ).toDateString()}`;
-  function handleNext() {
+  const title = `${formatDate(
+    new Date(days.at(0)),
+    true,
+    true
+  )}  —  ${formatDate(new Date(days.at(-1)), true, true)}`;
+  function prev() {
     setList((array) => array.map((item) => item + 7));
   }
-  function handlePrev() {
+  function next() {
     setList((array) => array.map((item) => item - 7));
   }
-  return { dates, weekdays, times, days, title, handleNext, handlePrev };
+  return { dates, weekdays, times, days, title, prev, next };
 }
