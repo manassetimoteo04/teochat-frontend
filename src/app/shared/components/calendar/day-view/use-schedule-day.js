@@ -94,7 +94,7 @@ function useScheduleDay(list) {
     increment++;
     setDays((d) => d.map((d) => updateScheduleDays(d, increment)));
   };
-  const pev = () => {
+  const prev = () => {
     increment--;
     setDays((d) => d.map((d) => updateScheduleDays(d, increment)));
   };
@@ -114,7 +114,7 @@ function useScheduleDay(list) {
     handleInputCalendarClick,
     filteredList,
     next,
-    pev,
+    prev,
     isToday,
     setPickDate,
     title,

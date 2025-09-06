@@ -1,11 +1,10 @@
 import clsx from "clsx";
 import { MapPin, Video } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
-export default function Event({ event, left }) {
+export default function Event({ event }) {
   const [startTime, startMin] = event?.time?.split(":") || [];
   const [endTime, endMin] = event?.end?.split(":") || [];
-  const [over, setOver] = useState(false);
   const ref = useRef();
 
   useEffect(() => {
@@ -27,11 +26,8 @@ export default function Event({ event, left }) {
   return (
     <div
       ref={ref}
-      onMouseEnter={() => setOver(true)}
-      onMouseOut={() => setOver(false)}
       className={clsx(
-        over && "z-10",
-        "w-full cursor-pointer border border-blue-300 absolute flex flex-col p-[0.5rem] rounded-2xl bg-blue-100 transition-all duration-200"
+        "w-full hover:z-50  z-40 hover:shadow-md cursor-pointer border border-blue-300 absolute flex flex-col p-[0.5rem] rounded-2xl bg-blue-100 transition-all duration-200"
       )}
     >
       <p className="truncate text-[1.4rem] text-blue-700">{event.title}</p>

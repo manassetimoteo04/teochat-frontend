@@ -3,7 +3,7 @@ import MonthDay from "./month-day";
 
 function MonthView() {
   const {
-    month: { weekdays, list },
+    month: { weekdays, list, events },
   } = useCalendar();
   return (
     <div>

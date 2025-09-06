@@ -5,7 +5,7 @@ import { useScheduleWeek } from "./week-view/use-schedule-week";
 
 const Provider = createContext();
 function CalendarProvider({ children, list }) {
-  const [currentView, setCurrentView] = useState("day-view");
+  const [currentView, setCurrentView] = useState("week");
   const month = useScheduleMonth(list);
   const day = useScheduleDay(list);
   const week = useScheduleWeek(list);

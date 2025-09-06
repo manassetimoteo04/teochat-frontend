@@ -9,7 +9,7 @@ function getDaysInMonth(year, month) {
   return eachDayOfInterval({ start, end });
 }
 
-export function useScheduleMonth() {
+export function useScheduleMonth(events) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const days = getDaysInMonth(2025, 8);
   const passedDays = [];
@@ -33,5 +33,5 @@ export function useScheduleMonth() {
   const finalList = Array.from([...passedDays, ...days, ...nextDays]);
   useEffect(() => {}, []);
 
-  return { list: finalList, weekdays };
+  return { list: finalList, weekdays, events };
 }

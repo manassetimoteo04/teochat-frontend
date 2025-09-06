@@ -5,11 +5,11 @@ import DayHour from "./day-hour";
 import clsx from "clsx";
 import { useCalendar } from "../calendar-provider";
 
-export function DayView({ events, render = null }) {
+export function DayView({ render = null }) {
   const {
     day: {
       filteredList,
-
+      events,
       isToday,
       buildScheduleDatesList,
       setDays,

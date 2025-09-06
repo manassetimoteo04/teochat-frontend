@@ -95,28 +95,31 @@ function Calendar() {
     <div>
       <header className="p-[2rem] justify-between flex border-b">
         <div>
-          <ButtonIcon title="Anterior" onClick={handlers[currentView].prev}>
+          <ButtonIcon title="Anterior" onClick={handlers[currentView]?.prev}>
             <ChevronLeft />
           </ButtonIcon>
-          <ButtonIcon title="Próximo" onClick={handlers[currentView].next}>
+          <ButtonIcon title="Próximo" onClick={handlers[currentView]?.next}>
             <ChevronRight />
           </ButtonIcon>
         </div>
         <p>{title}</p>
         <div className="flex gap-[1rem]">
           <ButtonIcon
+            active={currentView === "day"}
             title="Visualizar Dia"
             onClick={() => setCurrentView("day")}
           >
             <Calendar1Icon />
           </ButtonIcon>
           <ButtonIcon
+            active={currentView === "week"}
             title="Visualizar semana"
             onClick={() => setCurrentView("week")}
           >
             <CalendarRange />
           </ButtonIcon>
           <ButtonIcon
+            active={currentView === "month"}
             title="Visualizar mês"
             onClick={() => setCurrentView("month")}
           >
@@ -124,8 +127,8 @@ function Calendar() {
           </ButtonIcon>
         </div>
       </header>
-      {currentView === "week" && <WeekView events={events} />}
-      {currentView === "day" && <DayView events={events} />}
+      {currentView === "week" && <WeekView />}
+      {currentView === "day" && <DayView />}
       {currentView === "month" && <MonthView />}
     </div>
   );

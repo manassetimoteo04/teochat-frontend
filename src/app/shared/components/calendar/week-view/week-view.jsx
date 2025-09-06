@@ -3,9 +3,9 @@ import WeekHours from "./week-hours";
 
 import { useCalendar } from "../calendar-provider";
 
-function WeekView({ events, setTitle, onNext, onPrev }) {
+function WeekView({ setTitle, onNext, onPrev }) {
   const {
-    week: { dates, weekdays, times, days },
+    week: { dates, weekdays, times, days, events },
   } = useCalendar();
 
   return (
