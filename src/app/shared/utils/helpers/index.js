@@ -1,3 +1,5 @@
+import { getHours, getMinutes } from "date-fns";
+
 export const rewriteRoles = (role) => {
   const roles = {
     admin: "administrador",
@@ -78,4 +80,15 @@ export function generateAvatar(name) {
   const color = `#ccc`;
 
   return { initials, color };
+}
+
+export function formatHour(time) {
+  const date = new Date(time);
+
+  const hours = getHours(date);
+  const minutes = getMinutes(date);
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+    2,
+    "0"
+  )}`;
 }

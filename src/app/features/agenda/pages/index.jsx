@@ -5,10 +5,9 @@ import Spinner from "../../../shared/ui/Spinner";
 import Modal from "../../../shared/ui/modal";
 import { useGetTeamDetails } from "../../teams/hooks/use-get-team-details";
 import AgendaStats from "../components/agenda-stats";
-import AgendaUpcomingEvents from "../components/agenda-upcoming-events";
 import AgendasCalendar from "../components/agendas-calendar";
-
 import CreateEventForm from "../../events/components/create-event-form";
+import AgendaTodayEvents from "../components/agenda-today-events";
 
 function AgendasPage() {
   const { data, isPending } = useGetTeamDetails();
@@ -28,7 +27,7 @@ function AgendasPage() {
         </PageHeader>
         <div className="grid grid-cols-[1.5fr_1fr]">
           <AgendaStats />
-          <AgendaUpcomingEvents />
+          <AgendaTodayEvents />
         </div>
         <AgendasCalendar />
       </div>

@@ -7,6 +7,7 @@ import SpinnerMini from "../../../shared/ui/SpinnerMini";
 
 import { useEvent } from "../hooks/use-event";
 import { useUpdateEvent } from "../hooks/use-update-event";
+import { formatHour } from "../../../shared/utils/helpers";
 
 const initialState = {
   title: undefined,
@@ -63,17 +64,6 @@ function UpdateEventForm({ onCloseModal, eventId }) {
     e.preventDefault();
     if (state.type === "video-call") state.location = undefined;
     update({ eventId: data.id, ...state }, { onSuccess: onCloseModal });
-  }
-
-  function formatHour(time) {
-    const date = new Date(time);
-
-    const hours = getHours(date);
-    const minutes = getMinutes(date);
-    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
-      2,
-      "0"
-    )}`;
   }
 
   const startHour = formatHour(data.startTime);
