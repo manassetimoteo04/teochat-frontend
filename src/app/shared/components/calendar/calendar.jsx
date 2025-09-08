@@ -86,14 +86,14 @@ function generateEvents(count = 20) {
   return events;
 }
 
-export const events = generateEvents(100);
+export const events = generateEvents(200);
 
 function Calendar() {
   const { title, currentView, setCurrentView, ...rest } = useCalendar();
   const handlers = { ...rest };
   return (
     <div>
-      <header className="p-[2rem] justify-between flex border-b">
+      <div className="p-[2rem] sticky top-0 z-[100] left-0  !bg-white justify-between flex border-b">
         <div>
           <ButtonIcon title="Anterior" onClick={handlers[currentView]?.prev}>
             <ChevronLeft />
@@ -126,7 +126,7 @@ function Calendar() {
             <CalendarDays />
           </ButtonIcon>
         </div>
-      </header>
+      </div>
       {currentView === "week" && <WeekView />}
       {currentView === "day" && <DayView />}
       {currentView === "month" && <MonthView />}

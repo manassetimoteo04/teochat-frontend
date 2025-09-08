@@ -6,7 +6,6 @@ import SpinnerMini from "../../../shared/ui/SpinnerMini";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import Button from "../../../shared/ui/button";
-import { getRandomAvatars } from "../../../shared/utils/helpers";
 
 function SignUpForm() {
   const { signUp, isPending } = useSignUp();
@@ -17,8 +16,7 @@ function SignUpForm() {
   const [confirm, setConfirm] = useState("");
   function onSubmit(e) {
     e.preventDefault();
-    const data = { name, email, password, avatar: getRandomAvatars("users") };
-    console.log(data);
+    const data = { name, email, password };
     if (!name || !email || !password || !confirm)
       return toast.error("Por favor preencha todos os campos");
     if (password !== confirm)

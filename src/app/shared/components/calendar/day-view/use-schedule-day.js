@@ -67,22 +67,26 @@ const updateScheduleDays = (date, increment) => {
   return new Date(date).setDate(new Date(date).getDate() + increment);
 };
 const weekdays = ["dom.", "seg.", "ter.", "qua.", "qui.", "sex.", "sáb."];
+const hours = Array.from(
+  { length: 24 },
+  (_, i) => String(i).padStart(2, "0") + ":30"
+);
 
-const hours = [
-  "08:30",
-  "09:30",
-  "10:30",
-  "11:30",
-  "12:30",
-  "13:30",
-  "14:30",
-  "15:30",
-  "16:30",
-  "17:30",
-  "18:30",
-  "19:30",
-  "20:30",
-];
+// const hours = [
+//   "08:30",
+//   "09:30",
+//   "10:30",
+//   "11:30",
+//   "12:30",
+//   "13:30",
+//   "14:30",
+//   "15:30",
+//   "16:30",
+//   "17:30",
+//   "18:30",
+//   "19:30",
+//   "20:30",
+// ];
 function useScheduleDay(list) {
   const inputRef = useRef();
   const [days, setDays] = useState(buildScheduleDatesList());

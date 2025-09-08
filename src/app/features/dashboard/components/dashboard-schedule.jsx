@@ -1,12 +1,12 @@
-import Calendar from "../../../shared/components/calendar/calendar";
+import Calendar, { events } from "../../../shared/components/calendar/calendar";
+import CalendarProvider from "../../../shared/components/calendar/calendar-provider";
 
 function DashboardSchedule() {
   return (
     <div className="bg-white border-t border-gray-100 mt-[3rem] h-full">
-      <header className="p-[2rem]">
-        <h3>Agenda Completa</h3>
-      </header>
-      <Calendar />
+      <CalendarProvider view="month" list={events}>
+        <Calendar />
+      </CalendarProvider>
     </div>
   );
 }

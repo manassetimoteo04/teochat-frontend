@@ -24,7 +24,7 @@ function Button({ children, onClick, variation = "primary", disabled }) {
       <button
         disabled={disabled}
         onClick={onClick}
-        className="bg-red-500 p-[0.8rem_1.5rem] w-full items-center justify-center flex gap-[0.5rem] text-white disabled:opacity-50  rounded-full  mt-3 shadow-[0_0_0_1px_#dcdcdc]  border-main-border-color  hover:bg-red-600"
+        className="bg-red-500 p-[0.8rem_1.5rem] w-full items-center justify-center flex gap-[0.5rem] text-white disabled:opacity-50  rounded-full   shadow-[0_0_0_1px_#dcdcdc]  border-main-border-color  hover:bg-red-600"
       >
         {children}
       </button>

@@ -9,7 +9,6 @@ export function DayView({ render = null }) {
   const {
     day: {
       filteredList,
-      events,
       isToday,
       buildScheduleDatesList,
       setDays,
@@ -22,7 +21,7 @@ export function DayView({ render = null }) {
   return (
     <div>
       <div className="grid grid-cols-[1fr] justify-between gap-[1px] md:gap-[1rem]  ">
-        <div className="grid  grid-cols-7">
+        <header className="grid   !bg-white grid-cols-7">
           {days.map((day, i) => (
             <div
               style={{ animation: "none" }}
@@ -54,7 +53,7 @@ export function DayView({ render = null }) {
               </span>
             </div>
           ))}
-        </div>
+        </header>
       </div>
       <div className="flex flex-col border-border-light border-1 rounded-2xl overflow-hidden">
         {hours.map((hour) => {

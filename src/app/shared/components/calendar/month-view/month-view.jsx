@@ -17,7 +17,7 @@ function MonthView() {
 
       <div className="grid grid-cols-7  border-t-[1px] border-b-[1px] ">
         {list.map((day) => (
-          <MonthDay key={day} day={day} />
+          <MonthDay key={day} day={day} events={events} />
         ))}
       </div>
     </div>
