@@ -1,12 +1,26 @@
-const roles = {
-  admin: "administrador",
-  super_admin: "administrador",
-  member: "membro",
-  maganer: "gerente",
-  team_leader: "líder",
-};
+import { getHours, getMinutes } from "date-fns";
+
 export const rewriteRoles = (role) => {
+  const roles = {
+    admin: "administrador",
+    super_admin: "administrador",
+    member: "membro",
+    maganer: "gerente",
+    team_leader: "líder",
+  };
   return roles[role];
+};
+export const rewriteStatus = (statu) => {
+  const status = {
+    pending: "pendente",
+    active: "activo",
+    canceled: "cancelado",
+    finished: "terminado",
+    inactive: "incativo",
+    public: "público",
+    private: "privado",
+  };
+  return status[statu];
 };
 export function normalizeText(string) {
   return string
@@ -53,23 +67,28 @@ export const formatDate = function (
   return new Intl.DateTimeFormat(locale).format(date);
 };
 
-export function getRandomAvatars(type = "user") {
-  const unsplashBase = "https://source.unsplash.com/random/100x100";
-  const dicebearBase = "https://api.dicebear.com/7.x";
+export function generateAvatar(name) {
+  if (!name) return { initials: "?", color: "#ccc" };
 
-  const queries = {
-    user: "portrait,person",
-    team: "abstract,gradient,pattern,geometry",
-  };
+  const parts = name.trim().split(" ").filter(Boolean);
 
-  const sig = Math.floor(Math.random() * 10000);
+  let initials = parts[0][0].toUpperCase();
+  if (parts.length > 1) {
+    initials += parts[parts.length - 1][0].toUpperCase();
+  }
 
-  const unsplashUrl = `${unsplashBase}/?${queries[type]}&sig=${sig}`;
+  const color = `#ccc`;
 
-  const dicebearStyle = type === "user" ? "avataaars" : "shapes";
-  const dicebearUrl = `${dicebearBase}/${dicebearStyle}/svg?seed=${sig}`;
+  return { initials, color };
+}
 
-  const useUnsplash = Math.random() > 0.3;
+export function formatHour(time) {
+  const date = new Date(time);
 
-  return useUnsplash ? unsplashUrl : dicebearUrl;
+  const hours = getHours(date);
+  const minutes = getMinutes(date);
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+    2,
+    "0"
+  )}`;
 }

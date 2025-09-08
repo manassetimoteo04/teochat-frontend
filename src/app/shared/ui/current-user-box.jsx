@@ -1,16 +1,23 @@
 import { ChevronDown } from "lucide-react";
 import { useAppContext } from "../providers/context/";
-import { rewriteRoles } from "../utils/helpers";
+import { generateAvatar, rewriteRoles } from "../utils/helpers";
 function CurrentUserBox() {
   const { currentUser, currentRole } = useAppContext();
+  const { initials, color } = generateAvatar(currentUser?.name);
   return (
     <div className="flex items-center gap-[0.5rem]">
-      <img
+      {/* <img
         src={currentUser?.avatar || "/default-user.jpg"}
         onError={() => "/default-user.jpg"}
         className="w-[3.5rem] overflow-hidden h-[3.5rem] border-[2px] border-main-color rounded-full"
         alt={currentUser?.name}
-      />
+      /> */}
+      <div
+        style={{ backgroundColor: color }}
+        className="w-[3.5rem] text-main-text-color h-[3.5rem] border rounded-full flex items-center justify-center"
+      >
+        {initials}
+      </div>
       <div className="flex flex-col gap-0">
         <p className="text-[1.4rem] text-main-text-color">
           {currentUser?.name}

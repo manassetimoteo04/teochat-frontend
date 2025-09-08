@@ -1,13 +1,51 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { formatDate } from "../utils/helpers";
 
 function Input({ label, id, value, setValue, type = "text", defaultValues }) {
   const [isFocus, setIsFocus] = useState(false);
+  const ref = useRef();
+  if (type === "date")
+    return (
+      <div
+        onClick={() => ref.current.showPicker()}
+        className=" w-full border-[1px] h-[5rem] border-main-border-color rounded-2xl overflow-hidden relative"
+      >
+        <label
+          htmlFor={id}
+          className={`${
+            value || defaultValues ? "top-[1.3rem] text-[1.4rem] " : ""
+          } absolute top-1/2 z-9 text-secondary-text-color -translate-y-1/2 left-[1.5rem]`}
+        >
+          {label}
+        </label>
+        {(value || defaultValues) && (
+          <span
+            className={` absolute top-[3rem] z-9 text-main-text-color -translate-y-1/2 left-[1.5rem]`}
+          >
+            {formatDate(new Date(value || defaultValues), true, true)}
+          </span>
+        )}
+        <input
+          ref={ref}
+          defaultValue={defaultValues}
+          type={type}
+          min={new Date().toISOString().split("T")[0]}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={(e) => setValue(e.target.value)}
+          id={id}
+          className="p-[1.5rem] opacity-0 focus:outline-none !transition-none bottom-[-1rem] bg-transparent absolute w-full"
+        />
+      </div>
+    );
   return (
     <div className=" w-full border-[1px] h-[5rem] border-main-border-color rounded-2xl overflow-hidden relative">
       <label
         htmlFor={id}
         className={`${
-          isFocus || value || defaultValues ? "top-[1.3rem] text-[1.4rem] " : ""
+          type === "time" || isFocus || value || defaultValues
+            ? "top-[1.3rem] text-[1.4rem] "
+            : ""
         } absolute top-1/2 z-9 text-secondary-text-color -translate-y-1/2 left-[1.5rem]`}
       >
         {label}

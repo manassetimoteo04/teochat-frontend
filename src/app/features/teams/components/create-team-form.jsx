@@ -7,9 +7,9 @@ import Input from "../../../shared/ui/input";
 import Spinner from "../../../shared/ui/Spinner";
 import SpinnerMini from "../../../shared/ui/SpinnerMini";
 import InputSearch from "../../../shared/ui/input-search";
-import { getRandomAvatars, normalizeText } from "../../../shared/utils/helpers";
 import { useCompanyMembers } from "../../companies/hooks/use-company-members";
 import { useCreateTeam } from "../hooks/use-create-team";
+import Heading from "../../../shared/ui/heading";
 
 const initialState = {
   currentStep: 1,
@@ -60,7 +60,6 @@ function CreateTeamForm({ onCloseModal }) {
       description,
       tags,
       members: members?.map((mem) => mem.id),
-      photo: getRandomAvatars("teams"),
     };
     create({ newTeam }, { onSuccess: onCloseModal });
   };
@@ -82,22 +81,14 @@ function CreateTeamForm({ onCloseModal }) {
   return (
     <form className="p-[4rem_2rem] flex items-center flex-col gap-[2rem] max-w-[45rem]">
       <div className=" flex flex-col ">
-        {currentStep === 1 && (
-          <>
-            <h2 className="text-[2.4rem] font-[600]">Criar novo Team</h2>
-            <span className="text-secondary-text-color ">
-              Por favor preencha o formulário para criar o novo team
-            </span>
-          </>
-        )}{" "}
-        {currentStep === 2 && (
-          <>
-            <h2 className="text-[2.4rem] font-[600]">Selecionar Membros</h2>
-            <span className="text-secondary-text-color ">
-              Selecione os membros que vão participar no teu Team
-            </span>
-          </>
-        )}
+        <Heading as="h2">
+          {currentStep === 1 ? "Criar novo Team" : "Selecionar Membros"}
+        </Heading>
+        <span className="text-secondary-text-color ">
+          {currentStep === 1
+            ? "Por favor preencha o formulário para criar a nova Equipe"
+            : "Selecione os membros que vão participar na tua Equipe"}
+        </span>
       </div>
       {currentStep === 1 && (
         <div className="w-full gap-[1.5rem] flex flex-col ">
@@ -194,27 +185,13 @@ function CreateTeamForm({ onCloseModal }) {
       )}
       <div className="flex justify-center w-full gap-[1rem]">
         {currentStep > 1 && (
-          <Button
-            variation="secondary"
-            onClick={handlePrevStep}
-            className="bg-green-500 hover:bg-green-600 w-full p-[0.8rem_1.5rem] rounded-full"
-          >
+          <Button variation="secondary" onClick={handlePrevStep}>
             Voltar
           </Button>
         )}
-        {currentStep === 1 && (
-          <Button
-            onClick={handleNextStep}
-            className="bg-green-500 hover:bg-green-600 w-full p-[0.8rem_1.5rem] rounded-full"
-          >
-            Próximo
-          </Button>
-        )}
+        {currentStep === 1 && <Button onClick={handleNextStep}>Próximo</Button>}
         {currentStep > 1 && (
-          <Button
-            onClick={onSubmit}
-            className="bg-green-500 hover:bg-green-600 w-full p-[0.8rem_1.5rem] rounded-full"
-          >
+          <Button onClick={onSubmit}>
             {isCreating && <SpinnerMini />} Criar Novo Team
           </Button>
         )}

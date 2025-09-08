@@ -1,6 +1,6 @@
 import { X } from "lucide-react";
 import { cloneElement, createContext, useContext, useState } from "react";
-
+import { createPortal } from "react-dom";
 const ModalContext = createContext();
 function Modal({ children }) {
   const [open, setOpen] = useState(null);
@@ -24,12 +24,12 @@ function Window({ id, children, buttonClose }) {
   const { close, open } = useContext(ModalContext);
   if (id !== open) return;
   return (
-    <div className="absolute flex items-center z-[9] justify-center h-screen w-full top-0 left-0 bg-black/40">
+    <div className="fixed flex items-center z-[9999999] justify-center h-screen w-full top-0 left-0 bg-black/40">
       <div
         onClick={close}
         className="absolute top-0 left-0 w-full h-dvh "
       ></div>
-      <div className=" relative z-50 bg-white rounded-2xl overflow-y-scroll max-h-[calc(100dvh-5rem)]">
+      <div className=" relative z-50 bg-white rounded-2xl overflow-y-scroll max-h-[calc(100dvh-4rem)]">
         <button
           onClick={close}
           className="absolute right-[1rem] hover:text-main-text-color text-secondary-text-color top-[1rem]"

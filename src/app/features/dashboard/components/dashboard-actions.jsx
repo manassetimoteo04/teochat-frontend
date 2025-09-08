@@ -1,11 +1,12 @@
 import Button from "../../../shared/ui/button";
+import Heading from "../../../shared/ui/heading";
 import Modal from "../../../shared/ui/modal";
 
 function DashboardActions() {
   return (
     <div className="p-[4rem_2rem] flex items-center flex-col gap-[4rem] min-w-[45rem]">
       <div className=" flex items-center flex-col ">
-        <h2 className="text-[2.4rem] font-[600]">O que desejas Fazer?</h2>
+        <Heading as="h2">O que desejas Fazer?</Heading>
         <span className="text-secondary-text-color text-center">
           Selecione a acção que deseja executar
         </span>
