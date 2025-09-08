@@ -63,9 +63,8 @@ function UpdateEventForm({ onCloseModal, eventId }) {
   function onSubmit(e) {
     e.preventDefault();
     if (state.type === "video-call") state.location = undefined;
-    update({ eventId: data.id, ...state }, { onSuccess: onCloseModal });
+    update({ eventId: data.id, ...state });
   }
-
   const startHour = formatHour(data.startTime);
   const endHour = formatHour(data.endTime);
   return (
@@ -148,7 +147,7 @@ function UpdateEventForm({ onCloseModal, eventId }) {
           {(type === "presential" || data.type === "presential") && (
             <div className="flex w-full">
               <Input
-                defaultValues={location}
+                defaultValues={location || data.location}
                 label="Localização"
                 value={location}
                 setValue={(e) => handleChange(e, "location")}
