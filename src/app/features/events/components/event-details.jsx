@@ -1,9 +1,9 @@
-import { formatDate as formatFns } from "date-fns";
 import Button from "../../../shared/ui/button";
 import Heading from "../../../shared/ui/heading";
 import Tag from "../../../shared/ui/tag";
 import { useEvent } from "../hooks/use-event";
 import Spinner from "../../../shared/ui/Spinner";
+import SpinnerMini from "../../../shared/ui/SpinnerMini";
 import { formatDate, rewriteStatus } from "../../../shared/utils/helpers";
 import Modal from "../../../shared/ui/modal";
 import {
@@ -18,8 +18,9 @@ import {
   Video,
   X,
 } from "lucide-react";
+import { useCancelEvent } from "../hooks/use-cancel-event";
 
-function EventDetails({ eventId }) {
+function EventDetails({ eventId, onCloseModal }) {
   const {
     data: {
       title,
@@ -36,6 +37,7 @@ function EventDetails({ eventId }) {
     } = {},
     isPending,
   } = useEvent(eventId);
+  const { cancelEvent, isCanceling } = useCancelEvent();
   if (isPending) return <Spinner />;
   return (
     <div className="p-[2rem] max-w-[50rem] min-w-[50rem] flex flex-col gap-[2rem]">
@@ -136,12 +138,28 @@ function EventDetails({ eventId }) {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-end gap-[1rem]">
-        <Modal.Open id={eventId + "-update"}>
-          <Button variation="secondary">Editar Evento</Button>
-        </Modal.Open>
-        <Button variation="danger">Cancelar Evento</Button>
-      </div>
+      {status !== "canceled" && (
+        <div className="flex items-center justify-end gap-[1rem]">
+          <Modal.Open id={eventId + "-update"}>
+            <Button variation="secondary">Editar Evento</Button>
+          </Modal.Open>
+          <Button
+            onClick={() =>
+              cancelEvent({ eventId }, { onSuccess: onCloseModal })
+            }
+            disabled={isCanceling}
+            variation="danger"
+          >
+            {isCanceling ? <SpinnerMini /> : "Cancelar Evento"}
+          </Button>
+        </div>
+      )}
+      {status === "canceled" && (
+        <div className="text-center bg-red-100 p-[1rem] rounded-full">
+          {" "}
+          <span>Este evento foi cancelado, visualizar apenas</span>
+        </div>
+      )}
     </div>
   );
 }

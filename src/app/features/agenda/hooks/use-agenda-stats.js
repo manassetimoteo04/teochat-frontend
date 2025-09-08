@@ -5,29 +5,29 @@ export function useAgendaStats() {
   const { data } = useGetTeamEvents();
   const todayEvents = data?.filter(
     (event) => new Date(event.date).toDateString() === new Date().toDateString()
-  ).length;
+  )?.length;
   const canceledEvents = data?.filter(
     (event) => event.status === "canceled"
-  ).length;
+  )?.length;
   const upcomingEvents = data?.filter((event) =>
     isAfter(new Date(event.date), new Date())
-  ).length;
+  )?.length;
   const statsItems = [
     {
       title: "Total Eventos",
-      value: data.length,
+      value: data?.length || 0,
     },
     {
       title: "Eventos de Hoje",
-      value: todayEvents,
+      value: todayEvents || 0,
     },
     {
       title: "Eventos Próximos",
-      value: upcomingEvents,
+      value: upcomingEvents || 0,
     },
     {
       title: "Eventos Cancelados",
-      value: canceledEvents,
+      value: canceledEvents || 0,
     },
   ];
   return statsItems;

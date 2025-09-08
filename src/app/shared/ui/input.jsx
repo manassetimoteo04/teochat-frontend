@@ -29,6 +29,7 @@ function Input({ label, id, value, setValue, type = "text", defaultValues }) {
           ref={ref}
           defaultValue={defaultValues}
           type={type}
+          min={new Date().toISOString().split("T")[0]}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={(e) => setValue(e.target.value)}

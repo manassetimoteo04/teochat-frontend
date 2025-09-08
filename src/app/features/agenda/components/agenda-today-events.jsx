@@ -14,7 +14,7 @@ function AgendaTodayEvents() {
     <aside className="bg-main-bg-color-2 p-[2rem] border-gray-100 border rounded-3xl ">
       <Heading as="h3">Eventos de Hoje</Heading>
       <ul className="">
-        {todayEvents.map((event) => (
+        {todayEvents?.map((event) => (
           <li
             key={event.id}
             className="py-3 bg-white  last:border-b-0 hover:bg-gray-50 border-b "

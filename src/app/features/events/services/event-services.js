@@ -35,11 +35,21 @@ export const getEvent = async (eventId) => {
 };
 
 export const updateEvent = async ({ eventId, ...updateData }) => {
-  console.log(updateData);
   try {
     const {
       data: { data },
     } = await api.put("events/" + eventId, { ...updateData });
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+};
+export const cancelEvent = async ({ eventId }) => {
+  try {
+    const {
+      data: { data },
+    } = await api.put(`events/${eventId}/cancel`);
     return data;
   } catch (error) {
     console.error(error);
