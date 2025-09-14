@@ -5,7 +5,7 @@ const api = axios.create({
   timeout: 10000,
   withCredentials: true,
   headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
+    Authorization: `Bearer ${localStorage?.getItem("token") || ""}`,
     "Content-Type": "application/json",
   },
 });
@@ -26,12 +26,12 @@ api.interceptors.response.use(
         message = data.error || "Sessão expirada. Faça login novamente.";
       if (status === 403)
         message = data.message || "Você não tem permissão para esta ação.";
-      if (status === 404) message = data.error || "Recurso não encontrado.";
-      if (status === 409) message = data.error || "Conflito de recursos";
+      if (status === 404)
+        message = data.error || data.message || "Recurso não encontrado.";
+      if (status === 409) message = data.message || "Conflito de recursos";
       if (status === 500)
         message = "Erro no servidor. Tente novamente mais tarde.";
     }
-
     Promise.reject(error);
     throw new Error(message);
   }

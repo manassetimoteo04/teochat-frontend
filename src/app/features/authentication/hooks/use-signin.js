@@ -9,15 +9,18 @@ function useSignIn() {
   const { setToLocalStorage } = useLocalStorage("token");
   const { mutate, isPending } = useMutation({
     mutationFn: signIn,
-    onSuccess: (data) => {
+    onSuccess: ({ data }) => {
       toast.success("Sessão inciada com successo");
-      setToLocalStorage(data.token);
-      if (!data.data.user.isConfirmed) {
+      setToLocalStorage(data.token, "token");
+      console.log(data);
+      if (!data.user.isConfirmed) {
         toast.error(
           "Conta não verifica, por favor verifique a tua conta para continuar"
         );
         navigate("/verify-account");
+        return;
       }
+      navigate("/companies", { replace: true });
     },
     onError: (err) => {
       toast.error(err.message);

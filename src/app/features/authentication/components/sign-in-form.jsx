@@ -1,10 +1,10 @@
 import { useState } from "react";
-import AuthInput from "../ui/auth-input";
 import Form from "../ui/form";
 import { toast } from "sonner";
 import useSignIn from "../hooks/use-signin";
 import { useNavigate } from "react-router-dom";
 import SpinnerMini from "../../../shared/ui/SpinnerMini";
+import Input from "../../../shared/ui/input";
 
 function SignInForm() {
   const navigate = useNavigate();
@@ -32,21 +32,22 @@ function SignInForm() {
           </span>
         </header>
         <div className="flex flex-col my-[3rem] gap-[1.5rem]">
-          <AuthInput
+          <Input
             value={email}
             setValue={setEmail}
             label="Endereço de Email"
             id="email"
           />
-          <AuthInput
+          <Input
             value={password}
+            type="password"
             setValue={setPassword}
             label="Palavra-passe"
             id="password"
           />
         </div>
         <div className="flex flex-col w-full">
-          <button className="bg-gradient-to-b text-[1.4rem] sm:text-[1.6rem] from-green-600 to-green-500 p-[1rem_2rem]  gap-[0.5rem] text-white hover:bg-green-700 rounded-full">
+          <button className="bg-gradient-to-b text-[1.4rem] flex items-center justify-center sm:text-[1.6rem] from-green-600 to-green-500 p-[1rem_2rem]  gap-[0.5rem] text-white hover:bg-green-700 rounded-full">
             {isPending ? <SpinnerMini /> : "Iniciar Sessão"}
           </button>
         </div>
