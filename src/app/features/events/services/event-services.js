@@ -2,6 +2,7 @@ import api from "../../../shared/services/api";
 
 export const createNewEvent = async (newEvent) => {
   try {
+    console.log(newEvent);
     const {
       data: { data },
     } = await api.post("events/", newEvent);
@@ -11,6 +12,11 @@ export const createNewEvent = async (newEvent) => {
     throw new Error(error);
   }
 };
+
+export async function createMany(events) {
+  await Promise.all(events.map((event) => createNewEvent(event)));
+}
+
 export const getTeamEvents = async (teamId) => {
   try {
     const {

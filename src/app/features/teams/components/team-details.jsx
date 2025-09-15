@@ -10,7 +10,6 @@ import {
   X,
 } from "lucide-react";
 import Tag from "../../../shared/ui/tag";
-import TeamDetailsNav from "./team-details-nav";
 import { formatDate } from "../../../shared/utils/helpers";
 import Button from "../../../shared/ui/button";
 import Modal from "../../../shared/ui/modal";
@@ -23,9 +22,9 @@ function TeamDetails({ data }) {
   const { removeLider, isPending } = useRemoveTeamLider();
   return (
     <Modal>
-      <div className="p-[3rem] pt-[0]">
-        <div className="bg-white p-[3rem] rounded-2xl border border-gray-100">
-          <div className="flex  p-[1rem_0] items-center gap-[1rem]">
+      <div>
+        <div className="bg-white py-[2rem] pr-[2rem]  border-r h-full border-gray-200">
+          <div className="flex  items-center gap-[1rem]">
             <img src="/default-user.jpg" className="w-[6.4rem]" alt="" />
             <div>
               <h2 className="text-[2.4rem] ">{name}</h2>
@@ -38,7 +37,7 @@ function TeamDetails({ data }) {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-[0.5rem]">
+          <div className="flex flex-col mt-[2rem] gap-[0.5rem]">
             <div className="grid grid-cols-[20rem_1fr] mt-[2rem]">
               <span className="flex items-center gap-[0.5rem] text-secondary-text-color">
                 <Lock size={20} /> Privacidade
@@ -120,7 +119,7 @@ function TeamDetails({ data }) {
               </div>
             </div>
           </div>
-          <TeamDetailsNav />
+          {/* <TeamDetailsNav /> */}
         </div>
       </div>
       <Modal.Window id="set-lider">

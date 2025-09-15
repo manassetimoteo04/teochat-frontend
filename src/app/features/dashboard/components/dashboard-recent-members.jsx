@@ -3,12 +3,19 @@ import Spinner from "../../../shared/ui/Spinner";
 import { formatDate } from "../../../shared/utils/helpers";
 import { useCompanyRecentMembers } from "../../companies/hooks/use-company-recent-members";
 import CardBox from "../ui/card-box";
+import EmptyList from "../../../shared/ui/empty-list";
 
 function DashboardRecentMembers() {
   const { data, isPending } = useCompanyRecentMembers();
   return (
     <CardBox title="Aderidos Recentemente">
       <div>
+        {!isPending && data?.length < 1 && (
+          <EmptyList
+            title="Nenhuma equipa foi encontrada"
+            opensId="invite-new-member"
+          />
+        )}
         {!isPending ? (
           data?.map((user) => (
             <div

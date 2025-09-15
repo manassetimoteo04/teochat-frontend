@@ -10,6 +10,7 @@ import InputSearch from "../../../shared/ui/input-search";
 import { useCompanyMembers } from "../../companies/hooks/use-company-members";
 import { useCreateTeam } from "../hooks/use-create-team";
 import Heading from "../../../shared/ui/heading";
+import { normalizeText } from "../../../shared/utils/helpers";
 
 const initialState = {
   currentStep: 1,
@@ -79,7 +80,7 @@ function CreateTeamForm({ onCloseModal }) {
     dispatch({ type: "REMOVE_MEMBERS", payload: id });
   }
   return (
-    <form className="p-[4rem_2rem] flex items-center flex-col gap-[2rem] max-w-[45rem]">
+    <form className="p-[2rem] flex items-center flex-col gap-[2rem] max-w-[45rem]">
       <div className=" flex flex-col ">
         <Heading as="h2">
           {currentStep === 1 ? "Criar novo Team" : "Selecionar Membros"}

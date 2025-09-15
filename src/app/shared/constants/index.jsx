@@ -1,5 +1,6 @@
 import {
   CalendarDaysIcon,
+  Folder,
   HomeIcon,
   MessageCircleIcon,
   Phone,
@@ -16,7 +17,7 @@ export const NavListItems = [
     icon: <HomeIcon />,
   },
   {
-    title: "Teams",
+    title: "Equipas",
     isCollapseble: true,
     childs: [
       { title: "Marketing Digital", to: "teams/" },
@@ -25,6 +26,7 @@ export const NavListItems = [
     to: "/app/teams",
     icon: <UsersIcon />,
   },
+
   {
     title: "Agendas",
     isCollapseble: true,
@@ -34,6 +36,16 @@ export const NavListItems = [
     ],
     to: "/app/agendas",
     icon: <CalendarDaysIcon />,
+  },
+  {
+    title: "Projectos",
+    isCollapseble: true,
+    childs: [
+      { title: "Marketing Digital", to: "teams/" },
+      { title: "Dev Luvulo", to: "teams/" },
+    ],
+    to: "/app/projects",
+    icon: <Folder />,
   },
   {
     title: "Chats",

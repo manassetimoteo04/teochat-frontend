@@ -7,6 +7,7 @@ import { useResendVerificationCode } from "../hooks/use-resend-verification-code
 import Input from "../../../shared/ui/input";
 import Button from "../../../shared/ui/button";
 import SpinnerMini from "../../../shared/ui/SpinnerMini";
+import Logo from "../../../shared/ui/logo";
 
 function ConfirmForm() {
   const [confirm, setConfirm] = useState("");
@@ -27,10 +28,7 @@ function ConfirmForm() {
     <div className="p-[4rem] flex items-center h-full">
       <Form onSubmit={onSubmit}>
         <header className="flex flex-col gap-[0.5rem]">
-          <h1 className="flex items-center sm:text-[2.4rem] relative">
-            <img src="./logo.png" className="sm:w-[3.5rem] w-[2.5rem] h-auto" />
-            TeoChat
-          </h1>
+          <Logo />
           <h1 className="text-[2.4rem]">Confirmar Conta</h1>
           <span className="text-secondary-text-color">
             Insere o código de verificação de 8 dígitos para confirmar a tua
