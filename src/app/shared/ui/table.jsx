@@ -12,7 +12,10 @@ function Table({ children, columns }) {
 function Header({ children }) {
   const { columns } = useContext(TableProvider);
   return (
-    <header style={{ gridTemplateColumns: columns }} className={clsx("grid")}>
+    <header
+      style={{ gridTemplateColumns: columns }}
+      className={clsx("grid gap-4 rounded-2xl bg-gray-100")}
+    >
       {children}
     </header>
   );
@@ -20,7 +23,12 @@ function Header({ children }) {
 function Row({ children }) {
   const { columns } = useContext(TableProvider);
   return (
-    <div style={{ gridTemplateColumns: columns }} className={clsx("grid")}>
+    <div
+      style={{ gridTemplateColumns: columns }}
+      className={clsx(
+        "grid border-b gap-4 text-secondary-text-color last:border-b-0"
+      )}
+    >
       {children}
     </div>
   );

@@ -2,6 +2,7 @@ import Button from "../../../shared/ui/button";
 import PageHeader from "../../../shared/ui/page-heading";
 import { Plus } from "lucide-react";
 import Table from "../../../shared/ui/table";
+import ProjectsList from "../components/projects-list";
 function ProjectsPage() {
   return (
     <div>
@@ -17,14 +18,7 @@ function ProjectsPage() {
         </div>
       </PageHeader>
       <div className="p-[2rem]">
-        <Table columns="5rem 1fr 1fr 1fr">
-          <Table.Header>
-            <span>Nome</span>
-            <span>Nome</span>
-            <span>Nome</span>
-            <span>Nome</span>
-          </Table.Header>
-        </Table>
+        <ProjectsList />
       </div>
     </div>
   );
