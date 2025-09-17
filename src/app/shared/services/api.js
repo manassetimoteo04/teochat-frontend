@@ -23,7 +23,7 @@ api.interceptors.response.use(
       const data = error.response.data;
       if (status === 400) message = data.message || "Dados inválidos.";
       if (status === 401)
-        message = data.error || "Sessão expirada. Faça login novamente.";
+        message = data.message || "Sessão expirada. Faça login novamente.";
       if (status === 403)
         message = data.message || "Você não tem permissão para esta ação.";
       if (status === 404)

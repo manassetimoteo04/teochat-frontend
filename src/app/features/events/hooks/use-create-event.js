@@ -4,10 +4,11 @@ import { toast } from "sonner";
 import { createNewEvent } from "../services/event-services";
 
 export function useCreateEvent() {
-  const { teamId } = useParams();
+  const { teamId, companyId } = useParams();
   const queryClient = useQueryClient();
+
   const { mutate, isPending } = useMutation({
-    mutationFn: (data) => createNewEvent({ teamId, ...data }),
+    mutationFn: (data) => createNewEvent({ companyId, teamId, ...data }),
     onSuccess: () => {
       toast.success("Novo evento agendado com sucesso");
       queryClient.invalidateQueries({ queryKey: ["events"] });

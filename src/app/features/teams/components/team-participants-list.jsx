@@ -24,71 +24,69 @@ function TeamParticipantsList() {
     : data;
   if (isPending) return <Spinner />;
   return (
-    <div className="">
-      <div className=" p-[2rem] pr-0">
-        <header className="flex gap-[1rem] flex-col">
-          <Heading>Participantes</Heading>
-          <div className="flex justify-start">
-            <div>
-              <InputSearch value={query} setValue={setQuery} />
-            </div>
+    <div className=" p-[3rem]">
+      <header className="flex gap-[1rem] flex-col">
+        <Heading>Participantes</Heading>
+        <div className="flex justify-start">
+          <div>
+            <InputSearch value={query} setValue={setQuery} />
           </div>
-        </header>
-        {!isPending && (
-          <>
-            {queriedResults.length > 0 && (
-              <div className=" max-h-[40rem] overflow-y-scroll flex flex-col ">
-                {queriedResults.map((user) => (
-                  <div
-                    key={user.id}
-                    className="flex border-b last:border-b-0 p-[1.5rem_0] justify-between"
-                  >
-                    <div className="flex items-center gap-[1rem]">
-                      <img
-                        src={user.avatar || "/default-user.jpg"}
-                        className="w-[5rem] h-[5rem] rounded-full"
-                        alt=""
-                      />
+        </div>
+      </header>
+      {!isPending && (
+        <>
+          {queriedResults.length > 0 && (
+            <div className=" max-h-[40rem] overflow-y-scroll flex flex-col ">
+              {queriedResults.map((user) => (
+                <div
+                  key={user.id}
+                  className="flex border-b last:border-b-0 p-[1.5rem_0] justify-between"
+                >
+                  <div className="flex items-center gap-[1rem]">
+                    <img
+                      src={user.avatar || "/default-user.jpg"}
+                      className="w-[5rem] h-[5rem] rounded-full"
+                      alt=""
+                    />
+                    <div>
                       <div>
-                        <div>
-                          <p>{user.name}</p>
-                        </div>
-                        <span className="text-secondary-text-color">
-                          {user.email}
-                        </span>
+                        <p>{user.name}</p>
                       </div>
+                      <span className="text-secondary-text-color">
+                        {user.email}
+                      </span>
                     </div>
-                    <div className="flex gap-[2rem]">
-                      <ButtonIcon title="Mais opções">
-                        <User size={20} />
-                      </ButtonIcon>
-                      <Modal.Open id={user.id}>
-                        <ButtonIcon title="Remover do Team">
-                          <Trash2 size={20} />
-                        </ButtonIcon>
-                      </Modal.Open>
-                    </div>
-                    <Modal.Window id={user.id}>
-                      <RemoveMemberAlert
-                        onConfirm={removeMember}
-                        data={{ memberId: user.id }}
-                        isPending={isRemoving}
-                      />
-                    </Modal.Window>
                   </div>
-                ))}
-              </div>
-            )}
-            {queriedResults.length < 1 && (
-              <EmptyList
-                title="Nenhum participante foi encontrado"
-                opensId="add-team-member"
-              />
-            )}
-          </>
-        )}
-        {isPending && <Spinner />}
-      </div>
+                  <div className="flex gap-[2rem]">
+                    <ButtonIcon title="Mais opções">
+                      <User size={20} />
+                    </ButtonIcon>
+                    <Modal.Open id={user.id}>
+                      <ButtonIcon title="Remover do Team">
+                        <Trash2 size={20} />
+                      </ButtonIcon>
+                    </Modal.Open>
+                  </div>
+                  <Modal.Window id={user.id}>
+                    <RemoveMemberAlert
+                      onConfirm={removeMember}
+                      data={{ memberId: user.id }}
+                      isPending={isRemoving}
+                    />
+                  </Modal.Window>
+                </div>
+              ))}
+            </div>
+          )}
+          {queriedResults.length < 1 && (
+            <EmptyList
+              title="Nenhum participante foi encontrado"
+              opensId="add-team-member"
+            />
+          )}
+        </>
+      )}
+      {isPending && <Spinner />}
     </div>
   );
 }

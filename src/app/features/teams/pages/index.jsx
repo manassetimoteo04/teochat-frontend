@@ -46,7 +46,7 @@ function TeamsPage() {
           </div>
         </PageHeader>
         <div className="p-[0_2rem]">
-          <div className="grid p-[0_2rem] border border-gray-100 rounded-2xl bg-white grid-cols-[1.5fr_1fr]">
+          <div className="grid  border border-gray-100 rounded-2xl bg-white grid-cols-[1.5fr_1fr]">
             <TeamDetails data={data} />
             <TeamParticipantsList />
           </div>

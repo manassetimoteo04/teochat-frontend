@@ -119,7 +119,12 @@ function generateEvents(count = 20) {
     "Encontro anual da empresa para alinhar visão, metas e celebrar conquistas.",
     "Sessão de inovação para explorar novas tecnologias aplicáveis ao negócio.",
   ];
-
+  const teamsIDs = [
+    "68c53a47c5ebdaca6e0b47d0",
+    "68bcb8962d53bfa78eda010b",
+    "68b74275c909a75829ff1224",
+    "68c53a8bc5ebdaca6e0b4842",
+  ];
   function randomChoice(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
   }
@@ -147,7 +152,8 @@ function generateEvents(count = 20) {
       title: randomChoice(titles),
       team: randomChoice(teams),
       date,
-      teamId: "68c534c34b65b1ce405e83dd",
+      teamId: randomChoice(teamsIDs),
+      companyId: "68b742d1f0dba02c466f6859",
       startTime,
       endTime,
       type,
