@@ -2,11 +2,18 @@ import { Ellipsis } from "lucide-react";
 import Table from "../../../shared/ui/table";
 import { formatDate } from "../../../shared/utils/helpers/";
 import CheckBox from "../../../shared/ui/check-box";
-function ProjectListRow({ data: { name, createdAt, createdBy, endDate } }) {
+function ProjectListRow({
+  onSelect,
+  selected,
+  data: { id, name, createdAt, createdBy, endDate },
+}) {
   return (
     <Table.Row>
       <div className="flex items-center justify-center">
-        <CheckBox />
+        <CheckBox
+          value={selected.some((el) => el === id)}
+          setValue={() => onSelect(id)}
+        />
       </div>
       <div className="flex p-[1rem] gap-[1rem] items-center">
         <img src="/default-user.jpg" className="w-[3.5rem]" alt="" />
