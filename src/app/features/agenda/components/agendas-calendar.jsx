@@ -1,4 +1,4 @@
-import Calendar, { events } from "../../../shared/components/calendar/calendar";
+import Calendar from "../../../shared/components/calendar/calendar";
 import CalendarProvider from "../../../shared/components/calendar/calendar-provider";
 import { useGetTeamEvents } from "../../events/hooks/use-get-team-events";
 import Spinner from "../../../shared/ui/Spinner";

@@ -6,7 +6,7 @@ function Tag({ children, type = "pending" }) {
     canceled: "bg-red-100 text-red-600",
     pending: "bg-blue-100 text-blue-600",
     settled: "bg-gray-100 text-gray-600",
-    finshed: "bg-gray-100 text-gray-600",
+    finished: "bg-gray-100 text-gray-600",
   };
   return (
     <span

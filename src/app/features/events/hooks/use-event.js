@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { getEvent } from "../services/event-services";
-
-export function useEvent(id) {
+import { useParams } from "react-router-dom";
+export function useEvent(eventId) {
+  const { companyId } = useParams();
   const { data, isPending } = useQuery({
-    queryKey: ["events", id],
-    queryFn: () => getEvent(id),
+    queryKey: ["events", eventId],
+    queryFn: () => getEvent({ eventId, companyId }),
   });
   return { data, isPending };
 }

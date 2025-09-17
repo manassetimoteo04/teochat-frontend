@@ -14,6 +14,7 @@ import ConfigurationsPage from "../../../features/configurations/pages";
 import MeetingsPage from "../../../features/meetings/pages";
 import CompanyJoinPage from "../../../features/companies/pages/company-join";
 import TeamsPage from "../../../features/teams/pages";
+import ProjectsPage from "../../../features/projects/pages";
 function RoutesProvider() {
   return (
     <BrowserRouter>
@@ -41,6 +42,7 @@ function RoutesProvider() {
           <Route path="teams/:teamId" element={<TeamsPage />}></Route>
           <Route path="chats/:teamId" element={<ChatsPage />}></Route>
           <Route path="mettings/:teamId" element={<MeetingsPage />}></Route>
+          <Route path="projects/:teamId" element={<ProjectsPage />}></Route>
           <Route path="agendas/:teamId" element={<AgendasPage />}></Route>
           <Route path="configurations" element={<ConfigurationsPage />}></Route>
         </Route>

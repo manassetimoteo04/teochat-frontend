@@ -11,6 +11,7 @@ import Button from "../../../shared/ui/button";
 import { useParams } from "react-router-dom";
 import { useAddTeamMembers } from "../hooks/use-add-team-members";
 import { toast } from "sonner";
+import Heading from "../../../shared/ui/heading";
 
 const initialState = {
   members: [],
@@ -65,9 +66,9 @@ function AddTeamMemberForm({ onCloseModal }) {
     addMember({ members: ids }, { onSuccess: onCloseModal });
   }
   return (
-    <form className="p-[3rem_2rem] flex items-center flex-col gap-[2rem] max-w-[45rem]">
+    <form className="p-[2rem] flex items-center flex-col gap-[2rem] max-w-[45rem]">
       <div className=" flex flex-col ">
-        <h2 className="text-[2.4rem] font-[600]">Adicionar Membros</h2>
+        <Heading as="h2">Adicionar Membros</Heading>
         <span className="text-secondary-text-color ">
           Selecione os membros que desejas adicionar ao team
         </span>

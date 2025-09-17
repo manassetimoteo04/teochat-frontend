@@ -5,6 +5,9 @@ import useSignIn from "../hooks/use-signin";
 import { useNavigate } from "react-router-dom";
 import SpinnerMini from "../../../shared/ui/SpinnerMini";
 import Input from "../../../shared/ui/input";
+import Logo from "../../../shared/ui/logo";
+import Heading from "../../../shared/ui/heading";
+import Button from "../../../shared/ui/button";
 
 function SignInForm() {
   const navigate = useNavigate();
@@ -22,11 +25,10 @@ function SignInForm() {
     <div className="p-[4rem] flex items-center h-full">
       <Form onSubmit={onSubmit}>
         <header className="flex flex-col gap-[0.5rem]">
-          <h1 className="flex items-center sm:text-[2.4rem] relative">
-            <img src="./logo.png" className="sm:w-[3.5rem] w-[2.5rem] h-auto" />
-            TeoChat
-          </h1>
-          <h1 className="text-[2.4rem]">Iniciar Sessão</h1>
+          <Logo />
+          <Heading as="h2" className="text-[2.4rem]">
+            Iniciar Sessão
+          </Heading>
           <span className="text-secondary-text-color">
             Informe as tuas credenciais para começar a tua productividade
           </span>
@@ -47,9 +49,7 @@ function SignInForm() {
           />
         </div>
         <div className="flex flex-col w-full">
-          <button className="bg-gradient-to-b text-[1.4rem] flex items-center justify-center sm:text-[1.6rem] from-green-600 to-green-500 p-[1rem_2rem]  gap-[0.5rem] text-white hover:bg-green-700 rounded-full">
-            {isPending ? <SpinnerMini /> : "Iniciar Sessão"}
-          </button>
+          <Button>{isPending ? <SpinnerMini /> : "Iniciar Sessão"}</Button>
         </div>
         <div className="text-secondary-text-color mt-[2rem] flex justify-between">
           <p>Ainda não tem uma conta?</p>{" "}

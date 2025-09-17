@@ -4,9 +4,9 @@ import { useParams } from "react-router-dom";
 import { updateEvent } from "../services/event-services";
 export function useUpdateEvent() {
   const queryClient = useQueryClient();
-  const { teamId } = useParams();
+  const { teamId, companyId } = useParams();
   const { mutate, isPending } = useMutation({
-    mutationFn: (data) => updateEvent({ teamId, ...data }),
+    mutationFn: (data) => updateEvent({ teamId, companyId, ...data }),
     onSuccess() {
       toast.success("Evento actualizado com sucesso");
       queryClient.invalidateQueries({ queryKey: ["events"] });
