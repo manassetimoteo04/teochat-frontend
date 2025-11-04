@@ -9,7 +9,7 @@ function Header() {
       <Logo />
       <ButtonCta onClick={() => navigate("/sign-in")}>
         Começar Agora <ArrowRight size={18} />
-      </ButtonCta>
+      </ButtonCta>{" "}
     </header>
   );
 }

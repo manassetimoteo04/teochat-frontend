@@ -40,7 +40,7 @@ function ProjectsList() {
           </div>
         </div>
         {selected.length > 0 && (
-          <div className="mb-[1rem] px-[2rem] flex gap-[2rem]">
+          <div className="mb-[1rem] px-[1rem] flex gap-[2rem]">
             <div className="flex gap-[0.5rem] items-center">
               <CheckBox value={true} />{" "}
               <span>{selected.length} selecionado(s)</span>
