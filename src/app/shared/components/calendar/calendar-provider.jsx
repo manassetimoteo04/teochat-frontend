@@ -29,7 +29,7 @@ function formatEventObject(event) {
 }
 function CalendarProvider({ children, list, view }) {
   const [currentView, setCurrentView] = useState(view || "month");
-  const newList = list.map((event) => formatEventObject(event));
+  const newList = list?.map((event) => formatEventObject(event));
   const month = useScheduleMonth(newList);
   const day = useScheduleDay(newList);
   const week = useScheduleWeek(newList);

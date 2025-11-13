@@ -5,21 +5,14 @@ import {
   BsLinkedin,
   BsTwitterX,
 } from "react-icons/bs";
+import Logo from "../../../shared/ui/logo";
 
 function footer() {
   return (
     <footer className="bg-gray-950 p-[10rem_0rem] pb-0">
       <div className="max-w-[120rem] p-[2rem] flex-col gap-[2rem]  sm:flex-row flex justify-between m-[0_auto]">
         <div className="flex flex-col items-start">
-          <h3 className="text-2xl font-bold text-white mb-3">
-            <h1 className="flex items-center text-[2.4rem] relative">
-              <img src="./logo.png" className="w-[3.5rem] h-auto" />
-              TeoChat
-              <span className=" inline-block w-[0.8rem] absolute -right-[1rem] bottom-[0.4rem] h-[0.8rem] rounded-full bg-main-color">
-                &nbsp;
-              </span>
-            </h1>
-          </h3>
+          <Logo />
           <p className="text-white max-w-[40rem]">
             A plataforma que conecta sua equipe em um só lugar. Chats, chamadas
             e eventos de forma simples e segura.

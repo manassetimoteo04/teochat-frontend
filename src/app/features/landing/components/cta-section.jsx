@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import Heading from "../ui/heading";
 
 function CtaSection() {
+  const navigate = useNavigate();
   return (
     <div className="bg-gradient-to-l p-[10rem_2rem] from-green-500 to-green-600">
       <section className="max-w-[120rem] m-[0_auto]">
@@ -15,8 +17,12 @@ function CtaSection() {
             gratuitamente e descubra como é fácil se manter organizado e
             produtivo. A comunicação da sua equipe nunca mais será a mesma.
           </p>
-          <button className="bg-white p-[1rem_2rem] flex items-center gap-[0.5rem] text-black justify-center hover:bg-black hover:text-white rounded-full">
-            Criar a minha empresa
+
+          <button
+            onClick={() => navigate("/sign-in")}
+            className="bg-white p-[1rem_2rem] flex items-center gap-[0.5rem] text-black justify-center hover:bg-black hover:text-white rounded-full"
+          >
+            Começar Agora
           </button>
         </div>
       </section>

@@ -1,13 +1,13 @@
+import AuthLayout from "../components/auth-layout";
 import SignInForm from "../components/sign-in-form";
 
 function SignInPage() {
   return (
-    <div className="grid h-screen overflow-hidden grid-cols-[1fr_50rem]">
-      <div className="bg-[url('/workspace.jpg')] bg-cover h-screen"></div>
+    <AuthLayout>
       <div className="h-screen overflow-hidden">
         <SignInForm />
       </div>
-    </div>
+    </AuthLayout>
   );
 }
 

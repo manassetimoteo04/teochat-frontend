@@ -19,7 +19,7 @@ function FeaturesSection() {
           icon={<CalendarDays />}
           title="Gestão de Eventos"
           description="Gerenciamento de eventos globais e de equipes"
-        />{" "}
+        />
         <FeatureBox
           icon={<Phone />}
           title="Chamadas Integradas"

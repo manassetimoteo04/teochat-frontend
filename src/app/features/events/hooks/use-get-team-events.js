@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom";
 import { getTeamEvents } from "../services/event-services";
 
 export function useGetTeamEvents() {
-  const { teamId } = useParams();
-  const { data, isPending, error } = useQuery({
-    queryFn: () => getTeamEvents(teamId),
+  const { teamId, companyId } = useParams();
+  const { data, isPending } = useQuery({
+    queryFn: () => getTeamEvents({ teamId, companyId }),
     queryKey: ["events", teamId],
   });
   return { data, isPending };

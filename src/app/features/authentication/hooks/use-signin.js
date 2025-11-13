@@ -12,7 +12,6 @@ function useSignIn() {
     onSuccess: ({ data }) => {
       toast.success("Sessão inciada com successo");
       setToLocalStorage(data.token, "token");
-      console.log(data);
       if (!data.user.isConfirmed) {
         toast.error(
           "Conta não verifica, por favor verifique a tua conta para continuar"

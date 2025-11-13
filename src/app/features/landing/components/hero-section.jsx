@@ -36,7 +36,7 @@ function HeroSection() {
           tudo em um só lugar. Diga adeus à confusão de e-mails e grupos
           dispersos.
         </p>
-        <ButtonCta variarion="secondary">Criar Empresa</ButtonCta>
+        <ButtonCta variarion="secondary">Começar Agora</ButtonCta>
         <div>
           <span className="animate-bounce text-secondary-text-color cursor-pointer hover:bg-green-500 hover:text-white  mt-[2rem] w-[3rem] h-[3rem] bg-gray-200 flex items-center justify-center rounded-full">
             <ArrowDown size={20} />

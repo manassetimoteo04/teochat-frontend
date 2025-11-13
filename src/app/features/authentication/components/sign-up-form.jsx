@@ -6,6 +6,8 @@ import SpinnerMini from "../../../shared/ui/SpinnerMini";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import Button from "../../../shared/ui/button";
+import Logo from "../../../shared/ui/logo";
+import Heading from "../../../shared/ui/heading";
 
 function SignUpForm() {
   const { signUp, isPending } = useSignUp();
@@ -27,16 +29,15 @@ function SignUpForm() {
     <div className="p-[4rem] flex items-center h-full">
       <Form onSubmit={onSubmit}>
         <header className="flex flex-col gap-[0.5rem]">
-          <h1 className="flex items-center sm:text-[2.4rem] relative">
-            <img src="/logo.png" className="sm:w-[3.5rem] w-[2.5rem] h-auto" />
-            TeoChat
-          </h1>
-          <h1 className="text-[2.4rem]">Criar Conta</h1>
+          <Logo />
+          <Heading as="h2" className="text-[2.4rem]">
+            Criar Conta
+          </Heading>
           <span className="text-secondary-text-color">
             Crie a tua conta para começar a trabalhar com mais productividade
           </span>
         </header>
-        <div className="flex flex-col my-[3rem] gap-[1.5rem]">
+        <div className="flex flex-col my-[2rem] gap-[1.5rem]">
           <Input
             value={name}
             setValue={setName}
