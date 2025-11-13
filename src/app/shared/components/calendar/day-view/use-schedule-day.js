@@ -103,7 +103,7 @@ function useScheduleDay(list) {
     setDays((d) => d.map((d) => updateScheduleDays(d, increment)));
   };
   const currentDay = new Date(days.at(3)).toDateString();
-  const filteredList = list.filter(
+  const filteredList = list?.filter(
     (app) => new Date(app.date).toDateString() === currentDay
   );
   const handleInputCalendarClick = () => {

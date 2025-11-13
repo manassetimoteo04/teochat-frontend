@@ -34,7 +34,7 @@ function Row({ children }) {
   );
 }
 function Body({ data, render }) {
-  return <div>{data.map(render)}</div>;
+  return <div>{data?.map(render)}</div>;
 }
 function Footer({ children }) {
   return <div>{children}</div>;

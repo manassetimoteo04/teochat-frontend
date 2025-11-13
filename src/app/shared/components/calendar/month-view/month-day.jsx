@@ -15,7 +15,7 @@ function MonthDay({ day, events }) {
   const isToday = new Date().toDateString() === date.toDateString();
   const isMonth = new Date(currentDate).getMonth() === date.getMonth();
   const dayEvents = isMonth
-    ? events.filter(
+    ? events?.filter(
         (event) => new Date(event.date).toDateString() === date.toDateString()
       )
     : [];
@@ -35,15 +35,15 @@ function MonthDay({ day, events }) {
       >
         {day.getDate()}
       </span>
-      {dayEvents.slice(0, 2).map((event) => (
+      {dayEvents?.slice(0, 2).map((event) => (
         <MonthEventBox key={event.id + "event"} event={event} />
       ))}
-      {dayEvents.slice(1, -1).length >= 1 && (
+      {dayEvents?.slice(1, -1).length >= 1 && (
         <button
           onClick={() => setOpen((o) => !o)}
           className="text-[1.4rem] rounded-full border-gray-200 text-yellow-700 hover:bg-yellow-50 cursor-pointer border bg-gray-100 w-[4rem] bottom-1 flex items-center justify-center right-1 h-[2rem] absolute"
         >
-          + {dayEvents.slice(1, -1).length}
+          + {dayEvents?.slice(1, -1).length}
         </button>
       )}
       {open && (

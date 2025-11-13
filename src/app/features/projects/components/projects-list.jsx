@@ -39,11 +39,11 @@ function ProjectsList() {
             </button>
           </div>
         </div>
-        {selected.length > 0 && (
+        {selected?.length > 0 && (
           <div className="mb-[1rem] px-[1rem] flex gap-[2rem]">
             <div className="flex gap-[0.5rem] items-center">
               <CheckBox value={true} />{" "}
-              <span>{selected.length} selecionado(s)</span>
+              <span>{selected?.length} selecionado(s)</span>
             </div>
             <Modal.Open id="delete-many-project">
               <button className="bg-red-500 hover:bg-red-600 text-white flex gap-[0.4rem] p-[0.4rem_1rem] rounded-2xl  text-[1.4rem] items-center justify-center ">
@@ -78,7 +78,7 @@ function ProjectsList() {
               />
             )}
           />
-          {data.length < 1 && (
+          {data?.length < 1 && (
             <EmptyList
               opensId="create-project-form"
               title="Nenhum projecto foi encontrado nesta equipa"
