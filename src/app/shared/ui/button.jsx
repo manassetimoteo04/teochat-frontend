@@ -1,49 +1,48 @@
-function Button({ children, onClick, variation = "primary", disabled }) {
-  if (variation === "primary")
-    return (
-      <button
-        disabled={disabled}
-        onClick={onClick}
-        className=" bg-green-500 flex items-center text-black justify-center gap-[0.5rem] hover:bg-green-600 w-full p-[0.8rem_1.5rem] rounded-full "
-      >
-        {children}
-      </button>
-    );
-  if (variation === "secondary")
-    return (
-      <button
-        disabled={disabled}
-        onClick={onClick}
-        className="bg-main-bg-color p-[0.8rem_1.5rem] w-full items-center justify-center flex gap-[0.5rem] text-secondary-text-color disabled:opacity-50  rounded-full   shadow-[inset_0_0_0_1px_#dcdcdc] hover:shadow-[inset_0_0_0_1px_#22c55e] border-main-border-color hover:border-main-color hover:text-main-text-color"
-      >
-        {children}
-      </button>
-    );
-  if (variation === "danger")
-    return (
-      <button
-        disabled={disabled}
-        onClick={onClick}
-        className="bg-red-500 p-[0.8rem_1.5rem] w-full items-center justify-center flex gap-[0.5rem] text-white disabled:opacity-50  rounded-full   shadow-[0_0_0_1px_#dcdcdc]  border-main-border-color  hover:bg-red-600"
-      >
-        {children}
-      </button>
-    );
-  if (variation === "dashed")
-    return (
-      <button
-        style={{ borderWidth: "2px" }}
-        disabled={disabled}
-        onClick={onClick}
-        className="w-full flex items-center justify-center gap-2
-             p-[0.5rem_1.5rem] mt-3 rounded-full
-             border border-dashed  border-main-border-color
-             text-secondary-text-color disabled:opacity-50
-              hover:text-main-color"
-      >
-        {children}
-      </button>
-    );
+import clsx from "clsx";
+
+function Button({
+  children,
+  onClick,
+  variation = "primary",
+  size = "md",
+  disabled,
+  className,
+}) {
+  const base =
+    "flex items-center justify-center gap-[0.5rem] rounded-full font-medium disabled:opacity-50 transition" +
+    "  " +
+    className;
+
+  const variants = {
+    primary: "bg-green-500 text-black hover:bg-green-600",
+    secondary:
+      "bg-main-bg-color text-secondary-text-color shadow-[inset_0_0_0_1px_#dcdcdc] hover:shadow-[inset_0_0_0_1px_#22c55e] hover:text-main-text-color",
+    danger: "bg-red-500 text-white hover:bg-red-600",
+    dashed:
+      "border-2 border-dashed border-main-border-color text-secondary-text-color hover:text-main-color",
+  };
+
+  const sizes = {
+    sm: "px-3 py-1.5 text-[1.4rem]",
+    md: "px-6 py-2.5 text-[1.6rem]",
+    lg: "px-8 py-3 text-[1.8rem]",
+  };
+
+  return (
+    <button
+      disabled={disabled}
+      onClick={onClick}
+      className={clsx(
+        base,
+        variants[variation],
+        sizes[size],
+        "w-full",
+        className,
+      )}
+    >
+      {children}
+    </button>
+  );
 }
 
 export default Button;

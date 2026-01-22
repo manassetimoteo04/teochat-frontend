@@ -11,6 +11,7 @@ import { useState } from "react";
 import CheckBox from "../../../shared/ui/check-box";
 import Modal from "../../../shared/ui/modal";
 import DeleteAlert from "../../../shared/ui/delete-alert";
+import Menus from "../../../shared/ui/Menus";
 
 function ProjectsList() {
   const [selected, setSelected] = useState([]);
@@ -67,17 +68,19 @@ function ProjectsList() {
               Progresso
             </span>
           </Table.Header>
-          <Table.Body
-            data={data}
-            render={(data) => (
-              <ProjectListRow
-                onSelect={handleSelect}
-                selected={selected}
-                data={data}
-                key={data.id}
-              />
-            )}
-          />
+          <Menus>
+            <Table.Body
+              data={data}
+              render={(data) => (
+                <ProjectListRow
+                  onSelect={handleSelect}
+                  selected={selected}
+                  data={data}
+                  key={data.id}
+                />
+              )}
+            />
+          </Menus>
           {data?.length < 1 && (
             <EmptyList
               opensId="create-project-form"

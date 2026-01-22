@@ -29,8 +29,13 @@ function CompaniesLayout({ children }) {
         <div>
           <header className="p-[2rem_4rem]  flex justify-between items-center">
             <Logo />
-            <button className="text-secondary-text-color">
-              <LogOutIcon />
+            <button
+              onClick={() => {
+                navigate("/sign-in");
+              }}
+              className="bg-blue-700 rounded-3xl text-white hover:bg-black p-[2rem]"
+            >
+              <LogOutIcon /> Terminar Sessão
             </button>
           </header>
         </div>
