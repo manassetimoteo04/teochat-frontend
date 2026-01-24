@@ -46,7 +46,7 @@ function CreateTeamForm({ onCloseModal }) {
   const [query, setQuery] = useState("");
   const filteredUsers = users
     ? users?.filter((user) =>
-        normalizeText(user.name).startsWith(normalizeText(query))
+        normalizeText(user.name).startsWith(normalizeText(query)),
       )
     : [];
 
@@ -62,7 +62,7 @@ function CreateTeamForm({ onCloseModal }) {
       tags,
       members: members?.map((mem) => mem.id),
     };
-    create({ newTeam }, { onSuccess: onCloseModal });
+    create({ newTeam });
   };
   function handleNextStep() {
     dispatch({ type: "NEXT_STEP" });
@@ -157,7 +157,7 @@ function CreateTeamForm({ onCloseModal }) {
                       className={clsx(
                         "flex hover:bg-gray-100 rounded-2xl items-center gap-[0.5rem] p-[0.5rem_1rem]  ",
                         members.some((mem) => mem.id === user.id) &&
-                          "bg-gray-100"
+                          "bg-gray-100",
                       )}
                     >
                       <img

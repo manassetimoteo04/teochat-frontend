@@ -27,7 +27,7 @@ export default function TaskCard({ task }) {
   return (
     <>
       <Modal.Open id={`task-details-${task.id}`}>
-        <div className="bg-white rounded-xl shadow-sm  p-[2rem] flex flex-col gap-[0.5rem] items-start">
+        <div className="bg-white rounded-xl shadow-sm  cursor-pointer p-[2rem] flex flex-col gap-[0.5rem] items-start">
           <div className="flex justify-between w-full items-center">
             <Tag type={PRIORITIES[task.priority].type}>
               {PRIORITIES[task.priority].label}
