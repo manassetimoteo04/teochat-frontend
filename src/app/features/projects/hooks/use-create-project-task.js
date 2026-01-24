@@ -9,7 +9,7 @@ export function useCreateProjectTask() {
   const { mutate, isPending } = useMutation({
     mutationFn: (data) => createProjectTask(projectId, { ...data }),
     onSuccess() {
-      queryClient.invalidateQueries({ queryKey: ["task"] });
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
       toast.success("Nova tarefa criado com successo");
     },
     onError(err) {

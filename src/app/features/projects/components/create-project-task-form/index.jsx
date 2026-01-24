@@ -64,7 +64,6 @@ export function CreateProjectTaskForm({ onCloseModal }) {
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
-
       create(
         { ...state, assignedTo: assignedTo.id },
         {

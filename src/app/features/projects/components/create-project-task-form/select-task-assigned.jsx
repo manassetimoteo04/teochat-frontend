@@ -5,6 +5,7 @@ import { useState } from "react";
 import InputSearch from "../../../../shared/ui/input-search";
 import { normalizeText } from "../../../../shared/utils/helpers";
 import { Search } from "lucide-react";
+import Spinner from "../../../../shared/ui/Spinner";
 
 export default function SelectTaskAssigned({ setShowList, handleSetAssigned }) {
   const { data, isPending } = useTeamParticipants();

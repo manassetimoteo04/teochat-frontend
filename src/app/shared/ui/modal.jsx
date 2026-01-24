@@ -20,25 +20,28 @@ function Modal({ children }) {
   );
 }
 
-function Window({ id, children, buttonClose }) {
+function Window({ id, children, buttonClose = true }) {
   const { close, open } = useContext(ModalContext);
   if (id !== open) return;
-  return (
+  return createPortal(
     <div className="fixed flex items-center z-[9999999] justify-center h-screen w-full top-0 left-0 bg-black/40">
       <div
         onClick={close}
         className="absolute top-0 left-0 w-full h-dvh "
       ></div>
       <div className=" relative z-50 bg-white rounded-2xl overflow-y-scroll max-h-[calc(100dvh-4rem)]">
-        <button
-          onClick={close}
-          className="absolute right-[1rem] hover:text-main-text-color text-secondary-text-color top-[1rem]"
-        >
-          <X />
-        </button>
+        {buttonClose && (
+          <button
+            onClick={close}
+            className="absolute right-[1rem] hover:text-main-text-color text-secondary-text-color top-[1rem]"
+          >
+            <X />
+          </button>
+        )}
         {cloneElement(children, { onCloseModal: close })}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 function Open({ id, children }) {

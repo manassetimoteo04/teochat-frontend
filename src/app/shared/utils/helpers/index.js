@@ -19,6 +19,10 @@ export const rewriteStatus = (statu) => {
     inactive: "incativo",
     public: "público",
     private: "privado",
+    todo: "Pendente",
+    in_progress: "Em progresso",
+    done: "Concluído",
+    settled: "Concluído",
   };
   return status[statu];
 };
@@ -40,7 +44,7 @@ export const formatDate = function (
   date,
   fullDate = false,
   string = false,
-  locale = "pt-AO"
+  locale = "pt-AO",
 ) {
   const opts = string
     ? {
@@ -89,6 +93,6 @@ export function formatHour(time) {
   const minutes = getMinutes(date);
   return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
     2,
-    "0"
+    "0",
   )}`;
 }
