@@ -37,6 +37,7 @@ function AppContextProvider({ children }) {
     ...state,
     dispatch,
   };
+
   return (
     <ContextProvider.Provider value={values}>
       {children}

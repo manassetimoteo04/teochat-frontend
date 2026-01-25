@@ -15,6 +15,7 @@ import MeetingsPage from "../../../features/meetings/pages";
 import CompanyJoinPage from "../../../features/companies/pages/company-join";
 import TeamsPage from "../../../features/teams/pages";
 import ProjectsPage from "../../../features/projects/pages";
+import ProjectDetailsPage from "../../../features/projects/pages/project-details";
 function RoutesProvider() {
   return (
     <BrowserRouter>
@@ -41,11 +42,24 @@ function RoutesProvider() {
           <Route path="dashboard" element={<DashboardPage />}></Route>
           <Route path="teams/:teamId" element={<TeamsPage />}></Route>
           <Route path="chats/:teamId" element={<ChatsPage />}></Route>
-          <Route path="mettings/:teamId" element={<MeetingsPage />}></Route>
+          <Route path="meetings/:teamId" element={<MeetingsPage />}></Route>
           <Route path="projects/:teamId" element={<ProjectsPage />}></Route>
+          <Route
+            path="projects/:teamId/:projectId"
+            element={<ProjectDetailsPage />}
+          />
           <Route path="agendas/:teamId" element={<AgendasPage />}></Route>
           <Route path="configurations" element={<ConfigurationsPage />}></Route>
         </Route>
+
+        <Route
+          path="*"
+          element={
+            <div className="h-screen w-full bg-black text-white">
+              Página não encontrada
+            </div>
+          }
+        ></Route>
       </Routes>
     </BrowserRouter>
   );

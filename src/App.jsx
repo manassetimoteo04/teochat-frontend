@@ -1,4 +1,4 @@
-import AppProvider from "./app/shared/providers";
+import AppProvider from "./app/shared/providers/";
 
 function App() {
   return <AppProvider />;

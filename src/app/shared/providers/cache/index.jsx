@@ -8,10 +8,11 @@ const queryClient = new QueryClient({
     },
   },
 });
+
 export function CacheProvider({ children }) {
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools />
+      <ReactQueryDevtools position="left" />
       {children}
     </QueryClientProvider>
   );
