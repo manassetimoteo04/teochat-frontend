@@ -3,6 +3,8 @@ import { ChannelItem } from "./channel-item";
 import { useListChannelsByTeam } from "../../hooks/use-list-channels-by-team";
 import Modal from "../../../../shared/ui/modal";
 import { CreateChannelForm } from "./create-channel-form";
+import { useNavigate } from "react-router-dom";
+import Spinner from "../../../../shared/ui/Spinner";
 
 const fakeChannels = [
   {
@@ -45,7 +47,8 @@ const fakeChannels = [
 
 export function Channels() {
   const { data, isPending } = useListChannelsByTeam();
-  if (isPending) return <ChannelsSkeleton />;
+  const navigate = useNavigate();
+
   return (
     <Modal>
       <div className="py-[2rem] ">
@@ -61,9 +64,16 @@ export function Channels() {
         </header>
 
         <div className="">
-          {data.map((channel) => (
-            <ChannelItem key={channel.id} channel={channel}></ChannelItem>
-          ))}
+          {!isPending &&
+            data.length > 0 &&
+            data.map((channel) => (
+              <ChannelItem
+                onClick={() => navigate(`#${channel.id}`)}
+                key={channel.id}
+                channel={channel}
+              ></ChannelItem>
+            ))}
+          {isPending && <Spinner />}
         </div>
       </div>
       <Modal.Window id="create-channel">

@@ -1,4 +1,9 @@
-export function ChannelItem({ channel, isActive = false, onClick }) {
+import { useLocation } from "react-router-dom";
+import { formatDate } from "../../../../shared/utils/helpers";
+
+export function ChannelItem({ channel, onClick }) {
+  const { hash } = useLocation();
+  const isActive = hash.replace("#", "") === channel.id;
   return (
     <button
       onClick={onClick}
@@ -13,7 +18,7 @@ export function ChannelItem({ channel, isActive = false, onClick }) {
 
           {channel.lastMessage && (
             <span className="text-xs text-secondary-text-color">
-              {/* {formatTime(channel.lastMessage.createdAt)} */}10 min
+              {formatDate(channel.lastMessage.createdAt)}
             </span>
           )}
         </div>

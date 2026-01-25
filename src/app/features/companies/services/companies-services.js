@@ -16,7 +16,6 @@ export const getCurrentCompany = async (companyId) => {
     const {
       data: { data },
     } = await api.get(`/companies/${companyId}/current`);
-    console.log(data);
     return data;
   } catch (error) {
     console.error(error);

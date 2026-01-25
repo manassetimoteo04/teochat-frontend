@@ -17,3 +17,20 @@ export async function createChatChannel(channel) {
     throw new Error(error);
   }
 }
+
+export async function getChannelById(id) {
+  try {
+    const { data } = await api.get(`/channels/${id}`);
+    return data.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+export async function archiveChannel(id) {
+  try {
+    await api.put(`/channels/${id}/archive`);
+  } catch (error) {
+    throw new Error(error);
+  }
+}
