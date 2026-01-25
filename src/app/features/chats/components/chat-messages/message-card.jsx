@@ -1,25 +1,25 @@
 import { Check, CheckCheck, Clock } from "lucide-react";
 
 export function MessageCard({ message, currentUserId }) {
-  const isMe = message.sender.id === "user_01";
-
+  const isMe = message.senderId.id === currentUserId;
   return (
     <div
-      className={`flex items-end gap-2 mb-4 ${isMe ? "justify-end" : "justify-start"}`}
+      className={`flex items-end gap-2 mb-4 ${
+        isMe ? "justify-end" : "justify-start"
+      }`}
     >
       {!isMe && (
         <img
-          src={message.sender.avatar}
-          alt={message.sender.displayName}
-          className="w-9 h-9 rounded-full object-cover mt-5"
+          src={message.senderId.avatar}
+          alt={message.senderId.name}
+          className="w-9 h-9 rounded-full object-cover self-end"
         />
       )}
 
       <div className={`flex flex-col max-w-[70%] ${isMe && "items-end"}`}>
-        {/* Nome */}
         {!isMe && (
-          <span className="text-[1.3rem] text-secondary-text-color font-semibold mb-1">
-            {message.sender.displayName}
+          <span className="text-[1.3rem] text-secondary-text-color font-medium mb-1 ml-1">
+            {message.senderId.name}
           </span>
         )}
 
@@ -59,7 +59,7 @@ export function MessageCard({ message, currentUserId }) {
           )}
         </div>
 
-        <div className="flex items-center gap-2 mt-1 text-[1.1rem] text-secondary-text-color">
+        <div className="flex items-center gap-1.5 mt-1 text-[1.1rem] text-secondary-text-color">
           <span>
             {new Date(message.createdAt).toLocaleTimeString("pt-PT", {
               hour: "2-digit",
@@ -68,10 +68,10 @@ export function MessageCard({ message, currentUserId }) {
           </span>
 
           {isMe && (
-            <span className="text-[1.1rem]">
-              {message.status === "read" && <CheckCheck size={15} />}
-              {message.status === "delivered" && <Check size={15} />}
-              {message.status === "sent" && <Clock size={15} />}
+            <span className="opacity-70">
+              {message.status === "sent" && <CheckCheck size={14} />}
+              {message.status === "delivered" && <Check size={14} />}
+              {message.status === "pending" && <Clock size={14} />}
             </span>
           )}
         </div>

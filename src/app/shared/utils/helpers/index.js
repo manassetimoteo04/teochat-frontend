@@ -45,6 +45,7 @@ export const formatDate = function (
   fullDate = false,
   string = false,
   locale = "pt-AO",
+  notHour = false,
 ) {
   const opts = string
     ? {
@@ -57,12 +58,14 @@ export const formatDate = function (
   const daysPassed = calcTimePassed(new Date(), date, "day");
 
   if (daysPassed === 0) {
-    const hourPassed = calcTimePassed(new Date(), date, "hour");
-    if (hourPassed === 0) {
-      const minPassed = calcTimePassed(new Date(), date, "min");
-      return `há ${minPassed} min`;
+    if (!notHour) {
+      const hourPassed = calcTimePassed(new Date(), date, "hour");
+      if (hourPassed === 0) {
+        const minPassed = calcTimePassed(new Date(), date, "min");
+        return `há ${minPassed} min`;
+      }
+      if (hourPassed > 0) return `há ${hourPassed} horas`;
     }
-    if (hourPassed > 0) return `há ${hourPassed} horas`;
     return "Hoje";
   }
   if (daysPassed === 1) return "Ontem";

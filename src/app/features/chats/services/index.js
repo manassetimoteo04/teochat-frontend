@@ -34,3 +34,18 @@ export async function archiveChannel(id) {
     throw new Error(error);
   }
 }
+
+export async function listChannelMessages(
+  channelId,
+  { limit = 20, cursor = null, type } = {},
+) {
+  const { data } = await api.get(`/messages/${channelId}/channel`, {
+    params: {
+      limit,
+      cursor,
+      type,
+    },
+  });
+
+  return data.data;
+}

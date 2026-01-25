@@ -6,7 +6,7 @@ import Spinner from "../../../../shared/ui/Spinner";
 export function ChatChannels() {
   const { data, isPending } = useGetTeamDetails();
   return (
-    <div className=" h-[calc(100dvh-5.5rem)] border-r border-gray-200">
+    <div className=" h-[calc(100dvh-5.5rem)] overflow-hidden border-r border-gray-200">
       {isPending && <Spinner />}
 
       {!isPending && (
@@ -16,7 +16,7 @@ export function ChatChannels() {
               Chats:{" "}
               <span className="text-[1.6rem]  font-normal text-secondary-text-color">
                 {" "}
-                {data.name}
+                {data?.name}
               </span>
             </h2>
 

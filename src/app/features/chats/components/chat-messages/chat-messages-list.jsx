@@ -1,150 +1,66 @@
 import { MessageCard } from "./message-card";
-import { useEffect, useRef } from "react";
-import { getSocket } from "../../../../shared/services/socket-client";
-import { useGetChannelById } from "../../hooks/use-get-channel-by-id";
-import { useLocation } from "react-router-dom";
-import { toast } from "sonner";
+import { formatDate } from "../../../../shared/utils/helpers";
+import { Loader } from "lucide-react";
 
-const users = [
-  {
-    id: "user_01",
-    username: "timoteo",
-    displayName: "Timóteo",
-    avatar: "https://i.pravatar.cc/150?img=12",
-  },
-  {
-    id: "user_02",
-    username: "carlos_dev",
-    displayName: "Carlos",
-    avatar: "https://i.pravatar.cc/150?img=32",
-  },
-  {
-    id: "user_03",
-    username: "ana_ui",
-    displayName: "Ana",
-    avatar: "https://i.pravatar.cc/150?img=47",
-  },
-  {
-    id: "user_04",
-    username: "joao_backend",
-    displayName: "João",
-    avatar: "https://i.pravatar.cc/150?img=18",
-  },
-  {
-    id: "user_05",
-    username: "maria_pm",
-    displayName: "Maria",
-    avatar: "https://i.pravatar.cc/150?img=25",
-  },
-];
+export function ChatMessagesList({
+  data,
+  currentUser,
+  bottomRef,
+  containerRef,
+  fetchNextPage,
+  hasNextPage,
+  isFetchingNextPage,
+  prepareForFetchMore,
+}) {
+  function handleScroll(e) {
+    const { scrollTop } = e.currentTarget;
 
-const messages = Array.from({ length: 3 }, (_, i) => {
-  const sender = users[i % users.length];
-  const isImage = i % 7 === 0;
-
-  return {
-    id: `msg_${String(i + 1).padStart(3, "0")}`,
-    channelId: "channel_01",
-    type: isImage ? "image" : "text",
-    content: isImage
-      ? "Screenshot do progresso"
-      : `Mensagem número ${i + 1} no canal`,
-
-    image: isImage
-      ? {
-          url: `https://picsum.photos/400/25${i % 10}`,
-          width: 400,
-          height: 250,
-        }
-      : undefined,
-
-    createdAt: new Date(Date.now() - (200 - i) * 1000 * 60 * 3).toISOString(),
-
-    status: i % 3 === 0 ? "read" : i % 3 === 1 ? "delivered" : "sent",
-
-    sender: {
-      ...sender,
-      role: i % 5 === 0 ? "admin" : "member",
-      isOnline: i % 2 === 0,
-      lastSeen: new Date(
-        Date.now() - Math.random() * 1000 * 60 * 60,
-      ).toISOString(),
-    },
-
-    reactions:
-      i % 5 === 0
-        ? [{ emoji: "🔥", userId: "user_02" }]
-        : i % 8 === 0
-          ? [{ emoji: "👍", userId: "user_01" }]
-          : [],
-
-    replyTo: i > 0 && i % 6 === 0 ? `msg_${String(i).padStart(3, "0")}` : null,
-
-    metadata: {
-      device: i % 2 === 0 ? "desktop" : "mobile",
-      edited: i % 9 === 0,
-    },
-  };
-});
-
-const socket = getSocket();
-export function ChatMessagesList() {
-  const sortedMessages = [...messages].sort(
-    (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
-  );
-  const { hash } = useLocation();
-  const groupedMessages = Object.groupBy(sortedMessages, (msg) => {
-    const d = new Date(msg.createdAt);
-
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-  });
-
-  const currentChannelRef = useRef(null);
-  useEffect(() => {
-    const channelId = hash.replace("#", "");
-    if (!channelId) return;
-
-    socket.on("connect", () => {
-      if (currentChannelRef.current) {
-        socket.emit("channel:leave", {
-          channelId: currentChannelRef.current,
-        });
-      }
-
-      socket.emit("channel:join", { channelId });
-
-      socket.on("message:new", (msg) => {
-        console.log("Recebi:", msg);
-        toast("NOVA MENSAGEM");
-      });
-
-      socket.on("message:sent", (msg) => {
-        console.log("Enviei:", msg);
-      });
-
-      currentChannelRef.current = channelId;
-    });
-
-    return () => {
-      socket.off("connect");
-    };
-  }, [hash]);
+    if (scrollTop === 0 && hasNextPage && !isFetchingNextPage) {
+      prepareForFetchMore();
+      fetchNextPage();
+    }
+  }
 
   return (
-    <div className="relative p-[4rem_2rem] overflow-y-scroll h-[calc(100dvh-11rem)]">
-      {Object.entries(groupedMessages).map(([date, msgs]) => (
-        <div key={date}>
-          <div className="text-center sticky text-zinc-500 my-3">
-            <span className="flex items-center justify-center p-[0.5rem] rounded-full bg-white ">
-              {date}
+    <div
+      ref={containerRef}
+      onScroll={handleScroll}
+      className="relative p-[4rem_2rem] overflow-y-auto flex flex-col gap-[1rem] h-[calc(100dvh-11rem)]"
+    >
+      <div className="flex justify-center min-h-[3rem]">
+        {isFetchingNextPage && (
+          <div className="flex items-center gap-2 text-zinc-500 text-sm">
+            <Loader className="w-4 h-4 animate-spin" />
+            <span>A carregar mensagens anteriores…</span>
+          </div>
+        )}
+
+        {!hasNextPage && (
+          <span className="text-zinc-400 text-xs">Não há mais mensagens</span>
+        )}
+      </div>
+
+      {Object.entries(data).map(([date, msgs]) => (
+        <div key={date} className="flex flex-col gap-[2rem]">
+          <div className="text-center relative my-4 w-full">
+            <span className="h-[1px] w-full bg-gray-100 absolute top-1/2 left-0" />
+            <span className="relative px-3 py-1 rounded-full border bg-white text-[1.2rem] text-zinc-500">
+              {formatDate(new Date(date), false, false, false, true)}
             </span>
           </div>
 
           {msgs.map((msg) => (
-            <MessageCard key={msg.id} message={msg} />
+            <MessageCard
+              key={msg.id || msg.tempId}
+              message={msg}
+              currentUserId={currentUser}
+            />
           ))}
         </div>
       ))}
+
+      <div className="mt-[16rem] bg-red-500" />
+      <div ref={bottomRef} />
     </div>
   );
 }

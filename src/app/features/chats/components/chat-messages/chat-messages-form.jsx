@@ -4,7 +4,11 @@ import { useLocation } from "react-router-dom";
 import { getSocket } from "../../../../shared/services/socket-client";
 import { useState } from "react";
 
-export function ChatMessagesForm() {
+export function ChatMessagesForm({
+  setRealtimeMessages,
+  currentUser,
+  scrollToBottom,
+}) {
   const { hash } = useLocation();
   const [text, setText] = useState("");
   function handleSubmit(e) {
@@ -14,12 +18,19 @@ export function ChatMessagesForm() {
 
     const socket = getSocket();
     const channelId = hash.replace("#", "");
-
-    socket.emit("message:send", {
+    const data = {
       channelId,
       content: text,
-    });
-
+      tempId: crypto.randomUUID(),
+    };
+    socket.emit("message:send", data);
+    data.createdAt = new Date();
+    data.status = "pending";
+    data.content = text;
+    data.senderId = { id: currentUser };
+    data.type = "text";
+    setRealtimeMessages((prev) => [...prev, data]);
+    scrollToBottom();
     setText("");
   }
 

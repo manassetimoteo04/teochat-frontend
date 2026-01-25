@@ -1,9 +1,12 @@
 import { useLocation } from "react-router-dom";
 import { formatDate } from "../../../../shared/utils/helpers";
+import { useAppContext } from "../../../../shared/providers/context";
 
 export function ChannelItem({ channel, onClick }) {
   const { hash } = useLocation();
   const isActive = hash.replace("#", "") === channel.id;
+  const { currentUser } = useAppContext();
+  const isMe = channel?.lastMessage?.sent === currentUser?.id;
   return (
     <button
       onClick={onClick}
@@ -16,16 +19,22 @@ export function ChannelItem({ channel, onClick }) {
             #{channel.name}
           </span>
 
-          {channel.lastMessage && (
+          {channel?.lastMessage && (
             <span className="text-xs text-secondary-text-color">
-              {formatDate(channel.lastMessage.createdAt)}
+              {formatDate(
+                new Date(channel?.lastMessage?.date ?? new Date()),
+                false,
+                false,
+                false,
+                false,
+              )}
             </span>
           )}
         </div>
 
-        {channel.lastMessage ? (
+        {channel?.lastMessage?.name ? (
           <p className="text-[1.4rem] text-secondary-text-color truncate">
-            <strong>{channel.lastMessage.senderName}: </strong>
+            <strong>{!isMe ? channel.lastMessage.name : "Eu"}: </strong>
             {channel.lastMessage.content}
           </p>
         ) : (
