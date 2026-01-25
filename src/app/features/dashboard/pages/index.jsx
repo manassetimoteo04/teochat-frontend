@@ -17,19 +17,19 @@ function DashboardPage() {
       <Modal>
         <PageHeader
           title={"Seja bem-vindo, " + currentUser?.name}
-          description="Análise a productividade das tuas equipes, eventos próximos e mais"
+          description="Comece a colaborar já com TeoChat."
         >
           <div className="flex gap">
             <Modal.Open id="create-new">
               <Button>
                 <Plus size={20} />
-                Novo
+                <span className="hidden sm:flex">Novo</span>
               </Button>
             </Modal.Open>
           </div>
         </PageHeader>
         <Stats />
-        <div className="grid grid-cols-[1fr_1.5fr] mt-[3rem] gap-[3rem] p-[0_2rem]">
+        <div className="grid lg:grid-cols-[1fr_1.5fr] grid-cols-1 md:grid-cols-2 mt-[3rem] gap-[3rem] p-[0_2rem]">
           <DashboardTeams />
           <DashboardRecentMemebrs />
         </div>

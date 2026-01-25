@@ -9,14 +9,15 @@ export function useScheduleWeek(events) {
   const [list, setList] = useState(data);
   const today = new Date(Date.now());
   const days = list.map((day) =>
-    new Date(Date.now()).setDate(today.getDate() + day)
+    new Date(Date.now()).setDate(today.getDate() + day),
   );
   const dates = days.map((day) => new Date(day).toDateString());
   const title = `${formatDate(
     new Date(days.at(0)),
     true,
-    true
-  )}  —  ${formatDate(new Date(days.at(-1)), true, true)}`;
+    false,
+    false,
+  )}  —  ${formatDate(new Date(days.at(-1)), true, false, false)}`;
   function prev() {
     setList((array) => array.map((item) => item - 7));
   }

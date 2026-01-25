@@ -4,7 +4,7 @@ import StatBox from "../ui/stat-box";
 function Stats() {
   const stats = useDashboardStats();
   return (
-    <div className="grid mx-[2rem] overflow-hidden gap-[2rem] rounded-xl  border-main-border-color grid-cols-4 ">
+    <div className="grid mx-[2rem] overflow-hidden gap-[2rem] rounded-xl  border-main-border-color grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
       {stats?.map((stat) => (
         <StatBox key={stat.title} stat={stat} />
       ))}

@@ -32,7 +32,8 @@ export function DayView({ render = null }) {
                   ? "bg-gray-100  !transition-none !duration-initial !text-text-inverse border-primary"
                   : "hover:bg-background-contrast",
                 isToday(day) && "border-main-color border",
-                " gap-[1rem] first:border-l  last:border-r-[0px] cursor-pointer  border-r p-[0.5rem] md:p-[1rem] flex items-center justify-center text-center border-border-dark border-1"
+                " gap-[0rem] first:border-l  last:border-r-[0px] cursor-pointer  border-r p-[0.5rem] md:p-[1rem] flex items-center justify-center text-center border-border-dark border-1",
+                "flex-col",
               )}
             >
               <p
