@@ -5,20 +5,14 @@ function CurrentUserBox() {
   const { currentUser, currentRole } = useAppContext();
   const { initials, color } = generateAvatar(currentUser?.name);
   return (
-    <div className="flex items-center gap-[0.5rem]">
-      {/* <img
-        src={currentUser?.avatar || "/default-user.jpg"}
-        onError={() => "/default-user.jpg"}
-        className="w-[3.5rem] overflow-hidden h-[3.5rem] border-[2px] border-main-color rounded-full"
-        alt={currentUser?.name}
-      /> */}
+    <div className="flex w-ful  items-center gap-[0.5rem]">
       <div
         style={{ backgroundColor: color }}
         className="w-[3.5rem] text-main-text-color h-[3.5rem] border rounded-full flex items-center justify-center"
       >
         {initials}
       </div>
-      <div className="flex flex-col gap-0">
+      <div className=" flex-col hidden md:flex gap-0">
         <p className="text-[1.4rem] text-main-text-color">
           {currentUser?.name}
         </p>

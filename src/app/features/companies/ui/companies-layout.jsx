@@ -6,6 +6,7 @@ import FullPageSpinner from "../../../shared/ui/full-page-spinner";
 import { useSession } from "../../../shared/hooks/use-session";
 import { toast } from "sonner";
 import { useAppContext } from "../../../shared/providers/context";
+import Button from "../../../shared/ui/button";
 function CompaniesLayout({ children }) {
   const { session, isPending } = useSession();
   const { dispatch } = useAppContext();
@@ -25,18 +26,21 @@ function CompaniesLayout({ children }) {
   if (isPending) return <FullPageSpinner />;
   if (!isPending && session)
     return (
-      <div className="bg-main-bg-color overflow-scroll  h-screen">
+      <div className="bg-main-bg-color overflow-scroll relative  h-screen">
         <div>
-          <header className="p-[2rem_4rem]  flex justify-between items-center">
+          <header className="md:p-[2rem_4rem] bg-gradient-to-t from-transparent to-main-bg-color p-[2rem] top-0 left-0 w-full h-[8rem] fixed flex justify-between items-center">
             <Logo />
-            <button
-              onClick={() => {
-                navigate("/sign-in");
-              }}
-              className="bg-blue-700 rounded-3xl text-white hover:bg-black p-[2rem]"
-            >
-              <LogOutIcon /> Terminar Sessão
-            </button>
+            <div>
+              <Button
+                variation="secondary"
+                onClick={() => {
+                  navigate("/sign-in");
+                }}
+                className="bg-blue-700 flex  rounded-3xl"
+              >
+                <LogOutIcon /> <p className="hidden md:flex">Sair</p>
+              </Button>
+            </div>
           </header>
         </div>
         {children}
