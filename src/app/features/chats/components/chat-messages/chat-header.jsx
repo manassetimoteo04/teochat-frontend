@@ -1,10 +1,17 @@
-import { EllipsisVertical, Search, Video } from "lucide-react";
+import { ArrowLeft, EllipsisVertical, Search, Video } from "lucide-react";
 import ButtonIcon from "../../../../shared/ui/button-icon";
+import { useNavigate } from "react-router-dom";
 
 export function ChatHeader({ data, setDetails }) {
+  const navigate = useNavigate();
   return (
     <header className="h-full px-[2rem] flex items-center justify-between border-b">
       <div className="flex items-center gap-[1rem] ">
+        <div className="md:hidden">
+          <ButtonIcon onClick={() => navigate(-1)}>
+            <ArrowLeft />
+          </ButtonIcon>
+        </div>
         <span className="w-[4rem] h-[4rem] bg-green-100 text-main-color rounded-2xl flex items-center justify-center">
           #
         </span>

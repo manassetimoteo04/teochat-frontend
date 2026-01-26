@@ -41,7 +41,7 @@ export default function Event({ event, titleOnly = false }) {
           ref={ref}
           className={clsx(
             bg[event.status],
-            "w-full hover:z-50  z-40 hover:shadow-md cursor-pointer border absolute flex flex-col p-[0.5rem] rounded-2xl  transition-all duration-200"
+            "w-full hover:z-50  overflow-hidden z-40 hover:shadow-md cursor-pointer border absolute flex flex-col p-[0.5rem] rounded-2xl  transition-all duration-200",
           )}
         >
           <p className={clsx("truncate text-[1.4rem] ", text[event.status])}>

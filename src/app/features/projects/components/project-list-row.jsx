@@ -12,7 +12,7 @@ function ProjectListRow({
   const navigate = useNavigate();
   return (
     <Table.Row>
-      <div className="flex items-center justify-center">
+      <div className="flex items-center  justify-center">
         <CheckBox
           value={selected.some((el) => el === id)}
           setValue={() => onSelect(id)}
@@ -26,16 +26,16 @@ function ProjectListRow({
           </span>
         </div>
       </div>
-      <span className="p-[1.5rem_1rem] flex items-center">
+      <span className="p-[1.5rem_1rem] hidden sm:flex items-center">
         {createdBy.name}
       </span>
-      <span className="p-[1.5rem_1rem] flex items-center">
+      <span className="p-[1.5rem_1rem] hidden md:flex items-center">
         {formatDate(new Date(createdAt ?? new Date()), true)}
       </span>
-      <span className="p-[1.5rem_1rem] flex items-center">
+      <span className="p-[1.5rem_1rem] hidden lg:flex items-center">
         {formatDate(new Date(endDate ?? new Date()), true)}
       </span>
-      <div className="p-[1.5rem_1rem] flex items-center">
+      <div className="p-[1.5rem_1rem] hidden lg:flex items-center">
         <div className="w-full relative h-[1rem] rounded-full overflow-hidden bg-gray-200">
           <span className="absolute top-0 left-0 h-full w-1/2 rounded-full bg-blue-600"></span>
         </div>

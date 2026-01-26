@@ -99,7 +99,12 @@ export function ChatMessages() {
   }, [messages]);
 
   return (
-    <div className={clsx("grid h-full", details && "grid-cols-2")}>
+    <div
+      className={clsx(
+        "grid absolute top-0 left-0  w-full md:relative h-full",
+        details && "lg:grid-cols-2",
+      )}
+    >
       <div className="bg-white relative grid grid-rows-[5.5rem_1fr]">
         {!isPending && channel && (
           <>

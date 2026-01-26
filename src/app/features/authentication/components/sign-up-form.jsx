@@ -26,7 +26,7 @@ function SignUpForm() {
     signUp(data);
   }
   return (
-    <div className="p-[4rem] flex items-center h-full">
+    <div className="md:p-[4rem] p-[2rem]  flex items-center h-full">
       <Form onSubmit={onSubmit}>
         <header className="flex flex-col gap-[0.5rem]">
           <Logo />

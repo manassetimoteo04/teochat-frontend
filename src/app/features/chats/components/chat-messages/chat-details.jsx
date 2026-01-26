@@ -18,9 +18,9 @@ import { ArchiveIcon, PencilLine, Search } from "lucide-react";
 import { useArchiveChatChannel } from "../../hooks/use-archive-channel";
 
 export function ChatDetails({ setConversationDetails, data }) {
-  const { mutate, isPending } = useArchiveChatChannel();
+  const { mutate } = useArchiveChatChannel();
   return (
-    <div className="h-[calc(100dvh-5.5rem)] overflow-y-scroll  relative">
+    <div className="lg:h-[calc(100dvh-5.5rem)] bg-main-bg-color  overflow-y-scroll  absolute top-0 left-0 w-full h-full lg:relative">
       <header className="p-[2rem] bg-gradient-to-t from-main-bg-color/5 to-main-bg-color/90 dark:from-main-bg-color-dark/0 dark:to-main-bg-color-dark absolute top-0 left-0 w-full h-[5.5rem]  flex items-center justify-between">
         <div className="flex items-center gap-2">
           <ButtonIcon onClick={() => setConversationDetails(false)}>

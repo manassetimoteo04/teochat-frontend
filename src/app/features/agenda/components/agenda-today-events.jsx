@@ -11,11 +11,11 @@ function AgendaTodayEvents() {
   const todayEvents = data
     ?.filter(
       (event) =>
-        new Date(event.date).toDateString() === new Date().toDateString()
+        new Date(event.date).toDateString() === new Date().toDateString(),
     )
     .sort((a, b) => new Date(b) - new Date(a));
   return (
-    <aside className="bg-main-bg-color-2 p-[2rem] pb-[0.5rem] border-gray-100 border rounded-3xl ">
+    <aside className="bg-main-bg-color-2 p-[2rem] pb-[0.5rem]  min-h-[30rem] border-gray-100 border rounded-3xl ">
       <Heading as="h3">Eventos de Hoje</Heading>
       <ul className="max-h-[21rem] overflow-y-scroll">
         <>

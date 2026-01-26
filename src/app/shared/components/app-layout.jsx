@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Header from "./header";
 import Main from "./main";
 import Sidebar from "./sidebar";
@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { MessageCircle } from "lucide-react";
 const socket = getSocket();
 function AppLayout() {
+  const [sidebar, setSidebar] = useState(false);
   const { companyId } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
@@ -46,10 +47,10 @@ function AppLayout() {
     socket.on("channel:new-msg", onNewChannelMessage);
   }, [companyId, navigate]);
   return (
-    <div className="grid grid-cols-[30rem_1fr] max-w-[180rem] border-x mx-auto grid-rows-[5.5rem_1fr] h-[100dvh]">
-      <Sidebar />
+    <div className="grid lg:grid-cols-[30rem_1fr] max-w-[180rem] border-x mx-auto grid-rows-[5.5rem_1fr] h-[100dvh]">
+      <Sidebar sidebar={sidebar} setSidebar={setSidebar} />
       <Main />
-      <Header />
+      <Header sidebar={sidebar} setSidebar={setSidebar} />
     </div>
   );
 }

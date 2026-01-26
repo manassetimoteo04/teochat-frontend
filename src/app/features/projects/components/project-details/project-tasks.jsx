@@ -8,7 +8,7 @@ export default function ProjectTasks() {
   if (isPending) return <Spinner />;
   return (
     <Modal>
-      <div className="grid grid-cols-3 gap-[2rem] p-[2rem] ">
+      <div className=" overflow-x-scroll flex gap-[2rem] p-[2rem] ">
         <ProjectTaskCol
           data={data.filter((el) => el.status === "todo")}
           type="Pendentes"

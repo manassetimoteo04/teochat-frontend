@@ -46,7 +46,7 @@ function TeamDetails({ data }) {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-2 mt-[2rem] gap-[1rem]">
+        <div className="grid lg:grid-cols-2 mt-[2rem] gap-[1rem]">
           <TeamDetailBox
             icon={<Lock size={20} />}
             label="Privacidade"
@@ -127,7 +127,6 @@ function TeamDetails({ data }) {
             />
           </div>
         </div>
-        {/* <TeamDetailsNav /> */}
       </div>
       <Modal.Window id="set-lider">
         <SetLider />

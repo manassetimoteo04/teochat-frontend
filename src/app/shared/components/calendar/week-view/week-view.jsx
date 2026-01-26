@@ -3,7 +3,7 @@ import WeekHours from "./week-hours";
 
 import { useCalendar } from "../calendar-provider";
 
-function WeekView({ setTitle, onNext, onPrev }) {
+function WeekView() {
   const {
     week: { dates, weekdays, times, days, events },
   } = useCalendar();
@@ -11,9 +11,9 @@ function WeekView({ setTitle, onNext, onPrev }) {
   return (
     <>
       <div>
-        <div className="w-[calc(100dvw-30rem)]  overflow-x-scroll ">
-          <div className="grid grid-cols-[5rem_1fr_1fr_1fr_1fr_1fr_1fr_1fr] border-b">
-            <div className=" h-full w-full items-center border-r text-[1.2rem] flex justify-center">
+        <div className="lg:w-[calc(100dvw-30rem)] w-full  overflow-x-scroll ">
+          <div className="grid grid-cols-[3rem_1fr_1fr_1fr_1fr_1fr_1fr_1fr] md:grid-cols-[5rem_1fr_1fr_1fr_1fr_1fr_1fr_1fr] border-b">
+            <div className=" h-full w-full items-center border-r md:text-[1.2rem] text-[1rem] flex justify-center">
               <span>H</span>
             </div>
             {dates.map((date) => {
@@ -23,8 +23,8 @@ function WeekView({ setTitle, onNext, onPrev }) {
                 <div
                   key={date}
                   className={clsx(
-                    "p-[1rem_2rem] flex justify-center gap-[1rem] text-secondary-text-color items-center border-r",
-                    isToday && "bg-gray-50"
+                    "md:p-[1rem_2rem] py-[1rem] flex-col text-[1rem] flex justify-center gap-[0.5rem] text-secondary-text-color items-center border-r",
+                    isToday && "bg-gray-50",
                   )}
                 >
                   <span className={isToday ? "text-main-text-color" : ""}>

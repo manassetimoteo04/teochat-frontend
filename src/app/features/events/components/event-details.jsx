@@ -40,7 +40,7 @@ function EventDetails({ eventId, onCloseModal }) {
   const { cancelEvent, isCanceling } = useCancelEvent();
   if (isPending) return <Spinner />;
   return (
-    <div className="p-[2rem] max-w-[50rem] min-w-[50rem] flex flex-col gap-[2rem]">
+    <div className="p-[2rem] max-w-[50rem] sm:min-w-[50rem] flex flex-col gap-[2rem]">
       <div className="flex flex-col gap-[1rem] ">
         <div className="flex items-center gap-[1rem]">
           <span className="flex items-center  gap-[0.5rem] text-secondary-text-color">
@@ -139,7 +139,7 @@ function EventDetails({ eventId, onCloseModal }) {
         </div>
       </div>
       {status !== "canceled" && (
-        <div className="flex items-center justify-end gap-[1rem]">
+        <div className="flex flex-col md:flex-row items-center justify-end gap-[1rem]">
           <Modal.Open id={eventId + "-update"}>
             <Button variation="secondary">Editar Evento</Button>
           </Modal.Open>

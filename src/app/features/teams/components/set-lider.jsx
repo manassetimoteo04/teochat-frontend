@@ -17,12 +17,12 @@ function SetLider({ onCloseModal }) {
   const [query, setQuery] = useState("");
 
   const filteredUsers = users?.filter((user) =>
-    normalizeText(user.name).startsWith(normalizeText(query))
+    normalizeText(user.name).startsWith(normalizeText(query)),
   );
   return (
-    <div className="p-[2rem] flex flex-col gap-[2rem] max-w-[50rem]">
+    <div className="p-[2rem] flex flex-col gap-[2rem]  max-w-[50rem]">
       <header className="mt-[2rem]">
-        <h3 className="text-[1.8rem]">Adicionar Líder</h3>
+        <h3 className="text-[2.4rem] font-semibold">Adicionar Líder</h3>
         <span className="text-secondary-text-color">
           Clique no membro de desejas provover a líder
         </span>
@@ -43,7 +43,7 @@ function SetLider({ onCloseModal }) {
                   key={user.id}
                   className={clsx(
                     "flex cursor-pointer hover:bg-gray-50 rounded-2xl items-center gap-[0.5rem] p-[1rem]  ",
-                    selected === user.id && "bg-gray-100 hover:bg-gray-100"
+                    selected === user.id && "bg-gray-100 hover:bg-gray-100",
                   )}
                 >
                   <img

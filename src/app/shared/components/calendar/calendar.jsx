@@ -182,7 +182,7 @@ function Calendar() {
   // }, []);
   return (
     <div>
-      <div className="p-[2rem] sticky top-0 z-[100] left-0  !bg-white justify-between flex border-b">
+      <div className="p-[2rem] items-center sticky top-0 z-[100] left-0  !bg-white justify-between flex border-b">
         <div>
           <ButtonIcon title="Anterior" onClick={handlers[currentView]?.prev}>
             <ChevronLeft />
@@ -191,7 +191,7 @@ function Calendar() {
             <ChevronRight />
           </ButtonIcon>
         </div>
-        <p>{title}</p>
+        <p className="text-[1.2rem]">{title}</p>
         <div className="flex gap-[1rem]">
           <ButtonIcon
             active={currentView === "day"}

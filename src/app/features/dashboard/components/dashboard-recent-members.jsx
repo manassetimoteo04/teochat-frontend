@@ -9,7 +9,7 @@ function DashboardRecentMembers() {
   const { data, isPending } = useCompanyRecentMembers();
   return (
     <CardBox title="Aderidos Recentemente">
-      <div>
+      <div className="min-h-[30rem]">
         {!isPending && data?.length < 1 && (
           <EmptyList
             title="Nenhuma equipa foi encontrada"
@@ -35,10 +35,10 @@ function DashboardRecentMembers() {
                     {formatDate(new Date(user.companies.joined))}
                   </span>
                 </div>
-                <div className="flex gap-[0.5rem]">
+                {/* <div className="flex gap-[0.5rem]">
                   <Tag>web designer</Tag>
                   <Tag>stock</Tag>
-                </div>
+                </div> */}
               </div>
             </div>
           ))

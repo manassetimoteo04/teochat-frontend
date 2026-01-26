@@ -20,14 +20,16 @@ function AgendasPage() {
             <Modal.Open id="create-event">
               <Button>
                 <Plus size={20} />
-                Evento
+                <span className="hidden sm:inline"> Evento</span>
               </Button>
             </Modal.Open>
           </div>
         </PageHeader>
-        <div className="grid grid-cols-[1.5fr_1fr]">
+        <div className="grid md:grid-cols-2 lg:grid-cols-[1.5fr_1fr]">
           <AgendaStats />
-          <AgendaTodayEvents />
+          <div className="p-[2rem] md:p-0 ">
+            <AgendaTodayEvents />
+          </div>
         </div>
         <AgendasCalendar />
       </div>

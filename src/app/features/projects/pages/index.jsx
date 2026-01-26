@@ -16,7 +16,7 @@ function ProjectsPage() {
           <Modal.Open id="create-project-form">
             <Button>
               {" "}
-              <Plus /> Criar Projecto
+              <Plus /> <span className="hidden md:flex">Criar Projecto</span>
             </Button>
           </Modal.Open>
         </div>

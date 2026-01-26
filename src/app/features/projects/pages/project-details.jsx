@@ -18,7 +18,7 @@ function ProjectDetailsPage() {
         <div>
           <Modal.Open id="create-project-taskform">
             <Button>
-              <Plus /> Nova Tarefa
+              <Plus /> <span className="hidden md:flex">Nova Tarefa</span>
             </Button>
           </Modal.Open>
         </div>

@@ -30,7 +30,7 @@ function reducer(state, action) {
       return {
         ...state,
         steps: state.steps.map((step) =>
-          step.field === action.field ? { ...step, data: action.value } : step
+          step.field === action.field ? { ...step, data: action.value } : step,
         ),
       };
 
@@ -71,7 +71,7 @@ function CreateCompanyForm() {
     e.preventDefault();
     if (!step.data)
       return toast.warning(
-        "Por favor preenche o campo antes de ir ao próximo passo"
+        "Por favor preenche o campo antes de ir ao próximo passo",
       );
     dispatch({ type: "NEXT_STEP" });
   }
@@ -91,14 +91,15 @@ function CreateCompanyForm() {
     <div className="max-w-[100rem] rounded-2xl mt-[8rem]  border-main-border-color bg-main-bg-color-2 m-[0_auto]">
       <header className="flex gap-[1rem] flex-col justify-between p-[2rem]   border-main-border-color">
         <div className="flex justify-between items-center ">
-          <h3 className="text-[1.8rem]">Criar minha empresa</h3>
+          <h3 className="text-[2.4rem]  font-semibold">Criar Empresa</h3>
+
           <div>
             <Button
               onClick={() => navigate(-1)}
               variation="secondary"
               className="bg-main-bg-color p-[0.8rem_2rem] flex gap-[0.5rem] text-secondary-text-color disabled:opacity-50  rounded-full  mt-3 border border-main-border-color hover:border-main-color hover:text-main-color"
             >
-              <ArrowLeft /> Voltar
+              <ArrowLeft /> <p className="hidden md:flex">Voltar</p>
             </Button>
           </div>
         </div>
@@ -107,7 +108,7 @@ function CreateCompanyForm() {
             <div
               className={`${
                 i < currentStep ? "!bg-blue-500 after:!bg-blue-500" : ""
-              } bg-gray-200 w-full h-[1rem] rounded-2xl after:z-10 relative after:absolute after:right-[-0.5rem]  after:top-1/2 after:-translate-y-1/2 after:w-[3rem] after:h-[3rem] after:bg-gray-200 after:rounded-full `}
+              } bg-gray-200 w-full h-[0.3rem] md:h-[0.8rem] rounded-2xl after:z-10 relative after:absolute after:right-[-0.5rem]  after:top-1/2 after:-translate-y-1/2 after:w-[3rem] after:h-[3rem] after:bg-gray-200 after:rounded-full `}
             >
               {i < currentStep && (
                 <span className="absolute  z-20 text-white right-[-0rem]  top-1/2 -translate-y-1/2">
@@ -178,23 +179,16 @@ function CreateCompanyForm() {
         )}
         {currentStep === 4 && (
           <StepForm step={{ title: "Visualizar Informações" }}>
-            <div className="text-secondary-text-color">
-              <p className="">
-                Nome:{" "}
-                <span className="text-main-text-color">{steps[0].data}</span>
-              </p>
-              <p>
-                Área de actuação:{" "}
-                <span className="text-main-text-color">{steps[1].data}</span>
-              </p>
-              <p>
-                Descrição:{" "}
-                <span className="text-main-text-color">{steps[2].data}</span>
-              </p>
-              <p>
-                Convites para:{" "}
-                <span className="text-main-text-color">{steps[3].data}</span>
-              </p>
+            <p className="text-[1.3rem] text-gray-500 mb-[2rem]">
+              Confirma se as informações abaixo estão correctas antes de
+              finalizar.
+            </p>
+
+            <div className="bg-gray-50 border border-gray-200 rounded-[1.6rem] p-[2rem] space-y-[1.6rem]">
+              <InfoRow label="Nome" value={steps[0].data} />
+              <InfoRow label="Área de actuação" value={steps[1].data} />
+              <InfoRow label="Descrição" value={steps[2].data} />
+              <InfoRow label="Convites para" value={steps[3].data} />
             </div>
           </StepForm>
         )}
@@ -223,3 +217,15 @@ function CreateCompanyForm() {
 }
 
 export default CreateCompanyForm;
+
+function InfoRow({ label, value }) {
+  return (
+    <div className="flex justify-between gap-[2rem]">
+      <span className="text-[1.2rem] text-gray-500">{label}</span>
+
+      <span className="text-[1.4rem] font-medium text-gray-900 text-right max-w-[24rem]">
+        {value || "—"}
+      </span>
+    </div>
+  );
+}
