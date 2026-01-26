@@ -12,6 +12,7 @@ import CheckBox from "../../../shared/ui/check-box";
 import Modal from "../../../shared/ui/modal";
 import DeleteAlert from "../../../shared/ui/delete-alert";
 import Menus from "../../../shared/ui/Menus";
+import { useBreakpoint } from "../../../shared/hooks/use-breakpont";
 
 function ProjectsList() {
   const [selected, setSelected] = useState([]);
@@ -20,23 +21,30 @@ function ProjectsList() {
     setSelected((values) =>
       values.some((som) => som === value)
         ? values.filter((val) => val !== value)
-        : [...values, value]
+        : [...values, value],
     );
   }
+  const { isXs, isSm, isMd, isLg } = useBreakpoint();
   if (isPending) return <Spinner />;
+
+  let columns = "4rem 1.3fr 1fr 0.8fr 0.8fr 0.8fr 4rem";
+  if (isXs) columns = "4rem 1.3fr   4rem";
+  if (isSm) columns = "4rem 1.3fr 1fr  4rem";
+  if (isMd) columns = "4rem 1.3fr 1fr 0.8fr 4rem";
+  if (isLg) columns = "4rem 1.3fr 1fr 0.8fr 0.8fr 0.8fr 4rem";
   return (
     <Modal>
       <div className="bg-white p-[2rem] border border-gray-100 rounded-2xl">
-        <div className="flex justify-between items-center mb-[2rem]">
+        <div className="flex gap-[1rem] justify-between items-center mb-[2rem]">
           <div>
             <InputSearch />
           </div>
-          <div className="flex gap-[1rem]">
-            <button className="bg-gray-100 hover:text-main-text-color flex gap-[0.4rem] p-[0.4rem_1rem] rounded-2xl border text-[1.4rem] items-center justify-center text-secondary-text-color">
-              <SortAsc size={18} /> Ordenar
+          <div className="flex gap-[0.5rem]">
+            <button className="bg-gray-100 hover:text-main-text-color flex gap-[0.4rem] p-[0.5rem] rounded-2xl border text-[1.4rem] items-center justify-center text-secondary-text-color">
+              <SortAsc size={18} />
             </button>
-            <button className="bg-gray-100 hover:text-main-text-color flex gap-[0.4rem] p-[0.4rem_1rem] rounded-2xl border text-[1.4rem] items-center justify-center text-secondary-text-color">
-              <ListFilter size={18} /> Filtrar
+            <button className="bg-gray-100 hover:text-main-text-color flex gap-[0.4rem] p-[0.5rem] rounded-2xl border text-[1.4rem] items-center justify-center text-secondary-text-color">
+              <ListFilter size={18} />
             </button>
           </div>
         </div>
@@ -53,18 +61,20 @@ function ProjectsList() {
             </Modal.Open>
           </div>
         )}
-        <Table columns="4rem 1.3fr 1fr 0.8fr 0.8fr 0.8fr 4rem">
+        <Table columns={columns}>
           <Table.Header>
             <span className="p-[1.5rem_1rem]  flex items-center"></span>
             <span className="p-[1.5rem_1rem]  flex items-center">Nome</span>
-            <span className="p-[1.5rem_1rem]  flex items-center">
+            <span className="p-[1.5rem_1rem] hidden sm:flex items-center">
               Criado Por
             </span>
-            <span className="p-[1.5rem_1rem]  flex items-center">
+            <span className="p-[1.5rem_1rem] hidden  items-center">
               Criado Em
             </span>
-            <span className="p-[1.5rem_1rem]  flex items-center">Término</span>
-            <span className="p-[1.5rem_1rem]  flex items-center">
+            <span className="p-[1.5rem_1rem] hidden   items-center">
+              Término
+            </span>
+            <span className="p-[1.5rem_1rem] hidden md:flex items-center">
               Progresso
             </span>
           </Table.Header>

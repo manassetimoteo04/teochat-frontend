@@ -83,7 +83,7 @@ export function CreateProjectTaskForm({ onCloseModal }) {
   }, []);
 
   return (
-    <div className=" min-w-[50rem]">
+    <div className=" sm:min-w-[50rem]">
       <header className="border-b border-gray-200 p-[2rem]">
         <h2 className="text-[2rem] font-semibold">Adicionar Tarefa Nova</h2>
       </header>

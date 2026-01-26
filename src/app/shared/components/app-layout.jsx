@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Header from "./header";
 import Main from "./main";
 import Sidebar from "./sidebar";
@@ -46,12 +46,11 @@ function AppLayout() {
     };
     socket.on("channel:new-msg", onNewChannelMessage);
   }, [companyId, navigate]);
-
   return (
     <div className="grid lg:grid-cols-[30rem_1fr] max-w-[180rem] border-x mx-auto grid-rows-[5.5rem_1fr] h-[100dvh]">
       <Sidebar sidebar={sidebar} setSidebar={setSidebar} />
       <Main />
-      <Header setSidebar={setSidebar} />
+      <Header sidebar={sidebar} setSidebar={setSidebar} />
     </div>
   );
 }

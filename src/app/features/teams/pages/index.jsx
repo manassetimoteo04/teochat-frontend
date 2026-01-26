@@ -25,7 +25,7 @@ function TeamsPage() {
           description="Veja as informações detalhadas da tua equipa"
           title={`Equipa de ${data?.name}`}
         >
-          <div className="flex gap-[2rem]">
+          <div className="flex gap-[1rem]">
             <Modal.Open id="add-team-member">
               <button>
                 <ButtonIcon title="Adicionar Membros">
@@ -45,8 +45,8 @@ function TeamsPage() {
             </Modal.Open>
           </div>
         </PageHeader>
-        <div className="p-[0_2rem]">
-          <div className="grid  border border-gray-100 rounded-2xl bg-white grid-cols-[1.5fr_1fr]">
+        <div className="lg:p-[0_2rem]">
+          <div className="grid  border border-gray-100 rounded-2xl bg-white lg:grid-cols-[1.5fr_1fr] md:grid-cols-2">
             <TeamDetails data={data} />
             <TeamParticipantsList />
           </div>

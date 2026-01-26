@@ -4,10 +4,10 @@ import { useState } from "react";
 
 import { useCompanyTeams } from "../../features/teams/hooks/use-company-teams";
 import NavCollapseLink from "./nav-collapse-link";
-function NavLink({ link }) {
+function NavLink({ link, setSidebar }) {
   const { companyId } = useParams();
   const isActive = useLocation().pathname.startsWith(
-    link.to.replace("app", companyId)
+    link.to.replace("app", companyId),
   );
   const { data, isPending } = useCompanyTeams();
 
@@ -17,7 +17,10 @@ function NavLink({ link }) {
   return (
     <li>
       <Component
-        onClick={() => (link.isCollapseble ? setCollapse((s) => !s) : {})}
+        onClick={() => {
+          link.isCollapseble ? setCollapse((s) => !s) : null;
+          !link.isCollapseble && setSidebar(false);
+        }}
         to={link.isCollapseble ? "" : link.to.replace("app", companyId)}
         className={`${
           isActive ? "bg-gray-100 !text-main-text-color" : ""
@@ -38,7 +41,12 @@ function NavLink({ link }) {
         >
           {isPending && <span>Carrengando...</span>}
           {link.childs.map((child) => (
-            <NavCollapseLink link={child} to={link.to} key={child.title} />
+            <NavCollapseLink
+              setSidebar={setSidebar}
+              link={child}
+              to={link.to}
+              key={child.title}
+            />
           ))}
         </div>
       )}

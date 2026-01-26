@@ -41,7 +41,7 @@ function CreateEventForm({ onCloseModal }) {
       const date = new Date(value);
       startTime
         ? (data.startTime = new Date(
-            new Date(startTime).setDate(date.getDate())
+            new Date(startTime).setDate(date.getDate()),
           ))
         : null;
       endTime
@@ -59,7 +59,7 @@ function CreateEventForm({ onCloseModal }) {
 
   return (
     <form onSubmit={onSubmit}>
-      <div className="w-full p-[2rem] min-w-[35rem] gap-[1.5rem] flex flex-col ">
+      <div className="w-full p-[2rem] md:min-w-[35rem] gap-[1.5rem] flex flex-col ">
         <div>
           <Heading as="h2">Criar Evento</Heading>
           <span>Criar evento novo para este team</span>

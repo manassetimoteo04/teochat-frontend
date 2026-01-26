@@ -10,7 +10,11 @@ function Header({ setSidebar }) {
         "    flex justify-between items-center p-[0_2rem] text-secondary-text-color border-b border-gray-100",
       )}
     >
-      <button onClick={() => setSidebar((s) => !s)}>
+      <button
+        onClick={() => {
+          setSidebar(true);
+        }}
+      >
         <ListMinusIcon />
       </button>
       <div className="flex gap-[2rem] items-center">

@@ -7,7 +7,7 @@ function ChatsPage() {
   const { hash } = useLocation();
 
   return (
-    <div className="grid grid-cols-[35rem_1fr]">
+    <div className="grid relative md:grid-cols-2 lg:grid-cols-[35rem_1fr]">
       <ChatChannels />
       {hash && <ChatMessages />}
       {!hash && <EmptyChatSelected />}

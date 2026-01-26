@@ -21,7 +21,7 @@ export function ChatMessagesForm({
     const data = {
       channelId,
       content: text,
-      tempId: crypto.randomUUID(),
+      tempId: Math.random() * Date.now(),
     };
     socket.emit("message:send", data);
     data.createdAt = new Date();
