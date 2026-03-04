@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Spinner from "../../../../shared/ui/Spinner";
 import { useGetChannelById } from "../../hooks/use-get-channel-by-id";
 import { ChannelNotFound } from "./channell-not-found";
@@ -7,13 +7,18 @@ import { ChatMessagesForm } from "./chat-messages-form";
 import { ChatMessagesList } from "./chat-messages-list";
 import clsx from "clsx";
 import { ChatDetails } from "./chat-details";
-import { getSocket } from "../../../../shared/services/socket-client";
+import {
+  ensureSocketConnected,
+  getSocket,
+} from "../../../../shared/services/socket-client";
 import { useLocation } from "react-router-dom";
 import { useAppContext } from "../../../../shared/providers/context";
 import { useChatScroll } from "../../../../shared/hooks/use-acroll-bottom";
 import { useChannelMessages } from "../../hooks/use-list-channel-messages";
 
 const socket = getSocket();
+const ACK_TIMEOUT_MS = 12000;
+const MAX_SEND_ATTEMPTS = 5;
 
 export function ChatMessages() {
   const { hash } = useLocation();
@@ -22,8 +27,13 @@ export function ChatMessages() {
 
   const channelId = hash.replace("#", "");
   const currentChannelRef = useRef(null);
+  const realtimeMessagesRef = useRef([]);
+  const sendTimeoutsRef = useRef(new Map());
 
   const [details, setDetails] = useState(false);
+  const [connectionStatus, setConnectionStatus] = useState(
+    navigator.onLine ? "reconnecting" : "offline",
+  );
   const [realtimeMessages, setRealtimeMessages] = useState([]);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
@@ -31,7 +41,6 @@ export function ChatMessages() {
 
   const messages = useMemo(() => {
     const httpMessages = data?.pages.flatMap((p) => p.messages) ?? [];
-
     const map = new Map();
 
     [...httpMessages, ...realtimeMessages].forEach((msg) => {
@@ -44,52 +53,249 @@ export function ChatMessages() {
   }, [data, realtimeMessages]);
 
   useEffect(() => {
-    if (!channelId) return;
-
-    currentChannelRef.current = channelId;
-    setRealtimeMessages([]);
-  }, [channelId]);
+    realtimeMessagesRef.current = realtimeMessages;
+  }, [realtimeMessages]);
 
   const {
     containerRef,
     bottomRef,
     scrollToBottom,
+    scrollToBottomIfNearBottom,
     prepareForFetchMore,
-    isNearBottom,
+    onContainerScroll,
+    cleanupAnimation,
   } = useChatScroll({
     messagesLength: messages.length,
     channelId,
   });
 
+  const clearAckTimeout = useCallback((tempId) => {
+    const timeoutId = sendTimeoutsRef.current.get(tempId);
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+      sendTimeoutsRef.current.delete(tempId);
+    }
+  }, []);
+
+  const markMessageAsFailed = useCallback(
+    (tempId) => {
+      setRealtimeMessages((prev) =>
+        prev.map((msg) => {
+          if (msg.tempId !== tempId) return msg;
+          if (msg.status === "sent" || msg.status === "delivered") return msg;
+          return { ...msg, status: "failed" };
+        }),
+      );
+    },
+    [setRealtimeMessages],
+  );
+
+  const scheduleAckTimeout = useCallback(
+    (tempId) => {
+      clearAckTimeout(tempId);
+      const timeoutId = setTimeout(() => {
+        sendTimeoutsRef.current.delete(tempId);
+        markMessageAsFailed(tempId);
+      }, ACK_TIMEOUT_MS);
+
+      sendTimeoutsRef.current.set(tempId, timeoutId);
+    },
+    [clearAckTimeout, markMessageAsFailed],
+  );
+
+  const trySendMessage = useCallback(
+    (message) => {
+      if (!message?.tempId || !message?.content || !message?.channelId) return;
+
+      if (!navigator.onLine) {
+        setConnectionStatus("offline");
+        setRealtimeMessages((prev) =>
+          prev.map((msg) =>
+            msg.tempId === message.tempId
+              ? {
+                  ...msg,
+                  status: "queued",
+                }
+              : msg,
+          ),
+        );
+        return;
+      }
+
+      ensureSocketConnected();
+
+      if (!socket.connected) {
+        setConnectionStatus("reconnecting");
+        setRealtimeMessages((prev) =>
+          prev.map((msg) =>
+            msg.tempId === message.tempId
+              ? {
+                  ...msg,
+                  status: "queued",
+                }
+              : msg,
+          ),
+        );
+        return;
+      }
+
+      setRealtimeMessages((prev) =>
+        prev.map((msg) => {
+          if (msg.tempId !== message.tempId) return msg;
+
+          const nextAttempt = (msg.attempts || 0) + 1;
+          return {
+            ...msg,
+            attempts: nextAttempt,
+            status: "pending",
+          };
+        }),
+      );
+
+      socket.emit("message:send", {
+        channelId: message.channelId,
+        content: message.content,
+        tempId: message.tempId,
+        type: message.type || "text",
+      });
+
+      scheduleAckTimeout(message.tempId);
+    },
+    [scheduleAckTimeout],
+  );
+
+  const flushPendingMessages = useCallback(() => {
+    const pending = realtimeMessagesRef.current.filter((msg) => {
+      const isOwn = msg?.senderId?.id === currentUser?.id;
+      const canRetry = (msg.attempts || 0) < MAX_SEND_ATTEMPTS;
+      const needsRetry = ["queued", "failed"].includes(msg.status);
+
+      return isOwn && !msg.id && canRetry && needsRetry;
+    });
+
+    pending.forEach((msg) => {
+      trySendMessage(msg);
+    });
+  }, [currentUser?.id, trySendMessage]);
+
+  const handleSendMessage = useCallback(
+    (content) => {
+      if (!currentUser?.id || !channelId) return;
+
+      const tempId = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+      const optimisticMessage = {
+        channelId,
+        content,
+        tempId,
+        createdAt: new Date().toISOString(),
+        status: navigator.onLine ? "pending" : "queued",
+        senderId: {
+          id: currentUser.id,
+          name: currentUser.name,
+          avatar: currentUser.avatar,
+        },
+        type: "text",
+        attempts: 0,
+      };
+
+      setRealtimeMessages((prev) => [...prev, optimisticMessage]);
+      scrollToBottom();
+      trySendMessage(optimisticMessage);
+    },
+    [channelId, currentUser, scrollToBottom, trySendMessage],
+  );
+
   useEffect(() => {
-    if (!socket || !currentUser?.id) return;
+    if (!channelId) return;
+
+    currentChannelRef.current = channelId;
+    setRealtimeMessages([]);
+
+    sendTimeoutsRef.current.forEach((timeoutId) => clearTimeout(timeoutId));
+    sendTimeoutsRef.current.clear();
+  }, [channelId]);
+
+  useEffect(() => {
+    if (!currentUser?.id) return;
+
+    const client = ensureSocketConnected();
+
+    const onConnect = () => {
+      setConnectionStatus("online");
+      flushPendingMessages();
+    };
+
+    const onDisconnect = () => {
+      setConnectionStatus(navigator.onLine ? "reconnecting" : "offline");
+    };
+
+    const onConnectError = () => {
+      setConnectionStatus(navigator.onLine ? "reconnecting" : "offline");
+    };
+
+    const onOnline = () => {
+      setConnectionStatus("reconnecting");
+      ensureSocketConnected();
+      flushPendingMessages();
+    };
+
+    const onOffline = () => {
+      setConnectionStatus("offline");
+    };
 
     const onNewMessage = (msg) => {
       if (msg.channelId !== currentChannelRef.current) return;
 
-      setRealtimeMessages((prev) => [...prev, msg]);
-
-      if (isNearBottom()) {
-        scrollToBottom();
-      }
+      setRealtimeMessages((prev) => [...prev, { ...msg, status: "delivered" }]);
+      scrollToBottomIfNearBottom(true);
     };
 
     const onMessageSent = ({ tempId, message }) => {
       if (message.channelId !== currentChannelRef.current) return;
 
-      setRealtimeMessages((prev) =>
-        prev.map((m) => (m.tempId === tempId ? message : m)),
-      );
+      clearAckTimeout(tempId);
+      setRealtimeMessages((prev) => {
+        const tempExists = prev.some((m) => m.tempId === tempId);
+        if (!tempExists) {
+          return [...prev, { ...message, status: "sent" }];
+        }
+
+        return prev.map((m) =>
+          m.tempId === tempId ? { ...message, status: "sent" } : m,
+        );
+      });
     };
 
-    socket.on("message:new", onNewMessage);
-    socket.on("message:sent", onMessageSent);
+    client.on("connect", onConnect);
+    client.on("disconnect", onDisconnect);
+    client.on("connect_error", onConnectError);
+    client.on("message:new", onNewMessage);
+    client.on("message:sent", onMessageSent);
+    window.addEventListener("online", onOnline);
+    window.addEventListener("offline", onOffline);
+
+    if (client.connected) {
+      setConnectionStatus("online");
+    }
 
     return () => {
-      socket.off("message:new", onNewMessage);
-      socket.off("message:sent", onMessageSent);
+      client.off("connect", onConnect);
+      client.off("disconnect", onDisconnect);
+      client.off("connect_error", onConnectError);
+      client.off("message:new", onNewMessage);
+      client.off("message:sent", onMessageSent);
+      window.removeEventListener("online", onOnline);
+      window.removeEventListener("offline", onOffline);
+      cleanupAnimation();
     };
-  }, [currentUser?.id, scrollToBottom, isNearBottom]);
+  }, [
+    cleanupAnimation,
+    clearAckTimeout,
+    currentUser?.id,
+    flushPendingMessages,
+    scrollToBottom,
+    scrollToBottomIfNearBottom,
+  ]);
 
   const groupedMessages = useMemo(() => {
     return Object.groupBy(messages, (msg) => {
@@ -101,19 +307,24 @@ export function ChatMessages() {
   return (
     <div
       className={clsx(
-        "grid absolute top-0 left-0  w-full md:relative h-full",
+        "grid absolute top-0 left-0 w-full md:relative h-full",
         details && "lg:grid-cols-2",
       )}
     >
       <div className="bg-white relative grid grid-rows-[5.5rem_1fr]">
         {!isPending && channel && (
           <>
-            <ChatHeader setDetails={setDetails} data={channel} />
+            <ChatHeader
+              setDetails={setDetails}
+              data={channel}
+              connectionStatus={connectionStatus}
+            />
 
             <ChatMessagesList
               data={groupedMessages}
               bottomRef={bottomRef}
               containerRef={containerRef}
+              onScroll={onContainerScroll}
               fetchNextPage={fetchNextPage}
               prepareForFetchMore={prepareForFetchMore}
               hasNextPage={hasNextPage}
@@ -122,9 +333,8 @@ export function ChatMessages() {
             />
 
             <ChatMessagesForm
-              currentUser={currentUser?.id}
-              setRealtimeMessages={setRealtimeMessages}
-              scrollToBottom={scrollToBottom}
+              onSendMessage={handleSendMessage}
+              isOffline={connectionStatus !== "online"}
             />
           </>
         )}

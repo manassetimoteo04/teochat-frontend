@@ -6,7 +6,10 @@ import { CreateChannelForm } from "./create-channel-form";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../../../../shared/ui/Spinner";
 import { useEffect, useMemo, useState } from "react";
-import { getSocket } from "../../../../shared/services/socket-client";
+import {
+  ensureSocketConnected,
+  getSocket,
+} from "../../../../shared/services/socket-client";
 
 const socket = getSocket();
 
@@ -17,6 +20,8 @@ export function Channels() {
   const [realtimeUpdates, setRealtimeUpdates] = useState({});
 
   useEffect(() => {
+    ensureSocketConnected();
+
     const onChannelUpdate = (payload) => {
       setRealtimeUpdates((prev) => ({
         ...prev,
@@ -55,7 +60,7 @@ export function Channels() {
 
   return (
     <Modal>
-      <div className="py-[2rem] h-[calc(100dvh-12.5rem)] overflow-y-scroll">
+      <div className="py-[2rem] h-[calc(100dvh-12.5rem)] overflow-y-scroll bg-white">
         <header className="px-[2rem] flex justify-between items-center">
           <h4 className="font-semibold text-[1.4rem] text-secondary-text-color">
             Canais

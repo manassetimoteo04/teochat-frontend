@@ -1,13 +1,35 @@
 import axios from "axios";
 
+function getStoredToken() {
+  const raw = localStorage.getItem("token");
+  if (!raw) return "";
+
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return raw;
+  }
+}
+
 const api = axios.create({
   baseURL: `${import.meta.env.VITE_API_URL}/api/v1`,
   timeout: 10000,
   withCredentials: true,
   headers: {
-    Authorization: `Bearer ${localStorage?.getItem("token") || ""}`,
     "Content-Type": "application/json",
   },
+});
+
+api.interceptors.request.use((config) => {
+  const token = getStoredToken();
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  } else {
+    delete config.headers.Authorization;
+  }
+
+  return config;
 });
 
 api.interceptors.response.use(
@@ -32,7 +54,7 @@ api.interceptors.response.use(
       if (status === 500)
         message = "Erro no servidor. Tente novamente mais tarde.";
     }
-    Promise.reject(error);
+
     throw new Error(message);
   },
 );

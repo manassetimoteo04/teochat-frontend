@@ -12,6 +12,7 @@ import ChatsPage from "../../../features/chats/pages";
 import AgendasPage from "../../../features/agenda/pages";
 import ConfigurationsPage from "../../../features/configurations/pages";
 import MeetingsPage from "../../../features/meetings/pages";
+import MeetingCallRoomPage from "../../../features/meetings/pages/meeting-call-room";
 import CompanyJoinPage from "../../../features/companies/pages/company-join";
 import TeamsPage from "../../../features/teams/pages";
 import ProjectsPage from "../../../features/projects/pages";
@@ -51,6 +52,14 @@ function RoutesProvider() {
           <Route path="agendas/:teamId" element={<AgendasPage />}></Route>
           <Route path="configurations" element={<ConfigurationsPage />}></Route>
         </Route>
+        <Route
+          path="/:companyId/meetings/:teamId/call/:callId"
+          element={
+            <ProtectedRoute>
+              <MeetingCallRoomPage />
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="*"
