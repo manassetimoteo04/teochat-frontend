@@ -27,7 +27,7 @@ function MeetingCallRoomPage() {
     navigate(`/${companyId}/meetings/${teamId}`);
   }, [companyId, navigate, teamId]);
 
-  const meetingTitle = useMemo(() => `Meeting · ${callId}`, [callId]);
+  const meetingTitle = useMemo(() => `Reunião · ${callId}`, [callId]);
 
   if (isLoading) {
     return (
@@ -54,7 +54,7 @@ VITE_STREAM_TOKEN=... # opcional se backend já gerar token`}</pre>
             onClick={leaveToMeetings}
             className="mt-[1.4rem] px-[1.2rem] py-[0.8rem] rounded-xl bg-main-color text-white"
           >
-            Voltar para Meetings
+            Voltar para Reuniões
           </button>
         </div>
       </div>

@@ -70,7 +70,7 @@ export function InCallChatPanel({ currentUser }) {
   return (
     <div className="h-full min-h-0 flex flex-col bg-transparent text-zinc-100">
       <div className="p-[1.2rem] border-b border-white/10 bg-slate-900/80">
-        <h4 className="text-[1.4rem] font-semibold">In-call Chat</h4>
+        <h4 className="text-[1.4rem] font-semibold">Chat da chamada</h4>
       </div>
 
       <div className="flex-1 min-h-0 overflow-y-auto p-[1rem] flex flex-col gap-[0.8rem] bg-slate-900/40">

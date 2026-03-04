@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-  CallParticipantsList,
   CallingState,
   PaginatedGridLayout,
   ParticipantView,
@@ -28,6 +27,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { InCallChatPanel } from "./in-call-chat-panel";
+import { ParticipantsPanel } from "./participants-panel";
 import "./meeting-call-shell.css";
 
 function formatDuration(startedAt) {
@@ -181,7 +181,7 @@ export function MeetingCallShell({ currentUser, onLeave, meetingTitle }) {
 
           <div className="min-w-0">
             <p className="text-[1.4rem] font-semibold truncate">
-              {meetingTitle || "Team Room"}
+              {meetingTitle || "Sala da reunião"}
             </p>
             <p className="text-[1.2rem] text-zinc-300 truncate">
               {roomStatusLabel} · {participantCount || 1} participantes · {duration}
@@ -195,7 +195,7 @@ export function MeetingCallShell({ currentUser, onLeave, meetingTitle }) {
             className="px-[1rem] h-[3.2rem] rounded-lg bg-white/10 hover:bg-white/20 text-[1.2rem] inline-flex items-center gap-[0.5rem]"
           >
             <LayoutGrid size={14} />
-            <span className="hidden sm:inline">{layout === "speaker" ? "Grid" : "Speaker"}</span>
+            <span className="hidden sm:inline">{layout === "speaker" ? "Grade" : "Destaque"}</span>
           </button>
 
           <button
@@ -219,7 +219,7 @@ export function MeetingCallShell({ currentUser, onLeave, meetingTitle }) {
           <button
             onClick={() => openMobilePanel("chat")}
             className="lg:hidden w-[3.2rem] h-[3.2rem] rounded-lg bg-white/10 hover:bg-white/20 grid place-items-center"
-            title="Chat"
+            title="Conversa"
           >
             <MessageSquare size={15} />
           </button>
@@ -272,12 +272,12 @@ export function MeetingCallShell({ currentUser, onLeave, meetingTitle }) {
                   sidebar === "chat" ? "bg-emerald-500 text-white" : "bg-white/5 text-zinc-200"
                 }`}
               >
-                <MessageSquare size={14} /> Chat
+                <MessageSquare size={14} /> Conversa
               </button>
             </div>
 
             <div className="min-h-0 flex-1 call-sidebar-content">
-              {sidebar === "participants" && <CallParticipantsList />}
+              {sidebar === "participants" && <ParticipantsPanel currentUser={currentUser} />}
               {sidebar === "chat" && <InCallChatPanel currentUser={currentUser} />}
             </div>
           </aside>
@@ -338,9 +338,9 @@ export function MeetingCallShell({ currentUser, onLeave, meetingTitle }) {
           <button
             onClick={() => setLayout((prev) => (prev === "speaker" ? "grid" : "speaker"))}
             className="call-control-btn is-neutral"
-            data-label={layout === "speaker" ? "Grid" : "Speaker"}
-            aria-label={layout === "speaker" ? "Grid" : "Speaker"}
-            title={layout === "speaker" ? "Alternar para grid" : "Alternar para speaker"}
+            data-label={layout === "speaker" ? "Grade" : "Destaque"}
+            aria-label={layout === "speaker" ? "Grade" : "Destaque"}
+            title={layout === "speaker" ? "Alternar para grade" : "Alternar para destaque"}
           >
             <LayoutGrid size={16} />
           </button>
@@ -390,7 +390,7 @@ export function MeetingCallShell({ currentUser, onLeave, meetingTitle }) {
                       : "bg-transparent text-zinc-200"
                   }`}
                 >
-                  <MessageSquare size={14} /> Chat
+                  <MessageSquare size={14} /> Conversa
                 </button>
               </div>
               <button
@@ -403,7 +403,7 @@ export function MeetingCallShell({ currentUser, onLeave, meetingTitle }) {
             </div>
 
             <div className="min-h-0 flex-1 call-sidebar-content">
-              {sidebar === "participants" && <CallParticipantsList />}
+              {sidebar === "participants" && <ParticipantsPanel currentUser={currentUser} />}
               {sidebar === "chat" && <InCallChatPanel currentUser={currentUser} />}
             </div>
           </div>
