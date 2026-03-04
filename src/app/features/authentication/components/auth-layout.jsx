@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSession } from "../../../shared/hooks/use-session";
 import Spinner from "../../../shared/ui/Spinner";
 import { useNavigate } from "react-router-dom";
+import FullPageSpinner from "../../../shared/ui/full-page-spinner";
 
 function AuthLayout({ children }) {
   const { session, isPending } = useSession();
@@ -11,7 +12,7 @@ function AuthLayout({ children }) {
       navigate("/companies");
     }
   }, [session, isPending, navigate]);
-  if (isPending) return <Spinner />;
+  if (isPending) return <FullPageSpinner />;
 
   if (!isPending && !session)
     return (

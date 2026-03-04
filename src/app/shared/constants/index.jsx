@@ -62,9 +62,9 @@ export const NavListItems = [
     isCollapseble: true,
     childs: [
       { title: "Marketing Digital", to: "mettings/" },
-      { title: "Dev Luvulo", to: "mettings/" },
+      { title: "Dev Luvulo", to: "meetings/" },
     ],
-    to: "/app/mettings",
+    to: "/app/meetings",
     icon: <Video />,
   },
 

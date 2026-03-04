@@ -1,41 +1,46 @@
-import { Check, CheckCheck, Clock } from "lucide-react";
+import { AlertCircle, Check, CheckCheck, Clock } from "lucide-react";
+import clsx from "clsx";
+
+function resolveStatusIcon(status) {
+  if (status === "delivered") return <CheckCheck size={14} />;
+  if (status === "sent") return <Check size={14} />;
+  if (status === "failed") return <AlertCircle size={14} />;
+  return <Clock size={14} />;
+}
 
 export function MessageCard({ message, currentUserId }) {
-  const isMe = message.senderId.id === currentUserId;
+  const senderId = message?.senderId?.id ?? message?.senderId;
+  const isMe = senderId === currentUserId;
+  const authorName = message?.senderId?.name || "Utilizador";
+  const authorAvatar = message?.senderId?.avatar;
+  const messageStatus = message?.status || "sent";
+
   return (
-    <div
-      className={`flex items-end gap-2 mb-4 ${
-        isMe ? "justify-end" : "justify-start"
-      }`}
-    >
+    <div className={clsx("flex items-end gap-2 mb-4", isMe ? "justify-end" : "justify-start")}>
       {!isMe && (
         <img
-          src={message.senderId.avatar}
-          alt={message.senderId.name}
-          className="w-9 h-9 rounded-full object-cover self-end"
+          src={authorAvatar}
+          alt={authorName}
+          className="w-9 h-9 rounded-full object-cover self-end bg-zinc-100"
         />
       )}
 
-      <div className={`flex flex-col max-w-[70%] ${isMe && "items-end"}`}>
+      <div className={clsx("flex flex-col max-w-[78%]", isMe && "items-end")}>
         {!isMe && (
           <span className="text-[1.3rem] text-secondary-text-color font-medium mb-1 ml-1">
-            {message.senderId.name}
+            {authorName}
           </span>
         )}
 
         <div
-          className={`
-            relative px-4 py-2 rounded-2xl text-[1.4rem] leading-relaxed
-            ${
-              isMe
-                ? "bg-main-color text-white rounded-br-md"
-                : "bg-white border border-gray-200 text-zinc-900 rounded-bl-md"
-            }
-          `}
-        >
-          {message.type === "text" && (
-            <p className="break-words">{message.content}</p>
+          className={clsx(
+            "relative px-4 py-2 rounded-2xl text-[1.4rem] leading-relaxed shadow-sm",
+            isMe
+              ? "bg-emerald-500 text-white rounded-br-md"
+              : "bg-white border border-emerald-100 text-zinc-900 rounded-bl-md",
           )}
+        >
+          {message.type === "text" && <p className="break-words">{message.content}</p>}
 
           {message.type === "image" && (
             <img
@@ -50,7 +55,10 @@ export function MessageCard({ message, currentUserId }) {
               {message.reactions.map((r, i) => (
                 <span
                   key={i}
-                  className="text-[1.2rem] bg-black/10 px-2 py-0.5 rounded-full"
+                  className={clsx(
+                    "text-[1.2rem] px-2 py-0.5 rounded-full",
+                    isMe ? "bg-white/20" : "bg-black/10",
+                  )}
                 >
                   {r.emoji}
                 </span>
@@ -68,10 +76,13 @@ export function MessageCard({ message, currentUserId }) {
           </span>
 
           {isMe && (
-            <span className="opacity-70">
-              {message.status === "sent" && <CheckCheck size={14} />}
-              {message.status === "delivered" && <Check size={14} />}
-              {message.status === "pending" && <Clock size={14} />}
+            <span
+              className={clsx(
+                "opacity-80",
+                messageStatus === "failed" && "text-rose-600",
+              )}
+            >
+              {resolveStatusIcon(messageStatus)}
             </span>
           )}
         </div>
