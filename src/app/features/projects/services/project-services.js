@@ -42,9 +42,20 @@ export async function getProjectById(projectId, teamId) {
   }
 }
 
-export async function getTasksByProjectId(projectId) {
+export async function getTasksByProjectId(projectId, params = {}) {
   try {
-    const { data } = await api.get(`/tasks/${projectId}/projects`);
+    const cleanParams = { ...params };
+    Object.keys(cleanParams).forEach((key) => {
+      if (
+        cleanParams[key] === undefined ||
+        cleanParams[key] === null ||
+        cleanParams[key] === ""
+      )
+        delete cleanParams[key];
+    });
+    const { data } = await api.get(`/tasks/${projectId}/projects`, {
+      params: cleanParams,
+    });
     return data;
   } catch (error) {
     throw new Error(error);
