@@ -16,11 +16,26 @@ export async function createMany(events) {
   await Promise.all(events.map((event) => createNewEvent(event)));
 }
 
-export const getTeamEvents = async ({ companyId, teamId }) => {
+export const getTeamEvents = async ({
+  companyId,
+  teamId,
+  query,
+  range,
+  timezone,
+  view,
+  page,
+  limit,
+}) => {
   try {
+    const params = { query, range, timezone, view, page, limit };
+    Object.keys(params).forEach((key) => {
+      if (params[key] === undefined || params[key] === null || params[key] === "")
+        delete params[key];
+    });
     const {
-      data: { data },
-    } = await api.get(`events/${companyId}/team/${teamId}`);
+      data: { data, meta },
+    } = await api.get(`events/${companyId}/team/${teamId}`, { params });
+    if (meta) return { data, meta };
     return data;
   } catch (error) {
     console.error(error);

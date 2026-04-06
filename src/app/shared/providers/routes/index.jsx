@@ -25,6 +25,7 @@ function RoutesProvider() {
         <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/sign-in" element={<SignInPage />} />
         <Route path="/verify-account" element={<ConfirmAccountPage />} />
+
         <Route path="/companies" element={<CompaniesPage />} />
         <Route path="/companies/create" element={<CreateCompany />} />
         <Route

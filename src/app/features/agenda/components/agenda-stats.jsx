@@ -1,10 +1,16 @@
+import clsx from "clsx";
 import { useAgendaStats } from "../hooks/use-agenda-stats";
 import AgendaStatBox from "../ui/agenda-stat-box";
 
-function AgendaStats() {
+function AgendaStats({ className }) {
   const stats = useAgendaStats();
   return (
-    <div className="grid mx-[2rem] overflow-hidden gap-[2rem] rounded-xl  border-main-border-color grid-cols-2 ">
+    <div
+      className={clsx(
+        "grid overflow-hidden gap-[1.5rem] rounded-xl border-main-border-color grid-cols-2",
+        className,
+      )}
+    >
       {stats.map((stat) => (
         <AgendaStatBox key={stat.title} stat={stat} />
       ))}

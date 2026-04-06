@@ -4,6 +4,7 @@ import { formatDate } from "../utils/helpers";
 function Input({ label, id, value, setValue, type = "text", defaultValues }) {
   const [isFocus, setIsFocus] = useState(false);
   const ref = useRef();
+  const hasValueProp = value !== undefined;
   if (type === "date")
     return (
       <div
@@ -27,7 +28,8 @@ function Input({ label, id, value, setValue, type = "text", defaultValues }) {
         )}
         <input
           ref={ref}
-          defaultValue={defaultValues}
+          value={hasValueProp ? value ?? "" : undefined}
+          defaultValue={hasValueProp ? undefined : defaultValues}
           type={type}
           min={new Date().toISOString().split("T")[0]}
           onFocus={() => setIsFocus(true)}
@@ -51,7 +53,8 @@ function Input({ label, id, value, setValue, type = "text", defaultValues }) {
         {label}
       </label>
       <input
-        defaultValue={defaultValues}
+        value={hasValueProp ? value ?? "" : undefined}
+        defaultValue={hasValueProp ? undefined : defaultValues}
         type={type}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}

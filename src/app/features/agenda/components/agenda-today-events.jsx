@@ -6,9 +6,12 @@ import { formatHour, rewriteStatus } from "../../../shared/utils/helpers";
 import EventDetails from "../../events/components/event-details";
 import { useGetTeamEvents } from "../../events/hooks/use-get-team-events";
 
-function AgendaTodayEvents() {
-  const { data } = useGetTeamEvents();
-  const todayEvents = data
+function AgendaTodayEvents({ events, isPending: isPendingProp }) {
+  const shouldFetch = events === undefined;
+  const { data, isPending } = useGetTeamEvents({}, { enabled: shouldFetch });
+  const list = events || data;
+  const loading = isPendingProp ?? isPending;
+  const todayEvents = list
     ?.filter(
       (event) =>
         new Date(event.date).toDateString() === new Date().toDateString(),
@@ -45,7 +48,7 @@ function AgendaTodayEvents() {
                 </Modal.Window>
               </>
             ))}
-          {todayEvents?.length < 1 && (
+          {todayEvents?.length < 1 && !loading && (
             <EmptyList
               title="Nenhum evento para o dia de hoje"
               opensId="create-event"
