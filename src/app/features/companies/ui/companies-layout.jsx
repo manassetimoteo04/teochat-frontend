@@ -12,18 +12,21 @@ function CompaniesLayout({ children }) {
   const { dispatch } = useAppContext();
   const navigate = useNavigate();
   useEffect(() => {
-    if (!session && !isPending) {
+    if (isPending) return;
+
+    if (!session) {
       navigate("/sign-in", { replace: true });
       toast.warning("Usuário não autenticado, redirecionando");
-    }
-    if (!session?.isConfirmed) {
-      navigate("/verify-account", { replace: true });
-      toast.warning("Usuário não verificado, redirecionando");
-
       return;
     }
-    if (session && session.isConfirmed)
-      dispatch({ type: "SET_USER", payload: session });
+
+    if (!session.isConfirmed) {
+      navigate("/verify-account", { replace: true });
+      toast.warning("Usuário não verificado, redirecionando");
+      return;
+    }
+
+    dispatch({ type: "SET_USER", payload: session });
   }, [isPending, navigate, session, dispatch]);
   if (isPending) return <FullPageSpinner />;
   if (!isPending && session)
