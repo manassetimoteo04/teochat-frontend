@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { useCompanyTeams } from "../../features/teams/hooks/use-company-teams";
 import NavCollapseLink from "./nav-collapse-link";
+
 function NavLink({ link, setSidebar }) {
   const { companyId } = useParams();
   const isActive = useLocation().pathname.startsWith(
@@ -12,7 +13,8 @@ function NavLink({ link, setSidebar }) {
   const { data, isPending } = useCompanyTeams();
 
   const [collapse, setCollapse] = useState(false);
-  link.childs = data || [];
+  const teams = Array.isArray(data) ? data : [];
+  link.childs = teams;
   const Component = !link.isCollapseble ? Link : "div";
   return (
     <li>

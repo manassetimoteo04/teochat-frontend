@@ -9,6 +9,7 @@ import {
 } from "../services/socket-client";
 import { toast } from "sonner";
 import { MessageCircle } from "lucide-react";
+import { NotificationsProvider } from "../../features/notifications/providers/notifications-provider";
 
 const socket = getSocket();
 
@@ -70,11 +71,13 @@ function AppLayout() {
   }, [companyId, navigate]);
 
   return (
-    <div className="grid lg:grid-cols-[30rem_1fr] max-w-[180rem] border-x mx-auto grid-rows-[5.5rem_1fr] h-[100dvh]">
-      <Sidebar sidebar={sidebar} setSidebar={setSidebar} />
-      <Main />
-      <Header sidebar={sidebar} setSidebar={setSidebar} />
-    </div>
+    <NotificationsProvider>
+      <div className="grid lg:grid-cols-[30rem_1fr] max-w-[180rem] border-x mx-auto grid-rows-[5.5rem_1fr] h-[100dvh]">
+        <Sidebar sidebar={sidebar} setSidebar={setSidebar} />
+        <Main />
+        <Header sidebar={sidebar} setSidebar={setSidebar} />
+      </div>
+    </NotificationsProvider>
   );
 }
 

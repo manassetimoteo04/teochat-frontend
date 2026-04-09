@@ -111,7 +111,11 @@ export function TaskDetails({ task, onCloseModal }) {
   function handleUpdate() {
     const { id, assignedTo, ...rest } = state;
 
-    const data = { id, ...rest, assignedTo: assignedTo.id };
+    const data = {
+      id,
+      ...rest,
+      assignedTo: assignedTo?.id || undefined,
+    };
     update(
       { id, ...data },
       {
@@ -120,6 +124,11 @@ export function TaskDetails({ task, onCloseModal }) {
         },
       },
     );
+  }
+  function handleCancelUpdate() {
+    setIsUpdateSession(false);
+    dispatch({ type: "RESET" });
+    dispatch({ type: "SET_VALUE", payload: { ...task } });
   }
   return (
     <div className="p-[2rem] max-w-[50rem] min-w-[55rem] flex flex-col gap-[2rem]">
@@ -142,9 +151,18 @@ export function TaskDetails({ task, onCloseModal }) {
               </span>
             )}
             {isUpdateSession && (
-              <Button onClick={handleUpdate}>
-                {!isUpdating ? <Check /> : <Loader className="animate-spin" />}
-              </Button>
+              <div className="flex items-center gap-[0.5rem]">
+                <Button onClick={handleUpdate} className="!w-auto px-[1.2rem]">
+                  {!isUpdating ? <Check /> : <Loader className="animate-spin" />}
+                </Button>
+                <Button
+                  variation="secondary"
+                  onClick={handleCancelUpdate}
+                  className="!w-auto px-[1.2rem]"
+                >
+                  <X />
+                </Button>
+              </div>
             )}
             <span
               onClick={() => {
@@ -204,12 +222,14 @@ export function TaskDetails({ task, onCloseModal }) {
             </span>
             {!isUpdateSession && <span>{rewriteStatus(status)}</span>}
             {isUpdateSession && (
-              <div className="flex gap-[1rem]">
+              <div className="flex gap-[0.6rem] flex-wrap">
                 {Object.keys(typeStatus).map((key) => (
                   <Tag
                     onClick={() => handleChange("status", key)}
-                    className="cursor-pointer border"
-                    type={key === state.status ? typeStatus[key] : "settled"}
+                    className={`cursor-pointer border ${
+                      key === state.status ? "bg-blue-100 text-blue-600 border-blue-100" : ""
+                    }`}
+                    type={key === state.status ? "pending" : "settled"}
                     key={key}
                   >
                     {rewriteStatus(key)}

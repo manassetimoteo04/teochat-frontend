@@ -1,9 +1,12 @@
-import { useCallback, useReducer } from "react";
+import { useCallback, useEffect, useReducer } from "react";
 import Button from "../../../shared/ui/button";
 import Heading from "../../../shared/ui/heading";
 import Input from "../../../shared/ui/input";
 import SpinnerMini from "../../../shared/ui/SpinnerMini";
 import { useCreateProject } from "../hooks/use-create-project";
+import { useUpdateProject } from "../hooks/use-update-project";
+import { useGetProjectById } from "../hooks/use-get-project-by-id";
+import { useParams } from "react-router-dom";
 
 const initialState = {
   name: undefined,
@@ -19,27 +22,62 @@ function reducer(state, action) {
       return { ...state, ...action.payload };
   }
 }
-function CreateUpdateProjectForm({ onCloseModal }) {
+function CreateUpdateProjectForm({ onCloseModal, project, projectId }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { create, isPending } = useCreateProject();
+  const { teamId } = useParams();
+  const { update, isPending: isUpdating } = useUpdateProject();
   const handleChange = useCallback((field, value) => {
     dispatch({ type: "SET_VALUE", payload: { [field]: value } });
   }, []);
   const { description, dueDate, priority, name } = state;
+  const isUpdate = Boolean(projectId || project?.id);
+  const { data: projectDetails } = useGetProjectById(projectId, {
+    enabled: isUpdate && !project?.description,
+  });
+  const dataForForm = projectDetails || project || {};
+
+  useEffect(() => {
+    if (!dataForForm?.id && !dataForForm?.name) return;
+    dispatch({
+      type: "SET_VALUE",
+      payload: {
+        name: dataForForm.name || "",
+        description: dataForForm.description || "",
+        dueDate:
+          dataForForm.endDate?.split("T")[0] ||
+          dataForForm.dueDate?.split?.("T")?.[0] ||
+          "",
+        priority: dataForForm.priority || "",
+        startDate: dataForForm.startDate?.split("T")[0] || "",
+      },
+    });
+  }, [dataForForm]);
 
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      create({ ...state }, { onSuccess: onCloseModal });
+      if (isUpdate) {
+        update(
+          { projectId: projectId || project?.id, ...state, teamId },
+          { onSuccess: onCloseModal },
+        );
+      } else {
+        create({ ...state }, { onSuccess: onCloseModal });
+      }
     },
-    [create, onCloseModal, state],
+    [create, isUpdate, onCloseModal, project?.id, projectId, state, update],
   );
   return (
     <div className="p-[2rem] min-w-[35rem]">
       <header className="mb-[2rem]">
-        <Heading as="h2">Criar Novo Projecto</Heading>
+        <Heading as="h2">
+          {isUpdate ? "Actualizar Projecto" : "Criar Novo Projecto"}
+        </Heading>
         <span className="text-secondary-text-color">
-          Preencha o formulário para criar novo projecto
+          {isUpdate
+            ? "Actualize as informações do projecto"
+            : "Preencha o formulário para criar novo projecto"}
         </span>
       </header>
       <div className="flex flex-col gap-[1rem]">
@@ -73,7 +111,13 @@ function CreateUpdateProjectForm({ onCloseModal }) {
 
           <div className="mt-[2rem]">
             <Button onClick={handleSubmit}>
-              {isPending ? <SpinnerMini /> : "Criar Tarefa"}
+              {isPending || isUpdating ? (
+                <SpinnerMini />
+              ) : isUpdate ? (
+                "Actualizar Projecto"
+              ) : (
+                "Criar Projecto"
+              )}
             </Button>
           </div>
         </form>

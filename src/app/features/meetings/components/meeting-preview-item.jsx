@@ -7,13 +7,13 @@ function formatMeetingDay(value) {
   const date = new Date(value);
   const now = new Date();
 
-  if (date.toDateString() === now.toDateString()) return "Today";
+  if (date.toDateString() === now.toDateString()) return "Hoje";
 
   const tomorrow = new Date();
   tomorrow.setDate(now.getDate() + 1);
-  if (date.toDateString() === tomorrow.toDateString()) return "Tomorrow";
+  if (date.toDateString() === tomorrow.toDateString()) return "Amanhã";
 
-  return new Intl.DateTimeFormat("en-US", {
+  return new Intl.DateTimeFormat("pt-PT", {
     month: "short",
     day: "numeric",
   }).format(date);
@@ -21,7 +21,7 @@ function formatMeetingDay(value) {
 
 export function MeetingPreviewItem({ meeting, selected, onClick }) {
   const startAt = meeting.startTime || meeting.date;
-
+  console.log("metting", meeting.status);
   return (
     <li>
       <button
@@ -39,7 +39,7 @@ export function MeetingPreviewItem({ meeting, selected, onClick }) {
               {meeting.title}
             </p>
             <p className="text-[1.2rem] mt-[0.2rem] text-secondary-text-color line-clamp-1">
-              {meeting.description || "No description"}
+              {meeting.description || "Sem descrição"}
             </p>
           </div>
 
@@ -54,10 +54,14 @@ export function MeetingPreviewItem({ meeting, selected, onClick }) {
             <Clock3 size={14} /> {formatHour(startAt)}
           </span>
           <span className="inline-flex items-center gap-[0.4rem] col-span-2">
-            {meeting.type === "video-call" ? <Video size={14} /> : <MapPin size={14} />}
+            {meeting.type === "video-call" ? (
+              <Video size={14} />
+            ) : (
+              <MapPin size={14} />
+            )}
             {meeting.type === "video-call"
-              ? "Video call"
-              : meeting.location || "In-person"}
+              ? "Video chamada"
+              : meeting.location || "Presencial"}
           </span>
         </div>
       </button>

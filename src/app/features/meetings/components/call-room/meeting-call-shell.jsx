@@ -1,33 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-  CallingState,
-  PaginatedGridLayout,
-  ParticipantView,
-  SpeakerLayout,
   useCall,
   useCallStateHooks,
 } from "@stream-io/video-react-sdk";
 import {
-  ArrowLeft,
-  Camera,
-  CameraOff,
-  Copy,
-  LayoutGrid,
-  Loader2,
-  Mic,
-  MicOff,
-  MessageSquare,
-  PanelRight,
-  PanelRightClose,
-  ScreenShare,
-  ScreenShareOff,
-  PhoneOff,
-  Users,
-  X,
 } from "lucide-react";
 import { toast } from "sonner";
-import { InCallChatPanel } from "./in-call-chat-panel";
-import { ParticipantsPanel } from "./participants-panel";
+import RoomHeader from "./room-header";
+import RoomControlDock from "./room-control-dock";
+import { MobileRoomSidebar, RoomSidebar } from "./room-sidebar";
+import RoomStage from "./room-stage";
 import "./meeting-call-shell.css";
 
 function formatDuration(startedAt) {
@@ -49,7 +31,7 @@ function formatDuration(startedAt) {
   return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
 }
 
-export function MeetingCallShell({ currentUser, onLeave, meetingTitle }) {
+export function MeetingCallShell({ currentUser, onLeave, meeting }) {
   const [layout, setLayout] = useState("speaker");
   const [sidebar, setSidebar] = useState("participants");
   const [duration, setDuration] = useState("00:00");
@@ -57,7 +39,6 @@ export function MeetingCallShell({ currentUser, onLeave, meetingTitle }) {
   const [isMobilePanelOpen, setIsMobilePanelOpen] = useState(false);
 
   const {
-    useCallCallingState,
     useCallSettings,
     useCameraState,
     useMicrophoneState,
@@ -71,7 +52,6 @@ export function MeetingCallShell({ currentUser, onLeave, meetingTitle }) {
     useCallStateHooks();
 
   const call = useCall();
-  const callingState = useCallCallingState();
   const callSettings = useCallSettings();
   const { microphone, optionsAwareIsMute: isMicMuted, isTogglePending: isMicToggling } =
     useMicrophoneState();
@@ -87,6 +67,7 @@ export function MeetingCallShell({ currentUser, onLeave, meetingTitle }) {
   const startedAt = useCallStartedAt();
   const participants = useParticipants();
   const localParticipant = useLocalParticipant();
+  const [networkStatus, setNetworkStatus] = useState("");
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -108,15 +89,16 @@ export function MeetingCallShell({ currentUser, onLeave, meetingTitle }) {
     };
   }, []);
 
-  const roomStatusLabel = useMemo(
-    () =>
-      callingState === CallingState.JOINED
-        ? "Ao vivo"
-        : callingState === CallingState.JOINING
-          ? "A conectar..."
-          : "Aguardando",
-    [callingState],
-  );
+  useEffect(() => {
+    const update = () => setNetworkStatus(navigator.onLine ? "" : "Conexão instável");
+    update();
+    window.addEventListener("online", update);
+    window.addEventListener("offline", update);
+    return () => {
+      window.removeEventListener("online", update);
+      window.removeEventListener("offline", update);
+    };
+  }, []);
 
   const openMobilePanel = (nextSidebar) => {
     setSidebar(nextSidebar);
@@ -165,74 +147,30 @@ export function MeetingCallShell({ currentUser, onLeave, meetingTitle }) {
     }
   };
 
-  const shouldRenderLocalFallback = participants.length === 0 && !!localParticipant;
+  const screenShareParticipant = participants.find((participant) => participant.isScreenSharing);
+  const screenShareName =
+    screenShareParticipant?.user?.name || screenShareParticipant?.name || "";
 
   return (
     <div className="call-room-shell relative h-full min-h-0 flex flex-col bg-slate-950 text-white">
-      <header className="shrink-0 px-[1rem] md:px-[2rem] py-[1rem] flex items-center justify-between gap-[1rem] border-b border-white/10 bg-slate-950/95 backdrop-blur-sm">
-        <div className="flex items-center gap-[0.8rem] min-w-0">
-          <button
-            onClick={onLeave}
-            className="w-[3.2rem] h-[3.2rem] shrink-0 rounded-full bg-white/10 grid place-items-center hover:bg-white/20"
-            title="Voltar"
-          >
-            <ArrowLeft size={16} />
-          </button>
-
-          <div className="min-w-0">
-            <p className="text-[1.4rem] font-semibold truncate">
-              {meetingTitle || "Sala da reunião"}
-            </p>
-            <p className="text-[1.2rem] text-zinc-300 truncate">
-              {roomStatusLabel} · {participantCount || 1} participantes · {duration}
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-[0.5rem] shrink-0">
-          <button
-            onClick={() => setLayout((prev) => (prev === "speaker" ? "grid" : "speaker"))}
-            className="px-[1rem] h-[3.2rem] rounded-lg bg-white/10 hover:bg-white/20 text-[1.2rem] inline-flex items-center gap-[0.5rem]"
-          >
-            <LayoutGrid size={14} />
-            <span className="hidden sm:inline">{layout === "speaker" ? "Grade" : "Destaque"}</span>
-          </button>
-
-          <button
-            onClick={async () => {
-              await navigator.clipboard.writeText(window.location.href);
-              toast.success("Link da chamada copiado");
-            }}
-            className="px-[1rem] h-[3.2rem] rounded-lg bg-white/10 hover:bg-white/20 text-[1.2rem] inline-flex items-center gap-[0.5rem]"
-          >
-            <Copy size={14} /> <span className="hidden sm:inline">Copiar link</span>
-          </button>
-
-          <button
-            onClick={() => openMobilePanel("participants")}
-            className="lg:hidden w-[3.2rem] h-[3.2rem] rounded-lg bg-white/10 hover:bg-white/20 grid place-items-center"
-            title="Pessoas"
-          >
-            <Users size={15} />
-          </button>
-
-          <button
-            onClick={() => openMobilePanel("chat")}
-            className="lg:hidden w-[3.2rem] h-[3.2rem] rounded-lg bg-white/10 hover:bg-white/20 grid place-items-center"
-            title="Conversa"
-          >
-            <MessageSquare size={15} />
-          </button>
-
-          <button
-            onClick={() => setIsSidebarOpen((prev) => !prev)}
-            className="hidden lg:grid w-[3.2rem] h-[3.2rem] rounded-lg bg-white/10 hover:bg-white/20 place-items-center"
-            title={isSidebarOpen ? "Esconder painel" : "Mostrar painel"}
-          >
-            {isSidebarOpen ? <PanelRightClose size={16} /> : <PanelRight size={16} />}
-          </button>
-        </div>
-      </header>
+      <RoomHeader
+        onBack={onLeave}
+        meeting={meeting}
+        participantCount={participantCount}
+        duration={duration}
+        layout={layout}
+        onToggleLayout={() => setLayout((prev) => (prev === "speaker" ? "grid" : "speaker"))}
+        onCopyLink={async () => {
+          await navigator.clipboard.writeText(window.location.href);
+          toast.success("Link da chamada copiado");
+        }}
+        onOpenParticipants={() => openMobilePanel("participants")}
+        onOpenChat={() => openMobilePanel("chat")}
+        onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
+        isSidebarOpen={isSidebarOpen}
+        screenShareName={screenShareName}
+        networkStatus={networkStatus}
+      />
 
       <div
         className={`flex-1 min-h-0 grid gap-[0.8rem] p-[0.8rem] md:p-[1.2rem] ${
@@ -241,173 +179,59 @@ export function MeetingCallShell({ currentUser, onLeave, meetingTitle }) {
             : "lg:grid-cols-1"
         }`}
       >
-        <section className="min-h-0 rounded-2xl border border-white/10 bg-slate-950 overflow-hidden">
-          {shouldRenderLocalFallback ? (
-            <div className="h-full p-[0.8rem] md:p-[1.2rem]">
-              <ParticipantView participant={localParticipant} />
-            </div>
-          ) : layout === "speaker" ? (
-            <SpeakerLayout participantsBarPosition="bottom" />
-          ) : (
-            <PaginatedGridLayout />
-          )}
+        <section className="min-h-0 overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950 p-[0.8rem] md:p-[1.2rem]">
+          <RoomStage
+            layout={isSomeoneScreenSharing ? "speaker" : layout}
+            participants={participants}
+            localParticipant={localParticipant}
+          />
         </section>
 
         {isSidebarOpen && (
-          <aside className="hidden lg:flex min-h-0 flex-col rounded-2xl border border-white/10 bg-slate-900/70 overflow-hidden">
-            <div className="grid grid-cols-2 p-[0.5rem] gap-[0.5rem] border-b border-white/10 bg-slate-900/90">
-              <button
-                onClick={() => setSidebar("participants")}
-                className={`rounded-lg text-[1.2rem] h-[3.4rem] inline-flex items-center justify-center gap-[0.4rem] ${
-                  sidebar === "participants"
-                    ? "bg-emerald-500 text-white"
-                    : "bg-white/5 text-zinc-200"
-                }`}
-              >
-                <Users size={14} /> Pessoas
-              </button>
-              <button
-                onClick={() => setSidebar("chat")}
-                className={`rounded-lg text-[1.2rem] h-[3.4rem] inline-flex items-center justify-center gap-[0.4rem] ${
-                  sidebar === "chat" ? "bg-emerald-500 text-white" : "bg-white/5 text-zinc-200"
-                }`}
-              >
-                <MessageSquare size={14} /> Conversa
-              </button>
-            </div>
-
-            <div className="min-h-0 flex-1 call-sidebar-content">
-              {sidebar === "participants" && <ParticipantsPanel currentUser={currentUser} />}
-              {sidebar === "chat" && <InCallChatPanel currentUser={currentUser} />}
-            </div>
-          </aside>
+          <RoomSidebar
+            sidebar={sidebar}
+            setSidebar={setSidebar}
+            currentUser={currentUser}
+          />
         )}
       </div>
 
-      <footer className="call-dock-wrap">
-        <div className="custom-call-controls call-dock">
-          <button
-            onClick={toggleMic}
-            disabled={isMicToggling}
-            className={`call-control-btn ${isMicMuted ? "is-off" : "is-on"}`}
-            data-label={isMicMuted ? "Ativar microfone" : "Desativar microfone"}
-            aria-label={isMicMuted ? "Ativar microfone" : "Desativar microfone"}
-            title={isMicMuted ? "Ativar microfone" : "Desativar microfone"}
-          >
-            {isMicToggling ? <Loader2 size={16} className="spin" /> : isMicMuted ? <MicOff size={16} /> : <Mic size={16} />}
-          </button>
-
-          <button
-            onClick={toggleCamera}
-            disabled={isCameraToggling}
-            className={`call-control-btn ${isCameraMuted ? "is-off" : "is-on"}`}
-            data-label={isCameraMuted ? "Ativar câmera" : "Desativar câmera"}
-            aria-label={isCameraMuted ? "Ativar câmera" : "Desativar câmera"}
-            title={isCameraMuted ? "Ativar câmera" : "Desativar câmera"}
-          >
-            {isCameraToggling ? (
-              <Loader2 size={16} className="spin" />
-            ) : isCameraMuted ? (
-              <CameraOff size={16} />
-            ) : (
-              <Camera size={16} />
-            )}
-          </button>
-
-          <button
-            onClick={toggleScreenShare}
-            disabled={!canToggleScreenShare}
-            className={`call-control-btn ${isScreenShareMuted ? "is-off" : "is-active"}`}
-            data-label={
-              isScreenShareMuted ? "Iniciar compartilhamento" : "Parar compartilhamento"
-            }
-            aria-label={
-              isScreenShareMuted ? "Iniciar compartilhamento" : "Parar compartilhamento"
-            }
-            title={isScreenShareMuted ? "Iniciar compartilhamento" : "Parar compartilhamento"}
-          >
-            {isScreenShareToggling ? (
-              <Loader2 size={16} className="spin" />
-            ) : isScreenShareMuted ? (
-              <ScreenShare size={16} />
-            ) : (
-              <ScreenShareOff size={16} />
-            )}
-          </button>
-
-          <button
-            onClick={() => setLayout((prev) => (prev === "speaker" ? "grid" : "speaker"))}
-            className="call-control-btn is-neutral"
-            data-label={layout === "speaker" ? "Grade" : "Destaque"}
-            aria-label={layout === "speaker" ? "Grade" : "Destaque"}
-            title={layout === "speaker" ? "Alternar para grade" : "Alternar para destaque"}
-          >
-            <LayoutGrid size={16} />
-          </button>
-
-          <button
-            onClick={() => (window.innerWidth < 1024 ? openMobilePanel("participants") : setIsSidebarOpen((prev) => !prev))}
-            className="call-control-btn is-neutral"
-            data-label="Pessoas"
-            aria-label="Pessoas"
-            title="Alternar painel lateral"
-          >
-            <Users size={16} />
-          </button>
-
-          <button
-            onClick={leaveCall}
-            className="call-control-btn is-danger"
-            data-label="Sair"
-            aria-label="Sair"
-            title="Sair da chamada"
-          >
-            <PhoneOff size={16} />
-          </button>
-        </div>
-      </footer>
+      <RoomControlDock
+        isMicMuted={isMicMuted}
+        isMicToggling={isMicToggling}
+        onToggleMic={toggleMic}
+        isCameraMuted={isCameraMuted}
+        isCameraToggling={isCameraToggling}
+        onToggleCamera={toggleCamera}
+        isScreenShareMuted={isScreenShareMuted}
+        isScreenShareToggling={isScreenShareToggling}
+        canToggleScreenShare={canToggleScreenShare}
+        onToggleScreenShare={toggleScreenShare}
+        layout={layout}
+        onToggleLayout={() => setLayout((prev) => (prev === "speaker" ? "grid" : "speaker"))}
+        onOpenSidebar={() =>
+          window.innerWidth < 1024
+            ? openMobilePanel("participants")
+            : setIsSidebarOpen((prev) => !prev)
+        }
+        onOpenChat={() =>
+          window.innerWidth < 1024
+            ? openMobilePanel("chat")
+            : (() => {
+                setSidebar("chat");
+                setIsSidebarOpen(true);
+              })()
+        }
+        onLeave={leaveCall}
+      />
 
       {isMobilePanelOpen && (
-        <div className="lg:hidden absolute inset-0 z-30 bg-slate-950/75 backdrop-blur-sm">
-          <div className="absolute right-0 top-0 h-full w-[min(94vw,40rem)] bg-slate-900 border-l border-white/10 flex flex-col">
-            <div className="p-[0.8rem] border-b border-white/10 flex items-center gap-[0.6rem]">
-              <div className="grid grid-cols-2 p-[0.3rem] gap-[0.4rem] bg-black/20 rounded-xl flex-1">
-                <button
-                  onClick={() => setSidebar("participants")}
-                  className={`rounded-lg text-[1.2rem] h-[3.2rem] inline-flex items-center justify-center gap-[0.4rem] ${
-                    sidebar === "participants"
-                      ? "bg-emerald-500 text-white"
-                      : "bg-transparent text-zinc-200"
-                  }`}
-                >
-                  <Users size={14} /> Pessoas
-                </button>
-                <button
-                  onClick={() => setSidebar("chat")}
-                  className={`rounded-lg text-[1.2rem] h-[3.2rem] inline-flex items-center justify-center gap-[0.4rem] ${
-                    sidebar === "chat"
-                      ? "bg-emerald-500 text-white"
-                      : "bg-transparent text-zinc-200"
-                  }`}
-                >
-                  <MessageSquare size={14} /> Conversa
-                </button>
-              </div>
-              <button
-                onClick={() => setIsMobilePanelOpen(false)}
-                className="w-[3.2rem] h-[3.2rem] rounded-lg bg-white/10 hover:bg-white/20 grid place-items-center"
-                title="Fechar painel"
-              >
-                <X size={16} />
-              </button>
-            </div>
-
-            <div className="min-h-0 flex-1 call-sidebar-content">
-              {sidebar === "participants" && <ParticipantsPanel currentUser={currentUser} />}
-              {sidebar === "chat" && <InCallChatPanel currentUser={currentUser} />}
-            </div>
-          </div>
-        </div>
+        <MobileRoomSidebar
+          sidebar={sidebar}
+          setSidebar={setSidebar}
+          setIsMobilePanelOpen={setIsMobilePanelOpen}
+          currentUser={currentUser}
+        />
       )}
     </div>
   );
