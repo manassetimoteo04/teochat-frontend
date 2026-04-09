@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   useCall,
   useCallStateHooks,
 } from "@stream-io/video-react-sdk";
-import {
-} from "lucide-react";
+import { hasScreenShare } from "@stream-io/video-client";
 import { toast } from "sonner";
 import RoomHeader from "./room-header";
 import RoomControlDock from "./room-control-dock";
@@ -147,7 +146,9 @@ export function MeetingCallShell({ currentUser, onLeave, meeting }) {
     }
   };
 
-  const screenShareParticipant = participants.find((participant) => participant.isScreenSharing);
+  const screenShareParticipant = participants.find((participant) =>
+    hasScreenShare(participant),
+  );
   const screenShareName =
     screenShareParticipant?.user?.name || screenShareParticipant?.name || "";
 
@@ -179,9 +180,9 @@ export function MeetingCallShell({ currentUser, onLeave, meeting }) {
             : "lg:grid-cols-1"
         }`}
       >
-        <section className="min-h-0 overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950 p-[0.8rem] md:p-[1.2rem]">
+        <section className="min-h-0 overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950 p-[0.45rem] md:p-[1.2rem]">
           <RoomStage
-            layout={isSomeoneScreenSharing ? "speaker" : layout}
+            layout={layout}
             participants={participants}
             localParticipant={localParticipant}
           />

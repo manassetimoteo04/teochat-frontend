@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import clsx from "clsx";
 import { MonitorUp, Users } from "lucide-react";
 import { ParticipantView } from "@stream-io/video-react-sdk";
+import { hasScreenShare } from "@stream-io/video-client";
 
 function getParticipantKey(participant) {
   return participant?.sessionId || participant?.userId || participant?.session_id;
@@ -20,13 +21,15 @@ function dedupeParticipants(participants = []) {
 }
 
 function getParticipantLabel(participant) {
+  if (participant?.isLocalParticipant) return "Você";
+
   return participant?.name || participant?.user?.name || participant?.userId || "Participante";
 }
 
 function sortParticipants(participants = []) {
   return [...participants].sort((a, b) => {
-    if (a?.isScreenSharing && !b?.isScreenSharing) return -1;
-    if (!a?.isScreenSharing && b?.isScreenSharing) return 1;
+    if (hasScreenShare(a) && !hasScreenShare(b)) return -1;
+    if (!hasScreenShare(a) && hasScreenShare(b)) return 1;
     if (a?.isDominantSpeaker && !b?.isDominantSpeaker) return -1;
     if (!a?.isDominantSpeaker && b?.isDominantSpeaker) return 1;
     if (a?.isSpeaking && !b?.isSpeaking) return -1;
@@ -46,15 +49,18 @@ function StageTile({
   return (
     <div
       className={clsx(
-        "relative overflow-hidden rounded-[1.8rem] border border-white/10 bg-slate-900",
+        "room-stage-tile relative h-full min-h-0 overflow-hidden rounded-[1.8rem] border border-white/10 bg-slate-900",
+        isScreenShare && "room-stage-tile--screen-share",
         participant?.isSpeaking && "ring-1 ring-main-color/60",
-        compact ? "min-h-[10rem]" : "min-h-[18rem]",
+        compact ? "min-h-[11rem]" : "min-h-[20rem]",
         className,
       )}
     >
       <ParticipantView
         participant={participant}
         trackType={isScreenShare ? "screenShareTrack" : "videoTrack"}
+        ParticipantViewUI={null}
+        className="h-full"
       />
 
       <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-[0.8rem] bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent p-[1rem]">
@@ -110,7 +116,7 @@ export default function RoomStage({ participants = [], localParticipant, layout 
   }, [localParticipant, participants]);
 
   const screenShareParticipant = useMemo(
-    () => stageParticipants.find((participant) => participant?.isScreenSharing),
+    () => stageParticipants.find((participant) => hasScreenShare(participant)),
     [stageParticipants],
   );
 
@@ -137,14 +143,15 @@ export default function RoomStage({ participants = [], localParticipant, layout 
         <StageTile
           participant={screenShareParticipant}
           isScreenShare
-          className="min-h-[28rem] lg:min-h-0"
+          className="min-h-[30rem] lg:min-h-0"
         />
 
         <div className="flex min-h-0 gap-[0.8rem] overflow-x-auto lg:flex-col lg:overflow-y-auto lg:overflow-x-hidden">
-          {[screenShareParticipant, ...secondaryParticipants].map((participant) => (
+          {stageParticipants.map((participant) => (
             <StageTile
               key={getParticipantKey(participant)}
               participant={participant}
+              isScreenShare={hasScreenShare(participant)}
               compact
               className="h-[12rem] min-w-[16rem] lg:h-[14rem] lg:min-w-0"
             />
@@ -159,7 +166,7 @@ export default function RoomStage({ participants = [], localParticipant, layout 
       stageParticipants.length === 1
         ? "grid-cols-1"
         : stageParticipants.length === 2
-          ? "grid-cols-1 md:grid-cols-2"
+          ? "grid-cols-1 lg:grid-cols-2"
           : stageParticipants.length <= 4
             ? "grid-cols-1 md:grid-cols-2"
             : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3";
@@ -171,8 +178,9 @@ export default function RoomStage({ participants = [], localParticipant, layout 
             key={getParticipantKey(participant)}
             participant={participant}
             className={clsx(
-              stageParticipants.length === 1 && "min-h-[32rem]",
-              stageParticipants.length === 2 && "min-h-[24rem] md:min-h-0",
+              stageParticipants.length === 1 && "min-h-[36rem]",
+              stageParticipants.length === 2 && "min-h-[24rem] lg:min-h-0",
+              stageParticipants.length > 2 && "min-h-[20rem]",
             )}
           />
         ))}
@@ -182,14 +190,19 @@ export default function RoomStage({ participants = [], localParticipant, layout 
 
   if (stageParticipants.length <= 2) {
     return (
-      <section className="grid h-full min-h-0 gap-[0.8rem] grid-cols-1 xl:grid-cols-2">
-        {stageParticipants.map((participant) => (
+      <section className="grid h-full min-h-0 gap-[0.8rem] xl:grid-cols-[minmax(0,1.2fr)_minmax(24rem,0.8fr)]">
+        <StageTile
+          participant={stageParticipants[0]}
+          className="min-h-[26rem] xl:min-h-0"
+        />
+
+        {stageParticipants[1] ? (
           <StageTile
-            key={getParticipantKey(participant)}
-            participant={participant}
-            className="min-h-[24rem] xl:min-h-0"
+            participant={stageParticipants[1]}
+            compact
+            className="min-h-[18rem] xl:min-h-0"
           />
-        ))}
+        ) : null}
       </section>
     );
   }
