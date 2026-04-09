@@ -190,6 +190,36 @@
   --str-video__primary-color: #10b981;
 }
 
+.call-room-shell .room-stage-tile .str-video__participant-view,
+.call-room-shell .room-stage-tile .str-video__video,
+.call-room-shell .room-stage-tile video,
+.call-room-shell .room-stage-tile .str-video__video-placeholder {
+  height: 100%;
+  min-height: 100%;
+}
+
+.call-room-shell .room-stage-tile .str-video__participant-view {
+  display: flex;
+}
+
+.call-room-shell .room-stage-tile .str-video__video {
+  flex: 1;
+}
+
+.call-room-shell .room-stage-tile video {
+  width: 100%;
+  object-fit: cover;
+}
+
+.call-room-shell .room-stage-tile--screen-share .str-video__video,
+.call-room-shell .room-stage-tile--screen-share video {
+  background: #020617;
+}
+
+.call-room-shell .room-stage-tile--screen-share video {
+  object-fit: contain;
+}
+
 .call-room-shell .custom-call-controls {
   flex-wrap: nowrap;
 }
