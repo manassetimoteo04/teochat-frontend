@@ -10,15 +10,10 @@ import { useAppContext } from "../../../shared/providers/context";
 function DashboardTeams() {
   const navigate = useNavigate();
   const { companyId } = useParams();
-  const { currentUser, currentRole } = useAppContext();
+  const { currentRole } = useAppContext();
   const { data, isPending } = useCompanyTeams();
   const teams = Array.isArray(data) ? data : [];
-  const visibleTeams =
-    currentRole === "member"
-      ? teams.filter((team) =>
-          team.members?.some((member) => member.id === currentUser?.id),
-        )
-      : teams;
+  const visibleTeams = teams;
 
   return (
     <CardBox
@@ -66,7 +61,7 @@ function DashboardTeams() {
                 <div>
                   <p className="text-main-text-color">{team.name}</p>
                   <span className="text-secondary-text-color">
-                    {team.members.length} membros
+                    {team.members?.length || 0} membros
                   </span>
                 </div>
                 <button

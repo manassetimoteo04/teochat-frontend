@@ -21,7 +21,7 @@ function formatMeetingDay(value) {
 
 export function MeetingPreviewItem({ meeting, selected, onClick }) {
   const startAt = meeting.startTime || meeting.date;
-
+  console.log("metting", meeting.status);
   return (
     <li>
       <button
@@ -54,7 +54,11 @@ export function MeetingPreviewItem({ meeting, selected, onClick }) {
             <Clock3 size={14} /> {formatHour(startAt)}
           </span>
           <span className="inline-flex items-center gap-[0.4rem] col-span-2">
-            {meeting.type === "video-call" ? <Video size={14} /> : <MapPin size={14} />}
+            {meeting.type === "video-call" ? (
+              <Video size={14} />
+            ) : (
+              <MapPin size={14} />
+            )}
             {meeting.type === "video-call"
               ? "Video chamada"
               : meeting.location || "Presencial"}

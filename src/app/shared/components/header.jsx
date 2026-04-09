@@ -1,6 +1,7 @@
-import { BellIcon, ListMinusIcon } from "lucide-react";
+import { ListMinusIcon } from "lucide-react";
 import CurrentUserBox from "../ui/current-user-box";
 import clsx from "clsx";
+import NotificationBell from "../../features/notifications/components/notification-bell";
 
 function Header({ setSidebar }) {
   return (
@@ -18,9 +19,7 @@ function Header({ setSidebar }) {
         <ListMinusIcon />
       </button>
       <div className="flex gap-[2rem] items-center">
-        <button>
-          <BellIcon size={20} />
-        </button>
+        <NotificationBell />
         <CurrentUserBox />
       </div>
     </header>

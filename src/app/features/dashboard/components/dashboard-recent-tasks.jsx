@@ -12,12 +12,8 @@ function DashboardRecentTasks() {
 
   const memberTeamIds = useMemo(() => {
     if (!Array.isArray(teams)) return [];
-    return teams
-      .filter((team) =>
-        team.members?.some((member) => member.id === currentUser?.id),
-      )
-      .map((team) => team.id);
-  }, [teams, currentUser?.id]);
+    return teams.map((team) => team.id).filter(Boolean);
+  }, [teams]);
 
   const isMember = currentRole === "member";
   const { data: tasks, isPending } = useCompanyRecentTasks({

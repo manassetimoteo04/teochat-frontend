@@ -33,24 +33,28 @@ function MeetingsPage() {
     [meetings],
   );
 
-  const { upcomingMeetings, pastMeetings } = useMemo(() => {
-    const now = Date.now();
-
+  const { upcomingMeetings, pastMeetings, happeningMeetings } = useMemo(() => {
     const upcoming = [];
     const past = [];
+    const happening = [];
 
     orderedMeetings.forEach((meeting) => {
-      const startsAt = new Date(meeting.startTime || meeting.date).getTime();
-      if (startsAt >= now) {
+      if (meeting.status === "pending") {
         upcoming.push(meeting);
-      } else {
+      }
+      if (meeting.status === "started") {
+        happening.push(meeting);
+      }
+      if (meeting.status === "finished") {
         past.push(meeting);
       }
     });
 
+    console.log("ordered", orderedMeetings);
     return {
       upcomingMeetings: upcoming,
       pastMeetings: past.reverse(),
+      happeningMeetings: happening,
     };
   }, [orderedMeetings]);
 
@@ -70,7 +74,8 @@ function MeetingsPage() {
 
   useEffect(() => {
     if (isMobile) return;
-    if (!orderedMeetings.length || !selectedMeetingId || selectedMeeting) return;
+    if (!orderedMeetings.length || !selectedMeetingId || selectedMeeting)
+      return;
     navigate({ hash: `#${orderedMeetings[0].id}` }, { replace: true });
   }, [isMobile, navigate, orderedMeetings, selectedMeeting, selectedMeetingId]);
 
@@ -83,6 +88,7 @@ function MeetingsPage() {
         onSearch={setSearch}
         teamName={team?.name}
         upcomingMeetings={upcomingMeetings}
+        happeningMeetings={happeningMeetings}
         pastMeetings={pastMeetings}
         selectedMeetingId={selectedMeetingId}
         onSelectMeeting={(id) => {
@@ -111,19 +117,23 @@ function MeetingsPage() {
                 Seleciona uma reunião
               </h2>
               <p className="text-secondary-text-color mt-[0.6rem] max-w-[48rem]">
-                Escolhe uma reunião à esquerda para ver detalhes, participantes e
-                opções da chamada.
+                Escolhe uma reunião à esquerda para ver detalhes, participantes
+                e opções da chamada.
               </p>
             </div>
             <div className="grid sm:grid-cols-3 gap-[1rem]">
               <div className="bg-white border border-gray-200 rounded-2xl p-[1.5rem]">
-                <p className="text-[1.2rem] text-secondary-text-color">Próximas</p>
+                <p className="text-[1.2rem] text-secondary-text-color">
+                  Próximas
+                </p>
                 <p className="text-[2.2rem] font-semibold text-main-text-color">
                   {upcomingMeetings.length}
                 </p>
               </div>
               <div className="bg-white border border-gray-200 rounded-2xl p-[1.5rem]">
-                <p className="text-[1.2rem] text-secondary-text-color">Passadas</p>
+                <p className="text-[1.2rem] text-secondary-text-color">
+                  Passadas
+                </p>
                 <p className="text-[2.2rem] font-semibold text-main-text-color">
                   {pastMeetings.length}
                 </p>
@@ -159,7 +169,10 @@ function MeetingsPage() {
       {layout}
       {selectedMeeting && (
         <Modal.Window id="meeting-details" onClose={closeMobileModal}>
-          <MeetingDetailsPanel meeting={selectedMeeting} teamName={team?.name} />
+          <MeetingDetailsPanel
+            meeting={selectedMeeting}
+            teamName={team?.name}
+          />
         </Modal.Window>
       )}
     </Modal>

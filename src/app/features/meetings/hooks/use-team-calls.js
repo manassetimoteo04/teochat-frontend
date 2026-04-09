@@ -21,7 +21,7 @@ export function useTeamCalls(filters = {}, options = {}) {
       title: call.event?.title || "Reunião sem evento",
       description: call.event?.description || "Sem descrição",
       type: call.event?.type || "video-call",
-      status: call.event?.status || call.status || "pending",
+      status: call.status,
       date: call.event?.date || startTime,
       startTime,
       endTime,

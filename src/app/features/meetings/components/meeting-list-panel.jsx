@@ -8,6 +8,8 @@ export function MeetingListPanel({
   teamName,
   upcomingMeetings,
   pastMeetings,
+
+  happeningMeetings,
   selectedMeetingId,
   onSelectMeeting,
   useModal = false,
@@ -27,6 +29,7 @@ export function MeetingListPanel({
 
   const filteredUpcoming = upcomingMeetings.filter(matchesSearch);
   const filteredPast = pastMeetings.filter(matchesSearch);
+  const filteredHappening = happeningMeetings.filter(matchesSearch);
 
   return (
     <aside className="h-auto lg:h-[calc(100dvh-5.5rem)] lg:border-r border-gray-200 bg-white overflow-y-auto">
@@ -76,6 +79,17 @@ export function MeetingListPanel({
       </header>
 
       <div className="px-[1.2rem] sm:px-[1.6rem] py-[1rem]">
+        <MeetingListSection
+          title="Decorrendo Agora"
+          count={filteredHappening.length}
+          meetings={filteredHappening}
+          selectedMeetingId={selectedMeetingId}
+          onSelectMeeting={onSelectMeeting}
+          useModal={useModal}
+          modalId={modalId}
+          emptyMessage="Sem reuniões próximas"
+        />
+
         <MeetingListSection
           title="Próximas Reuniões"
           count={filteredUpcoming.length}

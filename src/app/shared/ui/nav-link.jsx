@@ -3,25 +3,18 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 
 import { useCompanyTeams } from "../../features/teams/hooks/use-company-teams";
-import { useAppContext } from "../providers/context";
 import NavCollapseLink from "./nav-collapse-link";
+
 function NavLink({ link, setSidebar }) {
   const { companyId } = useParams();
   const isActive = useLocation().pathname.startsWith(
     link.to.replace("app", companyId),
   );
   const { data, isPending } = useCompanyTeams();
-  const { currentRole, currentUser } = useAppContext();
 
   const [collapse, setCollapse] = useState(false);
   const teams = Array.isArray(data) ? data : [];
-  const memberTeams =
-    currentRole === "member"
-      ? teams.filter((team) =>
-          team.members?.some((member) => member.id === currentUser?.id),
-        )
-      : teams;
-  link.childs = memberTeams;
+  link.childs = teams;
   const Component = !link.isCollapseble ? Link : "div";
   return (
     <li>

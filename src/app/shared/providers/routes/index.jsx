@@ -17,6 +17,7 @@ import CompanyJoinPage from "../../../features/companies/pages/company-join";
 import TeamsPage from "../../../features/teams/pages";
 import ProjectsPage from "../../../features/projects/pages";
 import ProjectDetailsPage from "../../../features/projects/pages/project-details";
+import NotificationsPage from "../../../features/notifications/pages";
 function RoutesProvider() {
   return (
     <BrowserRouter>
@@ -50,6 +51,7 @@ function RoutesProvider() {
             path="projects/:teamId/:projectId"
             element={<ProjectDetailsPage />}
           />
+          <Route path="notifications" element={<NotificationsPage />}></Route>
           <Route path="agendas/:teamId" element={<AgendasPage />}></Route>
           <Route path="configurations" element={<ConfigurationsPage />}></Route>
         </Route>

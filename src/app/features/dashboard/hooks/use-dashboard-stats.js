@@ -20,14 +20,8 @@ export function useDashboardStats({ currentRole, currentUserId }) {
   const teamsWithMembers = teamsList.filter(
     (team) => (team.members?.length || 0) > 0,
   );
-  const memberTeams = teamsList.filter((team) =>
-    team.members?.some((member) => member.id === currentUserId),
-  );
-  const memberTeamIds = new Set(memberTeams.map((team) => team.id));
-  const memberEvents = eventsList.filter((event) => {
-    const eventTeamId = event.teamId || event.team?.id;
-    return memberTeamIds.has(eventTeamId);
-  });
+  const memberTeams = teamsList;
+  const memberEvents = eventsList;
 
   const values = {
     members: members?.length || 0,

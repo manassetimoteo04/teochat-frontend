@@ -2,14 +2,31 @@ import { useEffect, useState } from "react";
 import { StreamVideoClient } from "@stream-io/video-react-sdk";
 import { getStreamCallToken } from "../services/stream-call-service";
 
-export function useStreamCallRoom({ currentUser, callId, companyId, teamId }) {
+export function useStreamCallRoom({
+  currentUser,
+  callId,
+  companyId,
+  teamId,
+  enabled = true,
+}) {
   const [client, setClient] = useState(null);
   const [call, setCall] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
+    if (!enabled) {
+      setClient(null);
+      setCall(null);
+      setError("");
+      setIsLoading(false);
+      return;
+    }
+
     if (!currentUser?.id || !callId) return;
+
+    setIsLoading(true);
+    setError("");
 
     const apiKey = import.meta.env.VITE_STREAM_API_KEY;
 
@@ -72,7 +89,7 @@ export function useStreamCallRoom({ currentUser, callId, companyId, teamId }) {
       nextCall?.leave().catch(() => null);
       videoClient?.disconnectUser().catch(() => null);
     };
-  }, [callId, companyId, currentUser, teamId]);
+  }, [callId, companyId, currentUser, enabled, teamId]);
 
   return {
     client,
