@@ -6,14 +6,14 @@ import { useInviteMember } from "../../companies/hooks/use-invite-member";
 import { toast } from "sonner";
 import Heading from "../../../shared/ui/heading";
 
-function DashboardInviteMember() {
+function DashboardInviteMember({ onCloseModal }) {
   const { sendInvite, isPending } = useInviteMember();
   const [emails, setEmails] = useState();
   const onSubmit = (e) => {
     e.preventDefault();
     if (!emails) return toast.warning("Por favor, digite pelo menos um email");
 
-    sendInvite({ emails });
+    sendInvite({ emails }, { onSuccess: onCloseModal });
   };
   return (
     <form

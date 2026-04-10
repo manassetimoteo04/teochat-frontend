@@ -138,7 +138,7 @@ function EventDetails({ eventId, onCloseModal }) {
           </div>
         </div>
       </div>
-      {status !== "canceled" && (
+      {status === "pending" && (
         <div className="flex flex-col md:flex-row items-center justify-end gap-[1rem]">
           <Modal.Open id={eventId + "-update"}>
             <Button variation="secondary">Editar Evento</Button>
@@ -158,6 +158,19 @@ function EventDetails({ eventId, onCloseModal }) {
         <div className="text-center bg-red-100 p-[1rem] rounded-full">
           {" "}
           <span>Este evento foi cancelado, visualizar apenas</span>
+        </div>
+      )}
+      {status === "finished" && (
+        <div className="text-center bg-gray-100 p-[1rem] rounded-full">
+          {" "}
+          <span>Evento terminado, visualizar apenas</span>
+        </div>
+      )}
+
+      {status === "active" && (
+        <div className="text-center bg-yellow-100 p-[1rem] rounded-full">
+          {" "}
+          <span>Evento terminado, visualizar apenas</span>
         </div>
       )}
     </div>

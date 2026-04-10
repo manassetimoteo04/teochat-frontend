@@ -86,6 +86,11 @@ export function useStreamCallRoom({
 
     return () => {
       isMounted = false;
+      console.log("next call", nextCall);
+      if (nextCall) {
+        nextCall?.microphone?.disable().catch(() => null);
+        nextCall?.camera?.disable().catch(() => null);
+      }
       nextCall?.leave().catch(() => null);
       videoClient?.disconnectUser().catch(() => null);
     };
