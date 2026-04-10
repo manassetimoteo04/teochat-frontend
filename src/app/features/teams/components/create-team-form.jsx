@@ -62,7 +62,7 @@ function CreateTeamForm({ onCloseModal }) {
       tags,
       members: members?.map((mem) => mem.id),
     };
-    create({ newTeam });
+    create({ newTeam }, { onSuccess: onCloseModal });
   };
   function handleNextStep() {
     dispatch({ type: "NEXT_STEP" });

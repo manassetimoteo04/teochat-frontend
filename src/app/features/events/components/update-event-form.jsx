@@ -47,12 +47,12 @@ function UpdateEventForm({ onCloseModal, eventId }) {
       const date = new Date(value);
       startTime || data.startTime
         ? (newData.startTime = new Date(
-            new Date(startTime || data.startTime).setDate(date.getDate())
+            new Date(startTime || data.startTime).setDate(date.getDate()),
           ))
         : null;
       endTime || data.startTime
         ? (newData.endTime = new Date(
-            new Date(endTime || data.endTime).setDate(date.getDate())
+            new Date(endTime || data.endTime).setDate(date.getDate()),
           ))
         : null;
       dispatch({ type: "SET_VALUE", payload: { ...newData } });
@@ -63,7 +63,7 @@ function UpdateEventForm({ onCloseModal, eventId }) {
   function onSubmit(e) {
     e.preventDefault();
     if (state.type === "video-call") state.location = undefined;
-    update({ eventId: data.id, ...state });
+    update({ eventId: data.id, ...state }, { onSuccess: onCloseModal });
   }
   const startHour = formatHour(data.startTime);
   const endHour = formatHour(data.endTime);

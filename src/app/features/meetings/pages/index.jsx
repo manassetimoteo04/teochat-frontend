@@ -13,8 +13,8 @@ function MeetingsPage() {
   const [selectedMeetingIdLocal, setSelectedMeetingIdLocal] = useState("");
   const { hash } = useLocation();
   const navigate = useNavigate();
-  const { isLg } = useBreakpoint();
-  const isMobile = !isLg;
+  const { isXs, isSm } = useBreakpoint();
+  const isSmallDevice = isXs || isSm;
 
   const closeMobileModal = () => {
     setSelectedMeetingIdLocal("");
@@ -50,7 +50,6 @@ function MeetingsPage() {
       }
     });
 
-    console.log("ordered", orderedMeetings);
     return {
       upcomingMeetings: upcoming,
       pastMeetings: past.reverse(),
@@ -58,7 +57,7 @@ function MeetingsPage() {
     };
   }, [orderedMeetings]);
 
-  const selectedMeetingId = isMobile
+  const selectedMeetingId = isSmallDevice
     ? selectedMeetingIdLocal
     : hash.replace("#", "");
   const selectedMeeting = useMemo(
@@ -67,17 +66,23 @@ function MeetingsPage() {
   );
 
   useEffect(() => {
-    if (isMobile) return;
+    if (isSmallDevice) return;
     if (!orderedMeetings.length || selectedMeetingId) return;
     navigate({ hash: `#${orderedMeetings[0].id}` }, { replace: true });
-  }, [isMobile, navigate, orderedMeetings, selectedMeetingId]);
+  }, [isSmallDevice, navigate, orderedMeetings, selectedMeetingId]);
 
   useEffect(() => {
-    if (isMobile) return;
+    if (isSmallDevice) return;
     if (!orderedMeetings.length || !selectedMeetingId || selectedMeeting)
       return;
     navigate({ hash: `#${orderedMeetings[0].id}` }, { replace: true });
-  }, [isMobile, navigate, orderedMeetings, selectedMeeting, selectedMeetingId]);
+  }, [
+    isSmallDevice,
+    navigate,
+    orderedMeetings,
+    selectedMeeting,
+    selectedMeetingId,
+  ]);
 
   if (isLoadingMeetings || isLoadingTeam) return <Spinner />;
 
@@ -92,21 +97,21 @@ function MeetingsPage() {
         pastMeetings={pastMeetings}
         selectedMeetingId={selectedMeetingId}
         onSelectMeeting={(id) => {
-          if (isMobile) {
+          if (isSmallDevice) {
             setSelectedMeetingIdLocal(id);
             return;
           }
           navigate({ hash: `#${id}` });
         }}
-        useModal={isMobile}
+        useModal={isSmallDevice}
         modalId="meeting-details"
       />
 
-      {selectedMeeting && !isMobile && (
+      {selectedMeeting && !isSmallDevice && (
         <MeetingDetailsPanel meeting={selectedMeeting} teamName={team?.name} />
       )}
 
-      {!selectedMeeting && !isMobile && orderedMeetings.length > 0 && (
+      {!selectedMeeting && !isSmallDevice && orderedMeetings.length > 0 && (
         <section className="h-[calc(100dvh-5.5rem)] bg-main-bg-color p-[2rem] lg:p-[3rem]">
           <div className="max-w-[72rem] mx-auto flex flex-col gap-[1.5rem]">
             <div className="bg-white border border-gray-200 rounded-3xl p-[2.4rem]">
@@ -162,7 +167,7 @@ function MeetingsPage() {
     </div>
   );
 
-  if (!isMobile) return layout;
+  if (!isSmallDevice) return layout;
 
   return (
     <Modal>

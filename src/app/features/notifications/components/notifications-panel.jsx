@@ -48,7 +48,7 @@ function NotificationsPanel() {
   });
 
   return (
-    <div className="absolute right-0 top-[calc(100%+1rem)] z-30 w-[min(92vw,38rem)] overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-[0_18px_40px_rgba(15,23,42,0.10)]">
+    <div className="absolute -right-[7rem] top-[calc(100%+1rem)] z-[9999] w-[min(92vw,38rem)] overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-[0_18px_40px_rgba(15,23,42,0.10)]">
       <div className="border-b border-gray-100 p-[1.5rem_2rem]">
         <div className="flex items-start justify-between gap-[1rem]">
           <div>
@@ -67,13 +67,19 @@ function NotificationsPanel() {
             className="rounded-full border border-gray-200 p-[0.55rem] text-secondary-text-color transition hover:bg-main-bg-color hover:text-main-text-color"
             title="Atualizar notificações"
           >
-            <RefreshCcw size={16} className={clsx(isFetching && "animate-spin")} />
+            <RefreshCcw
+              size={16}
+              className={clsx(isFetching && "animate-spin")}
+            />
           </button>
         </div>
 
         <div className="mt-[1.25rem] flex items-center justify-between gap-[1rem]">
           <div className="flex gap-[0.5rem]">
-            <FilterButton active={filter === "all"} onClick={() => setFilter("all")}>
+            <FilterButton
+              active={filter === "all"}
+              onClick={() => setFilter("all")}
+            >
               Todas
             </FilterButton>
             <FilterButton
