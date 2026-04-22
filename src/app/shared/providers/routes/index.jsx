@@ -63,6 +63,22 @@ function RoutesProvider() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/:companyId/teams/:teamId/calls/:callId"
+          element={
+            <ProtectedRoute>
+              <MeetingCallRoomPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/companies/:companyId/teams/:teamId/calls/:callId"
+          element={
+            <ProtectedRoute>
+              <MeetingCallRoomPage />
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="*"

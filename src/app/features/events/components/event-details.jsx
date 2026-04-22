@@ -19,6 +19,7 @@ import {
   X,
 } from "lucide-react";
 import { useCancelEvent } from "../hooks/use-cancel-event";
+import { useNavigate, useParams } from "react-router-dom";
 
 function EventDetails({ eventId, onCloseModal }) {
   const {
@@ -34,11 +35,15 @@ function EventDetails({ eventId, onCloseModal }) {
       status,
       createdAt,
       location,
+      callId,
     } = {},
     isPending,
   } = useEvent(eventId);
   const { cancelEvent, isCanceling } = useCancelEvent();
+  const { companyId } = useParams();
+  const navigate = useNavigate();
   if (isPending) return <Spinner />;
+  const roomPath = `/${companyId}/teams/${teamId.id}/calls/${callId}`;
   return (
     <div className="p-[2rem] max-w-[50rem] sm:min-w-[50rem] flex flex-col gap-[2rem]">
       <div className="flex flex-col gap-[1rem] ">
@@ -168,10 +173,12 @@ function EventDetails({ eventId, onCloseModal }) {
       )}
 
       {status === "active" && (
-        <div className="text-center bg-yellow-100 p-[1rem] rounded-full">
-          {" "}
-          <span>Evento terminado, visualizar apenas</span>
-        </div>
+        <Button className="rounded-2xl" onClick={() => navigate(roomPath)}>
+          <>
+            <Video size={16} />
+            Entrar na Sala
+          </>
+        </Button>
       )}
     </div>
   );

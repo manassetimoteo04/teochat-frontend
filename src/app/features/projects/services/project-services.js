@@ -73,7 +73,11 @@ export async function getTeamProjects({
   try {
     const params = { query, range, status, page, limit, sort };
     Object.keys(params).forEach((key) => {
-      if (params[key] === undefined || params[key] === null || params[key] === "")
+      if (
+        params[key] === undefined ||
+        params[key] === null ||
+        params[key] === ""
+      )
         delete params[key];
     });
     const {
@@ -84,7 +88,6 @@ export async function getTeamProjects({
     if (meta) return { data, meta };
     return data;
   } catch (error) {
-    console.log(error);
     throw new Error(error);
   }
 }
@@ -99,7 +102,6 @@ export async function createProjectTask(projectId, values) {
 
 export async function updateProjectTask(id, values) {
   try {
-    console.log(id, values);
     const { data } = await api.put(`/tasks/${id}`, values);
     return data;
   } catch (error) {

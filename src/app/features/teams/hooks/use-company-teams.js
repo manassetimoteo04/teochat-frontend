@@ -4,7 +4,6 @@ import { useAppContext } from "../../../shared/providers/context";
 
 export function useCompanyTeams() {
   const { currentCompany } = useAppContext();
-  console.log("currentCompany", currentCompany?.id);
   const { data, isPending } = useQuery({
     queryKey: ["teams", "company", currentCompany?.id ?? ""],
     queryFn: async () =>

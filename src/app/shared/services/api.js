@@ -35,6 +35,7 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    console.log("API Error:", error);
     let message = "Ocorreu um erro inesperado. Tente novamente.";
     if (error.code === "ECONNABORTED") {
       message = "A requisição demorou muito. Por favor, tente novamente.";

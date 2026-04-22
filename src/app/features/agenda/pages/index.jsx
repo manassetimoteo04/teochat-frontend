@@ -1,4 +1,9 @@
-import { CalendarDays, ListChecks, Plus, SlidersHorizontal } from "lucide-react";
+import {
+  CalendarDays,
+  ListChecks,
+  Plus,
+  SlidersHorizontal,
+} from "lucide-react";
 import Button from "../../../shared/ui/button";
 import PageHeader from "../../../shared/ui/page-heading";
 import Spinner from "../../../shared/ui/Spinner";
@@ -13,8 +18,13 @@ import InputSearch from "../../../shared/ui/input-search";
 import Tag from "../../../shared/ui/tag";
 import { useEffect, useState } from "react";
 import { useGetTeamEvents } from "../../events/hooks/use-get-team-events";
-import { formatDate, formatHour, rewriteStatus } from "../../../shared/utils/helpers";
+import {
+  formatDate,
+  formatHour,
+  rewriteStatus,
+} from "../../../shared/utils/helpers";
 import Pagination from "../../../shared/ui/pagination";
+import EventDetails from "../../events/components/event-details";
 
 function AgendasPage() {
   const { data, isPending } = useGetTeamDetails();
@@ -22,6 +32,7 @@ function AgendasPage() {
   const [range, setRange] = useState("week");
   const [view, setView] = useState("calendar");
   const [page, setPage] = useState(1);
+  const eventId = new URLSearchParams(window.location.search).get("eventId");
   const limit = 10;
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const {
@@ -34,6 +45,7 @@ function AgendasPage() {
     setPage(1);
   }, [query, range, view]);
   if (isPending) return <Spinner />;
+
   return (
     <Modal>
       <div className="flex gap-[2rem] flex-col min-h-screen">
@@ -180,6 +192,9 @@ function AgendasPage() {
       </div>
       <Modal.Window id="create-event">
         <CreateEventForm />
+      </Modal.Window>
+      <Modal.Window onValueRely={eventId}>
+        <EventDetails eventId={eventId} />
       </Modal.Window>
     </Modal>
   );

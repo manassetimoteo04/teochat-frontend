@@ -1,5 +1,11 @@
 import { X } from "lucide-react";
-import { cloneElement, createContext, useContext, useState } from "react";
+import {
+  cloneElement,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 const ModalContext = createContext();
 function Modal({ children }) {
@@ -20,13 +26,26 @@ function Modal({ children }) {
   );
 }
 
-function Window({ id, children, buttonClose = true, onClose }) {
+function Window({ id, children, buttonClose = true, onClose, onValueRely }) {
   const { close, open } = useContext(ModalContext);
+  const [valueRely, setValueRely] = useState(onValueRely);
+  const removeSearchParam = () => {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("eventId");
+
+    window.history.pushState({}, "", url);
+  };
   const handleClose = () => {
     onClose?.();
     close();
+    setValueRely(null);
+    removeSearchParam();
   };
-  if (id !== open) return;
+  useEffect(() => {
+    setValueRely(onValueRely);
+  }, [onValueRely]);
+
+  if (id !== open && !valueRely) return;
   return createPortal(
     <div className="fixed flex items-center z-[9999999] justify-center h-screen w-full top-0 left-0 bg-black/40">
       <div

@@ -9,6 +9,7 @@ import {
 import ButtonIcon from "../../../../shared/ui/button-icon";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
+import { useCreateInstantCall } from "../../../meetings/hooks/use-create-instant-call";
 
 const connectionMap = {
   online: {
@@ -33,7 +34,8 @@ export function ChatHeader({ data, setDetails, connectionStatus = "online" }) {
   const currentConnection =
     connectionMap[connectionStatus] || connectionMap.reconnecting;
   const ConnectionIcon = currentConnection.icon;
-
+  const { createInstantCall, isPending: isCreatingInstantCall } =
+    useCreateInstantCall();
   return (
     <header className="h-full px-[2rem] flex items-center justify-between border-b bg-white/95 backdrop-blur-sm">
       <div className="flex items-center gap-[1rem] ">
@@ -60,7 +62,11 @@ export function ChatHeader({ data, setDetails, connectionStatus = "online" }) {
       </div>
 
       <div className="flex items-center gap-[2rem]">
-        <ButtonIcon title="Iniciar Meeting">
+        <ButtonIcon
+          title="Iniciar Meeting"
+          onClick={createInstantCall}
+          disabled={isCreatingInstantCall}
+        >
           <Video size={20} />
         </ButtonIcon>
         <ButtonIcon title="Procurar Mensagem">
