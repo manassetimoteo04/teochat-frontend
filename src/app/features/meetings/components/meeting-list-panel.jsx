@@ -1,6 +1,7 @@
-import { CalendarDays, Search, Video } from "lucide-react";
+import { LoaderCircle, Search, Video } from "lucide-react";
 import { normalizeText } from "../../../shared/utils/helpers";
 import { MeetingListSection } from "./meeting-list-section";
+import Button from "../../../shared/ui/button";
 
 export function MeetingListPanel({
   search,
@@ -12,6 +13,8 @@ export function MeetingListPanel({
   happeningMeetings,
   selectedMeetingId,
   onSelectMeeting,
+  onStartInstantCall,
+  isCreatingInstantCall = false,
   useModal = false,
   modalId = "meeting-details",
 }) {
@@ -62,6 +65,25 @@ export function MeetingListPanel({
             </p>
           </div>
         </div>
+
+        <Button
+          size="sm"
+          disabled={isCreatingInstantCall}
+          onClick={onStartInstantCall}
+          className="rounded-2xl"
+        >
+          {isCreatingInstantCall ? (
+            <>
+              <LoaderCircle size={16} className="animate-spin" />A iniciar
+              chamada...
+            </>
+          ) : (
+            <>
+              <Video size={16} />
+              Iniciar Chamada Instantânea
+            </>
+          )}
+        </Button>
 
         <div className="relative rounded-2xl border border-gray-200 focus-within:border-main-color bg-main-bg-color px-[1.2rem] py-[1rem]">
           <Search

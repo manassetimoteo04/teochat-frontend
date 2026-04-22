@@ -11,9 +11,8 @@ export function useSignUp() {
     mutationFn: signUp,
     onSuccess: (data) => {
       toast.success(
-        "Conta Criada com sucesso verifique o email para confirmar"
+        "Conta Criada com sucesso verifique o email para confirmar",
       );
-      console.log(data);
       setToLocalStorage(data.data.token, "token");
       navigate("/verify-account");
     },

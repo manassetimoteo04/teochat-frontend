@@ -18,6 +18,7 @@ export function useTeamCalls(filters = {}, options = {}) {
     const endTime = call.endTime || call.event?.endTime || startTime;
     return {
       id: call.id,
+      callId: call.callId || call.streamCallId || call.id,
       title: call.event?.title || "Reunião sem evento",
       description: call.event?.description || "Sem descrição",
       type: call.event?.type || "video-call",
@@ -28,6 +29,7 @@ export function useTeamCalls(filters = {}, options = {}) {
       location: call.event?.location,
       teamId: call.teamId,
       eventId: call.eventId,
+      eventStatus: call.event?.status,
       duration: call.duration,
     };
   });

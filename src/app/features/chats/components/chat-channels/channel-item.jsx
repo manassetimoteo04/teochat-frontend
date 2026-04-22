@@ -21,7 +21,9 @@ export function ChannelItem({ channel, onClick }) {
     >
       <div className="flex flex-col gap-1">
         <div className="flex items-center justify-between gap-2">
-          <span className="font-medium text-main-text-color truncate">#{channel.name}</span>
+          <span className="font-medium text-main-text-color truncate">
+            #{channel.name}
+          </span>
 
           {channel?.lastMessage && (
             <span className="text-xs text-secondary-text-color whitespace-nowrap">
@@ -42,7 +44,9 @@ export function ChannelItem({ channel, onClick }) {
             {channel.lastMessage.content}
           </p>
         ) : (
-          <p className="text-sm text-secondary-text-color">Nenhuma mensagem ainda</p>
+          <p className="text-sm text-secondary-text-color">
+            Nenhuma mensagem ainda
+          </p>
         )}
       </div>
     </button>

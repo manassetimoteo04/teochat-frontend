@@ -31,6 +31,8 @@ export function MeetingDetailsPanel({ meeting, teamName }) {
   const startAt = meeting.startTime || meeting.date;
   const endAt = meeting.endTime || meeting.startTime || meeting.date;
 
+  const roomPath = `/${companyId}/teams/${teamId}/calls/${meeting.id}`;
+
   return (
     <section className="h-auto  overflow-y-auto bg-main-bg-color p-[1.5rem] sm:p-[2rem] lg:p-[3rem]">
       <div className="max-w-[72rem] mx-auto flex flex-col gap-[1.5rem]">
@@ -38,7 +40,7 @@ export function MeetingDetailsPanel({ meeting, teamName }) {
           <div className="flex items-start justify-between gap-[1rem]">
             <div>
               <p className="text-[1.3rem] text-secondary-text-color">
-                Reuniões • {meeting.teamId?.name || teamName || "-"}
+                Reuniões | {meeting.teamId?.name || teamName || "-"}
               </p>
               <h1 className="text-[2.2rem] sm:text-[2.6rem] leading-tight font-semibold text-main-text-color mt-[0.3rem]">
                 {meeting.title}
@@ -107,9 +109,7 @@ export function MeetingDetailsPanel({ meeting, teamName }) {
 
           {meeting.type === "video-call" && meeting.status === "started" && (
             <button
-              onClick={() =>
-                navigate(`/${companyId}/meetings/${teamId}/call/${meeting.id}`)
-              }
+              onClick={() => navigate(roomPath)}
               className="w-full sm:w-auto px-[1.6rem] py-[1rem] rounded-xl bg-main-color text-white text-[1.4rem] font-medium hover:opacity-90"
             >
               Entrar na chamada

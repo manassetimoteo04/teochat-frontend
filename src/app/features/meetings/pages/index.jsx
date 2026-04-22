@@ -7,6 +7,7 @@ import { useGetTeamDetails } from "../../teams/hooks/use-get-team-details";
 import { MeetingDetailsPanel } from "../components/meeting-details-panel";
 import { MeetingListPanel } from "../components/meeting-list-panel";
 import { useBreakpoint } from "../../../shared/hooks/use-breakpont";
+import { useCreateInstantCall } from "../hooks/use-create-instant-call";
 
 function MeetingsPage() {
   const [search, setSearch] = useState("");
@@ -22,6 +23,8 @@ function MeetingsPage() {
 
   const { data: team, isPending: isLoadingTeam } = useGetTeamDetails();
   const { data: meetings, isPending: isLoadingMeetings } = useTeamCalls();
+  const { createInstantCall, isPending: isCreatingInstantCall } =
+    useCreateInstantCall();
 
   const orderedMeetings = useMemo(
     () =>
@@ -92,6 +95,15 @@ function MeetingsPage() {
         search={search}
         onSearch={setSearch}
         teamName={team?.name}
+        onStartInstantCall={() =>
+          createInstantCall({
+            title: team?.name
+              ? `Chamada instantânea • ${team.name}`
+              : "Chamada instantânea",
+            description: "Chamada iniciada agora para a equipa.",
+          })
+        }
+        isCreatingInstantCall={isCreatingInstantCall}
         upcomingMeetings={upcomingMeetings}
         happeningMeetings={happeningMeetings}
         pastMeetings={pastMeetings}

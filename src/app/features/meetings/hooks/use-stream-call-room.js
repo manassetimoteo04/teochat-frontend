@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StreamVideoClient } from "@stream-io/video-react-sdk";
 import { getStreamCallToken } from "../services/stream-call-service";
 
@@ -7,12 +7,18 @@ export function useStreamCallRoom({
   callId,
   companyId,
   teamId,
+  initialToken = "",
   enabled = true,
 }) {
   const [client, setClient] = useState(null);
   const [call, setCall] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const initialTokenRef = useRef(initialToken);
+
+  useEffect(() => {
+    initialTokenRef.current = initialToken;
+  }, [initialToken]);
 
   useEffect(() => {
     if (!enabled) {
@@ -49,12 +55,19 @@ export function useStreamCallRoom({
             name: currentUser.name || "Utilizador",
             image: currentUser.avatar || undefined,
           },
-          tokenProvider: () =>
-            getStreamCallToken({
+          tokenProvider: () => {
+            if (initialTokenRef.current) {
+              const token = initialTokenRef.current;
+              initialTokenRef.current = "";
+              return Promise.resolve(token);
+            }
+
+            return getStreamCallToken({
               callId,
               teamId,
               companyId,
-            }),
+            });
+          },
         });
 
         nextCall = videoClient.call("default", callId);
@@ -86,7 +99,6 @@ export function useStreamCallRoom({
 
     return () => {
       isMounted = false;
-      console.log("next call", nextCall);
       if (nextCall) {
         nextCall?.microphone?.disable().catch(() => null);
         nextCall?.camera?.disable().catch(() => null);

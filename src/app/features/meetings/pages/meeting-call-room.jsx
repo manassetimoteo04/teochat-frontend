@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import {
   StreamCall,
   StreamTheme,
@@ -63,22 +63,59 @@ function CallRoomShell({ client, call, currentUser, onLeave, meeting }) {
 
 function MeetingCallRoomPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
   const { callId, companyId, teamId } = useParams();
   const { currentUser } = useAppContext();
   const { data: meetings, isPending: isLoadingMeetings } = useTeamCalls();
+  const eventIdFromQuery = searchParams.get("eventId");
+  const instantCallData = location.state?.instantCallData;
 
   const meeting = useMemo(
-    () => (meetings || []).find((item) => item.id === callId),
-    [callId, meetings],
+    () =>
+      (meetings || []).find(
+        (item) =>
+          item.callId === callId ||
+          item.id === callId ||
+          item.id === eventIdFromQuery ||
+          item.eventId === eventIdFromQuery,
+      ),
+    [callId, eventIdFromQuery, meetings],
   );
 
-  const canJoinMeeting = meeting?.status === "started";
+  const fallbackMeeting = useMemo(() => {
+    if (!instantCallData?.event || !instantCallData?.meetingCall) return null;
+
+    return {
+      id: instantCallData.meetingCall.id,
+      callId: instantCallData.meetingCall.callId,
+      title: instantCallData.event.title || "Chamada instantânea",
+      description: instantCallData.event.description || "Sem descrição",
+      type: instantCallData.event.type || "video-call",
+      status: instantCallData.meetingCall.status,
+      date: instantCallData.event.date || instantCallData.meetingCall.startTime,
+      startTime:
+        instantCallData.event.startTime || instantCallData.meetingCall.startTime,
+      endTime:
+        instantCallData.event.endTime || instantCallData.meetingCall.endTime,
+      location: instantCallData.event.location,
+      teamId: instantCallData.event.teamId || instantCallData.meetingCall.teamId,
+      eventId: instantCallData.event.id || instantCallData.meetingCall.eventId,
+      eventStatus: instantCallData.event.status,
+    };
+  }, [instantCallData]);
+
+  const resolvedMeeting = meeting || fallbackMeeting;
+  const canJoinMeeting =
+    resolvedMeeting?.status === "started" ||
+    instantCallData?.meetingCall?.status === "started";
 
   const { client, call, isLoading, error } = useStreamCallRoom({
     currentUser,
     callId,
     companyId,
     teamId,
+    initialToken: location.state?.initialStreamToken || "",
     enabled: canJoinMeeting,
   });
 
@@ -90,7 +127,7 @@ function MeetingCallRoomPage() {
     return <CallRoomLoading />;
   }
 
-  if (!meeting) {
+  if (!resolvedMeeting) {
     return (
       <RoomStateCard
         icon={Video}
@@ -101,13 +138,13 @@ function MeetingCallRoomPage() {
     );
   }
 
-  if (meeting.status !== "started") {
+  if (resolvedMeeting.status !== "started") {
     return (
       <RoomStateCard
         icon={Video}
         title="A sala ainda não está disponível"
         description="O acesso à sala só é permitido quando a reunião estiver com o estado iniciado. Assim evitamos entradas antecipadas e mantemos a experiência alinhada com o calendário da equipa."
-        meeting={meeting}
+        meeting={resolvedMeeting}
         primaryAction={{ label: "Voltar para reuniões", onClick: leaveToMeetings }}
       />
     );
@@ -123,7 +160,7 @@ function MeetingCallRoomPage() {
       call={call}
       currentUser={currentUser}
       onLeave={leaveToMeetings}
-      meeting={meeting}
+      meeting={resolvedMeeting}
     />
   );
 }
