@@ -19,12 +19,12 @@ function TeamParticipantsList() {
 
   const queriedResults = query
     ? data?.filter((item) =>
-        normalizeText(item.name).startsWith(normalizeText(query))
+        normalizeText(item.name).startsWith(normalizeText(query)),
       )
     : data;
   if (isPending) return <Spinner />;
   return (
-    <div className=" p-[3rem]">
+    <div className=" p-[3rem] ">
       <header className="flex gap-[1rem] flex-col">
         <Heading>Participantes</Heading>
         <div className="flex justify-start">

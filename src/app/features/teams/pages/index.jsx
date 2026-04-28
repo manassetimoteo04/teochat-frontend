@@ -79,7 +79,7 @@ function TeamsPage() {
               <div className="flex items-start justify-between gap-[1rem]">
                 <div>
                   <div className="flex items-center gap-[0.75rem]">
-                    <h2 className="text-[2.4rem] text-main-text-color">
+                    <h2 className="text-[2.4rem]  text-main-text-color">
                       {data?.name}
                     </h2>
                     <Tag type="active">Ativa</Tag>
@@ -92,7 +92,11 @@ function TeamsPage() {
                   <CalendarDays size={18} />
                   <span className="text-[1.3rem]">
                     Atualizado em{" "}
-                    {formatDate(new Date(data?.updatedAt || new Date()), true, true)}
+                    {formatDate(
+                      new Date(data?.updatedAt || new Date()),
+                      true,
+                      true,
+                    )}
                   </span>
                 </div>
               </div>
@@ -182,7 +186,11 @@ function TeamsPage() {
               <div className="mt-[1.5rem] p-[1rem] rounded-xl bg-gray-50 border border-gray-100">
                 <p className="text-[1.2rem] text-secondary-text-color">
                   Criado em{" "}
-                  {formatDate(new Date(data?.createdAt || new Date()), true, true)}
+                  {formatDate(
+                    new Date(data?.createdAt || new Date()),
+                    true,
+                    true,
+                  )}
                 </p>
               </div>
             </div>

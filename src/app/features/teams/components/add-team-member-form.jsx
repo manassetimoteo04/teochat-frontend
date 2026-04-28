@@ -45,7 +45,7 @@ function AddTeamMemberForm({ onCloseModal }) {
     : [];
   const filteredUsers = filteredUsersExisted
     ? filteredUsersExisted?.filter((user) =>
-        normalizeText(user.name).startsWith(normalizeText(query))
+        normalizeText(user.name).startsWith(normalizeText(query)),
       )
     : [];
 
@@ -66,7 +66,7 @@ function AddTeamMemberForm({ onCloseModal }) {
     addMember({ members: ids }, { onSuccess: onCloseModal });
   }
   return (
-    <form className="p-[2rem] flex items-center flex-col gap-[2rem] max-w-[45rem]">
+    <form className="p-[2rem]  flex items-center flex-col gap-[2rem] max-w-[45rem]">
       <div className=" flex flex-col ">
         <Heading as="h2">Adicionar Membros</Heading>
         <span className="text-secondary-text-color ">
@@ -109,7 +109,8 @@ function AddTeamMemberForm({ onCloseModal }) {
                     key={user.id}
                     className={clsx(
                       "flex hover:bg-gray-100 rounded-lg items-center gap-[0.5rem] p-[1rem]  ",
-                      members.some((mem) => mem.id === user.id) && "bg-gray-100"
+                      members.some((mem) => mem.id === user.id) &&
+                        "bg-gray-100",
                     )}
                   >
                     <img

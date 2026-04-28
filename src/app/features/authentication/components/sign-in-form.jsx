@@ -23,11 +23,11 @@ function SignInForm() {
     signIn(data);
   }
   return (
-    <div className="md:p-[4rem] p-[2rem] justify-center flex items-center h-full">
+    <div className="md:p-[4rem] bg-white p-[2rem] justify-center flex items-center h-full">
       <Form onSubmit={onSubmit}>
         <header className="flex flex-col gap-[0.5rem]">
           <Logo />
-          <Heading as="h2" className="text-[2.4rem]">
+          <Heading as="h2" className="">
             Iniciar Sessão
           </Heading>
           <span className="text-secondary-text-color">
@@ -50,7 +50,9 @@ function SignInForm() {
           />
         </div>
         <div className="flex flex-col w-full">
-          <Button>{isPending ? <SpinnerMini /> : "Iniciar Sessão"}</Button>
+          <Button className="bg-red">
+            {isPending ? <SpinnerMini /> : "Iniciar Sessão"}
+          </Button>
         </div>
         <div className="text-secondary-text-color mt-[2rem] flex justify-between">
           <p>Ainda não tem uma conta?</p>{" "}

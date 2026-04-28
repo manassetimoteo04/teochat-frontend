@@ -34,7 +34,7 @@ function CompaniesLayout({ children }) {
   if (!isPending && session)
     return (
       <NotificationsProvider>
-        <div className="bg-main-bg-color relative min-h-screen overflow-y-auto">
+        <div className="bg-main-bg-color  relative min-h-screen overflow-y-auto">
           <div>
             <header className="md:px-[4rem] px-[2rem] top-0 left-0 w-full h-[8rem] fixed flex justify-between items-center border-b border-main-border-color bg-main-bg-color/95 backdrop-blur">
               <div className="flex items-center gap-4">
