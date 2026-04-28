@@ -14,7 +14,7 @@ function Button({
     className;
 
   const variants = {
-    primary: "bg-green-500 text-black hover:bg-green-600",
+    primary: "bg-red-500 text-black hover:bg-green-600",
     secondary:
       "bg-main-bg-color text-secondary-text-color shadow-[inset_0_0_0_1px_#dcdcdc] hover:shadow-[inset_0_0_0_1px_#22c55e] hover:text-main-text-color",
     danger: "bg-red-500 text-white hover:bg-red-600",
