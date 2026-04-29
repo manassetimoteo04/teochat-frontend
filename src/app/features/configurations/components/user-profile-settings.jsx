@@ -1,4 +1,10 @@
-import { CalendarDays, CheckCircle2, Mail, UserRound } from "lucide-react";
+import {
+  CalendarDays,
+  Camera,
+  CheckCircle2,
+  Mail,
+  UserRound,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Button from "../../../shared/ui/button";
@@ -90,13 +96,13 @@ function UserProfileSettings({ profile, isPending, onSubmit, disabled }) {
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col gap-[1.6rem]">
-          <div className="flex flex-col gap-[1.4rem] rounded-2xl border border-gray-100 bg-gray-50 p-[1.4rem] sm:flex-row sm:items-center">
+          <div className="flex  gap-[1.4rem] rounded-2xl border border-gray-100 bg-gray-50 p-[1.4rem] sm:flex-row items-center">
             <div className="relative">
               <img
                 src={form.avatar || "/default-user.jpg"}
                 alt={profile?.name}
                 className="
-        h-[7rem] w-[7rem]
+        md:h-[7rem] md:w-[7rem] w-[4rem] h-[4rem]
         rounded-2xl border border-white
         object-cover shadow-sm
       "
@@ -106,13 +112,13 @@ function UserProfileSettings({ profile, isPending, onSubmit, disabled }) {
                 htmlFor="avatar-upload"
                 className="
         absolute -bottom-2 -right-2
-        h-[3rem] w-[3rem]
+        h-[2rem] w-[2rem]
         rounded-full bg-white border shadow
         flex items-center justify-center
         cursor-pointer hover:scale-105 transition
       "
               >
-                +
+                <Camera size={13} />
               </label>
 
               <input
@@ -127,7 +133,7 @@ function UserProfileSettings({ profile, isPending, onSubmit, disabled }) {
             </div>
 
             <div className="flex-1">
-              <p className="text-[1.5rem] font-medium text-main-text-color">
+              <p className="text-[1.4rem] md:text-[1.5rem] font-medium text-main-text-color">
                 Fotografia de perfil
               </p>
 
@@ -152,7 +158,7 @@ function UserProfileSettings({ profile, isPending, onSubmit, disabled }) {
                 value={form.name}
                 onChange={handleChange}
                 disabled={disabled || isPending}
-                className="rounded-2xl border border-main-border-color bg-white px-[1.4rem] py-[1.3rem] text-[1.4rem] outline-none focus:border-green-500 disabled:bg-gray-50"
+                className="rounded-2xl w-full border border-main-border-color bg-white px-[1.4rem] py-[1.3rem] text-[1.4rem] outline-none focus:border-green-500 disabled:bg-gray-50"
                 placeholder="O teu nome"
               />
             </label>
@@ -168,7 +174,7 @@ function UserProfileSettings({ profile, isPending, onSubmit, disabled }) {
                 disabled
                 value={form.email}
                 onChange={handleChange}
-                className="rounded-2xl border opacity-60 border-main-border-color bg-white px-[1.4rem] py-[1.3rem] text-[1.4rem] outline-none focus:border-green-500 disabled:bg-gray-50"
+                className="rounded-2xl w-full border opacity-60 border-main-border-color bg-white px-[1.4rem] py-[1.3rem] text-[1.4rem] outline-none focus:border-green-500 disabled:bg-gray-50"
                 placeholder="teu@email.com"
               />
             </label>

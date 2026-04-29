@@ -44,9 +44,17 @@ export async function getCompanySettings(companyId) {
 }
 
 export async function updateCompanySettings({ companyId, payload }) {
+  const isFormData = payload instanceof FormData;
+
   const {
     data: { data },
-  } = await api.patch(`/companies/${companyId}/settings`, payload);
+  } = await api.patch(`/companies/${companyId}/settings`, payload, {
+    headers: isFormData
+      ? {
+          "Content-Type": "multipart/form-data",
+        }
+      : undefined,
+  });
 
   return data;
 }
