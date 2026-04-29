@@ -182,7 +182,7 @@ function Calendar() {
   // }, []);
   return (
     <div>
-      <div className="p-[2rem] items-center sticky top-0 z-[100] left-0  !bg-white justify-between flex border-b">
+      <div className="p-[2rem] items-center sticky top-0 z-10 left-0  !bg-white justify-between flex border-b">
         <div>
           <ButtonIcon title="Anterior" onClick={handlers[currentView]?.prev}>
             <ChevronLeft />

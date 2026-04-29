@@ -31,31 +31,31 @@ const sections = [
     id: "account",
     title: "Conta",
     description: "Informações pessoais e identidade do utilizador.",
-    icon: <Settings2 size={18} />,
+    icon: <Settings2 size={16} />,
   },
   {
     id: "company",
     title: "Empresa",
     description: "Configuração principal do workspace.",
-    icon: <Building2 size={18} />,
+    icon: <Building2 size={16} />,
   },
   {
     id: "security",
     title: "Segurança",
     description: "Palavra-passe e protecção da conta.",
-    icon: <ShieldCheck size={18} />,
+    icon: <ShieldCheck size={16} />,
   },
   {
     id: "members",
     title: "Membros",
     description: "Papéis, acessos e convites.",
-    icon: <Users2 size={18} />,
+    icon: <Users2 size={16} />,
   },
   {
     id: "danger",
     title: "Zona de risco",
     description: "Acções destrutivas e restritas.",
-    icon: <AlertTriangle size={18} />,
+    icon: <AlertTriangle size={16} />,
   },
 ];
 
@@ -63,6 +63,7 @@ function ConfigurationsPage() {
   const { companyId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const { currentCompany, currentRole } = useAppContext();
+
   const { profile, isPending: isProfilePending } = useSettingsProfile();
   const { company, isPending: isCompanyPending } =
     useCompanySettings(companyId);
@@ -81,10 +82,17 @@ function ConfigurationsPage() {
   const isInactive = resolvedCompany?.isActive === false;
   const canEditCompany =
     currentRole === "admin" || currentRole === "super_admin";
+  const isSuperAdmin = currentRole === "super_admin";
   const canManageMembers = canEditCompany;
   const canDeactivate = currentRole === "super_admin";
   const membersCount = Array.isArray(members) ? members.length + 1 : 1;
   const invitationsCount = Array.isArray(invitations) ? invitations.length : 0;
+
+  const visibleSections = sections.filter((section) => {
+    if (!canEditCompany && section.id === "members") return false;
+    if (!canDeactivate && isSuperAdmin && section.id === "danger") return false;
+    return true;
+  });
 
   const activeSection = useMemo(() => {
     const section = searchParams.get("section");
@@ -102,49 +110,73 @@ function ConfigurationsPage() {
 
   if (isProfilePending || isCompanyPending) {
     return (
-      <div className="h-full">
+      <div className="h-full flex items-center justify-center">
         <Spinner />
       </div>
     );
   }
 
   return (
-    <div className="p-[2rem] pb-[3rem]">
-      <div className="overflow-hidden ">
-        <div className="grid min-h-[calc(100dvh-12rem)] items-start lg:grid-cols-[36rem_1fr]">
-          <aside className="border-b rounded-2xl h-fit border border-gray-200 bg-[#fff] shadow-[0_24px_70px_rgba(15,23,42,0.08)] lg:border-b-0 lg:border-r">
-            <div className="px-[1.8rem] py-[2rem]">
-              <p className="text-[2.2rem] font-semibold text-main-text-color">
+    <div className="min-h-screen bg-gray-50">
+      <div className="lg:hidden sticky top-0 z-20 bg-white border-b border-gray-200 shadow-sm">
+        <div className="px-4 pt-4 pb-0">
+          <p className="text-[1.8rem] font-semibold text-main-text-color">
+            Configurações
+          </p>
+          <p className="text-[1.2rem] text-secondary-text-color mb-3">
+            Conta, empresa e permissões.
+          </p>
+        </div>
+        <div className="flex overflow-x-auto scrollbar-hide gap-1 px-3 pb-0">
+          {visibleSections.map((section) => {
+            const isActive = activeSection === section.id;
+            return (
+              <button
+                key={section.id}
+                onClick={() => changeSection(section.id)}
+                className={`flex-shrink-0 flex items-center gap-2 px-4 py-2.5 text-[1.3rem] font-medium border-b-2 transition-all whitespace-nowrap ${
+                  isActive
+                    ? "border-blue-600 text-blue-600"
+                    : "border-transparent text-secondary-text-color hover:text-main-text-color hover:border-gray-300"
+                }`}
+              >
+                {section.icon}
+                {section.title}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="max-w-[120rem] mx-auto p-4 sm:p-6 lg:p-8">
+        <div className="lg:grid lg:grid-cols-[28rem_1fr] xl:grid-cols-[30rem_1fr] lg:gap-6 lg:items-start">
+          <aside className="hidden lg:block sticky top-8 bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+            <div className="px-6 py-6 border-b border-gray-100">
+              <p className="text-[2rem] font-semibold text-main-text-color leading-tight">
                 Configurações
               </p>
-              <p className="mt-[0.4rem] text-[1.3rem] text-secondary-text-color">
-                Área central para conta, empresa e permissões.
+              <p className="mt-1 text-[1.3rem] text-secondary-text-color">
+                Conta, empresa e permissões.
               </p>
             </div>
-
-            <nav className="flex gap-[0.8rem] overflow-x-auto px-[1.2rem] pb-[1.2rem] lg:flex-col lg:overflow-visible">
-              {sections.map((section) => {
+            <nav className="p-3 flex flex-col gap-1">
+              {visibleSections.map((section) => {
                 const isActive = activeSection === section.id;
-                if (
-                  (!canEditCompany && section.id === "members") ||
-                  (!canDeactivate && section.id === "danger")
-                )
-                  return;
                 return (
                   <button
                     key={section.id}
                     onClick={() => changeSection(section.id)}
-                    className={`min-w-[20rem] rounded-2xl border px-[1.4rem] py-[1.2rem] text-left transition lg:min-w-0 ${
+                    className={`w-full rounded-xl px-4 py-3 text-left transition-all duration-150 ${
                       isActive
-                        ? "border-blue-100 bg-blue-50 text-blue-700 shadow-sm"
-                        : "border-transparent bg-transparent text-secondary-text-color hover:border-gray-100 hover:bg-gray-50"
+                        ? "bg-blue-50 border border-blue-100 text-blue-700 shadow-sm"
+                        : "border border-transparent text-secondary-text-color hover:bg-gray-50 hover:border-gray-100"
                     }`}
                   >
-                    <span className="flex items-center gap-[0.8rem] text-[1.4rem] font-medium">
+                    <span className="flex items-center gap-3 text-[1.4rem] font-medium">
                       {section.icon}
                       {section.title}
                     </span>
-                    <span className="mt-[0.5rem] hidden text-[1.2rem] leading-[1.6rem] lg:block">
+                    <span className="mt-1 text-[1.2rem] leading-relaxed block opacity-70">
                       {section.description}
                     </span>
                   </button>
@@ -153,26 +185,38 @@ function ConfigurationsPage() {
             </nav>
           </aside>
 
-          <div className="flex flex-col">
-            <header className="border-b  px-[2rem] py-[1.8rem] backdrop-blur">
-              <div className="flex items-start gap-[1.2rem]">
-                <span className="flex h-[4.4rem] w-[4.4rem] items-center justify-center rounded-2xl bg-white text-blue-700">
-                  {currentSectionData.icon}
-                </span>
-                <div>
-                  <h2 className="text-[2.8rem] font-semibold text-main-text-color">
-                    {currentSectionData.title}
-                  </h2>
-                  <p className="mt-[0.3rem] text-[1.4rem] text-secondary-text-color">
-                    {currentSectionData.description}
-                  </p>
-                </div>
+          <main className="min-w-0 mt-4 lg:mt-0">
+            <header className="hidden lg:flex items-center gap-4 mb-5 p-5 bg-white rounded-2xl border border-gray-200 shadow-sm">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600 flex-shrink-0">
+                {currentSectionData.icon}
+              </span>
+              <div>
+                <h2 className="text-[2rem] font-semibold text-main-text-color leading-tight">
+                  {currentSectionData.title}
+                </h2>
+                <p className="mt-0.5 text-[1.3rem] text-secondary-text-color">
+                  {currentSectionData.description}
+                </p>
               </div>
             </header>
 
-            <div className="flex-1 p-[2rem]">
+            <div className="lg:hidden flex items-center gap-3 mb-4">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600 flex-shrink-0">
+                {currentSectionData.icon}
+              </span>
+              <div>
+                <h2 className="text-[1.6rem] font-semibold text-main-text-color leading-tight">
+                  {currentSectionData.title}
+                </h2>
+                <p className="text-[1.2rem] text-secondary-text-color">
+                  {currentSectionData.description}
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 sm:p-6">
               {isInactive && (
-                <div className="mb-[2rem] rounded-3xl border border-amber-200 bg-amber-50 px-[1.8rem] py-[1.4rem] text-[1.4rem] text-amber-800">
+                <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-[1.3rem] text-amber-800 leading-relaxed">
                   Esta empresa está desactivada. A página permanece visível para
                   consulta, mas as acções de gestão ficam bloqueadas.
                 </div>
@@ -210,7 +254,7 @@ function ConfigurationsPage() {
               )}
 
               {activeSection === "members" && (
-                <div className="flex flex-col gap-[2rem]">
+                <div className="flex flex-col gap-6">
                   <CompanyMembersList
                     members={members}
                     isPending={isMembersPending}
@@ -242,7 +286,7 @@ function ConfigurationsPage() {
                 />
               )}
             </div>
-          </div>
+          </main>
         </div>
       </div>
     </div>

@@ -6,14 +6,13 @@ export function useChatScroll({ messagesLength, channelId }) {
   const rafRef = useRef(null);
 
   const prependSnapshotRef = useRef(null);
-  const pendingScrollRef = useRef(null);
   const isFirstLoadRef = useRef(true);
   const stickToBottomRef = useRef(true);
+  // REMOVIDO: pendingScrollRef — era a raiz da race condition
 
   const isNearBottom = useCallback((threshold = 120) => {
     const container = containerRef.current;
     if (!container) return false;
-
     const { scrollTop, scrollHeight, clientHeight } = container;
     return scrollHeight - scrollTop - clientHeight <= threshold;
   }, []);
@@ -22,90 +21,72 @@ export function useChatScroll({ messagesLength, channelId }) {
     const container = containerRef.current;
     if (!container) return;
 
-    if (rafRef.current) {
-      cancelAnimationFrame(rafRef.current);
-    }
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
 
     rafRef.current = requestAnimationFrame(() => {
-      container.scrollTo({
-        top: container.scrollHeight,
-        behavior,
-      });
+      // Lê scrollHeight DENTRO do rAF — DOM já foi pintado
+      container.scrollTo({ top: container.scrollHeight, behavior });
       rafRef.current = null;
     });
   }, []);
 
-  const requestScrollToBottom = useCallback(
-    (smooth = true, force = false) => {
-      const behavior = smooth ? "smooth" : "auto";
-      pendingScrollRef.current = { behavior, force };
-      if (force || isNearBottom()) {
-        performScrollToBottom(behavior);
-      }
-    },
-    [isNearBottom, performScrollToBottom],
-  );
-
   useLayoutEffect(() => {
     if (!containerRef.current) return;
 
+    // Prioridade 1: restaurar posição após carregar mais msgs (infinite scroll up)
     if (prependSnapshotRef.current) {
       const container = containerRef.current;
       const { scrollTop, scrollHeight } = prependSnapshotRef.current;
-      const diff = container.scrollHeight - scrollHeight;
-      container.scrollTop = scrollTop + diff;
+      container.scrollTop = scrollTop + (container.scrollHeight - scrollHeight);
       prependSnapshotRef.current = null;
       return;
     }
 
+    // Prioridade 2: primeira carga do canal — sempre vai pro fundo
     if (isFirstLoadRef.current) {
-      requestScrollToBottom(false, true);
+      performScrollToBottom("auto");
       isFirstLoadRef.current = false;
       stickToBottomRef.current = true;
       return;
     }
 
-    const pending = pendingScrollRef.current;
-    if (pending) {
-      if (pending.force || isNearBottom()) {
-        performScrollToBottom(pending.behavior);
-      }
-      pendingScrollRef.current = null;
-      return;
-    }
-
+    // Prioridade 3: nova mensagem — só scrolla se estava colado no fundo
+    // stickToBottomRef é atualizado pelo onContainerScroll em tempo real,
+    // então aqui ele já reflete a posição ANTES da nova mensagem chegar
     if (stickToBottomRef.current) {
       performScrollToBottom("smooth");
     }
-  }, [
-    channelId,
-    isNearBottom,
-    messagesLength,
-    performScrollToBottom,
-    requestScrollToBottom,
-  ]);
+  }, [messagesLength, channelId, performScrollToBottom]);
 
-  function scrollToBottom(smooth = true) {
-    requestScrollToBottom(smooth, true);
-  }
+  // Reset ao trocar de canal
+  useLayoutEffect(() => {
+    isFirstLoadRef.current = true;
+    stickToBottomRef.current = true;
+  }, [channelId]);
 
-  function scrollToBottomIfNearBottom(smooth = true, threshold = 140) {
-    if (!isNearBottom(threshold)) {
-      return false;
-    }
+  const scrollToBottom = useCallback(() => {
+    stickToBottomRef.current = true;
+    performScrollToBottom("smooth");
+  }, [performScrollToBottom]);
 
-    requestScrollToBottom(smooth, true);
-    return true;
-  }
+  const scrollToBottomIfNearBottom = useCallback(
+    (smooth = true, threshold = 140) => {
+      // Não testa isNearBottom() aqui — deixa o useLayoutEffect decidir
+      // via stickToBottomRef que já foi atualizado pelo scroll event
+      if (!stickToBottomRef.current) return false;
+      performScrollToBottom(smooth ? "smooth" : "auto");
+      return true;
+    },
+    [performScrollToBottom],
+  );
 
-  function prepareForFetchMore() {
+  const prepareForFetchMore = useCallback(() => {
     if (!containerRef.current) return;
-
     prependSnapshotRef.current = {
       scrollHeight: containerRef.current.scrollHeight,
       scrollTop: containerRef.current.scrollTop,
     };
-  }
+  }, []);
 
   const onContainerScroll = useCallback(() => {
     stickToBottomRef.current = isNearBottom(120);
@@ -118,6 +99,28 @@ export function useChatScroll({ messagesLength, channelId }) {
     }
   }, []);
 
+  useLayoutEffect(() => {
+    if (!containerRef.current) return;
+
+    if (prependSnapshotRef.current) {
+      const container = containerRef.current;
+      const { scrollTop, scrollHeight } = prependSnapshotRef.current;
+      container.scrollTop = scrollTop + (container.scrollHeight - scrollHeight);
+      prependSnapshotRef.current = null;
+      return;
+    }
+
+    if (isFirstLoadRef.current) {
+      performScrollToBottom("auto");
+      isFirstLoadRef.current = false;
+      stickToBottomRef.current = true;
+      return;
+    }
+
+    if (stickToBottomRef.current) {
+      performScrollToBottom("smooth");
+    }
+  }, [messagesLength, channelId, performScrollToBottom]);
   return {
     containerRef,
     bottomRef,
