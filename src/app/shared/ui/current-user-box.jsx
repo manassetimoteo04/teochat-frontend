@@ -3,10 +3,11 @@ import { ChevronDown, LogOut, Settings, User } from "lucide-react";
 
 import { useAppContext } from "../providers/context";
 import { generateAvatar, rewriteRoles } from "../utils/helpers";
+import { useLogout } from "../../features/authentication/hooks/use-logout";
 
 function CurrentUserBox() {
-  const { currentUser, currentRole, logout } = useAppContext();
-
+  const { currentUser, currentRole } = useAppContext();
+  const { logout, isPending } = useLogout();
   const { initials, color } = generateAvatar(currentUser?.name);
 
   const [open, setOpen] = useState(false);
@@ -115,8 +116,9 @@ function CurrentUserBox() {
 
           <button
             onClick={logout}
+            disabled={isPending}
             className="
-              w-full flex items-center gap-[1rem]
+              w-full flex  disabled:opacity-50 items-center gap-[1rem]
               rounded-xl px-[1rem] py-[1rem]
               text-red-600 hover:bg-red-50 transition
             "

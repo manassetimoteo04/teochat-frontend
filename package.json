@@ -17,7 +17,7 @@
     "axios": "^1.10.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
-    "emoji-picker-react": "^4.12.2",
+    "emoji-picker-react": "^4.19.1",
     "lucide-react": "^0.539.0",
     "prop-types": "^15.8.1",
     "react": "^19.1.0",

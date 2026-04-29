@@ -24,7 +24,9 @@ function NavCollapseLink({ link, to, setSidebar }) {
         {initials}
       </div>
 
-      <span key={link.to}>{link.name}</span>
+      <span key={link.to} className="truncate">
+        {link.name}
+      </span>
     </Link>
   );
 }
