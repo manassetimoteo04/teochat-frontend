@@ -9,13 +9,24 @@ export async function getMyProfile() {
 }
 
 export async function updateMyProfile(payload) {
+  const isFormData = payload instanceof FormData;
+
   const {
     data: { data },
-  } = await api.patch("/users/me", payload);
+  } = await api.patch(
+    "/users/me",
+    payload,
+    isFormData
+      ? {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      : undefined,
+  );
 
   return data;
 }
-
 export async function updateMyPassword(payload) {
   const {
     data: { data },

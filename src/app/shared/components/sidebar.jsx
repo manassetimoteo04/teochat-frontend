@@ -15,7 +15,7 @@ function Sidebar({ setSidebar, sidebar }) {
     <aside
       ref={ref}
       className={clsx(
-        " absolute top-0 left-0 w-[80%]    z-10      translate-x-[-100%]      lg:w-full  lg:translate-x-0",
+        " absolute top-0 left-0 max-w-[80%]    z-20  lg:max-w-max    translate-x-[-100%]      lg:w-full  lg:translate-x-0",
         sidebar && "!translate-x-0 ",
         "lg:relative w-full",
         " h-screen bg-white border-gray-100 border-r grid grid-rows-[5.5rem_1fr] row-[1/-1]",

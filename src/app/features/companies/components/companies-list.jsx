@@ -49,7 +49,7 @@ function CompaniesList() {
   return (
     <div className="max-w-[120rem] mt-[8rem] m-[0_auto] px-[1.6rem] md:px-[3.2rem] pb-[6rem]">
       <section className="rounded-[1.6rem] border border-main-border-color bg-main-bg-color-2   shadow-[0_8px_24px_rgba(15,23,42,0.06)] overflow-hidden">
-        <div className="px-[2.4rem] md:px-[3.2rem] pt-[2.4rem] pb-[2rem] border-b border-main-border-color bg-white">
+        <div className="px-[2.4rem] md:px-[3.2rem] pt-[2.4rem] pb-[2rem] border-b border-main-border-color ">
           <div className="flex flex-col gap-[1.2rem] md:flex-row md:items-center md:justify-between">
             <div>
               <h3 className="text-[2.6rem] md:text-[3rem] font-semibold">
@@ -77,6 +77,7 @@ function CompaniesList() {
               </Button>
             </div>
           </div>
+
           <div className="grid gap-[1rem] mt-[2rem] md:grid-cols-3">
             <div className="rounded-xl border border-main-border-color bg-main-bg-color px-[1.4rem] py-[1.2rem]">
               <p className="text-[1.2rem] text-secondary-text-color">Total</p>
